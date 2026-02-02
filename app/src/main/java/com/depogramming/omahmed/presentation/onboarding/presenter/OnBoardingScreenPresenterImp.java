@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.view.View;
 
 import com.depogramming.omahmed.presentation.onboarding.views.OnBoardingView;
+import com.depogramming.omahmed.utils.Consts;
 
 public class OnBoardingScreenPresenterImp implements OnBoardingPresenter {
     OnBoardingView onBoardingView;
@@ -22,9 +23,9 @@ public class OnBoardingScreenPresenterImp implements OnBoardingPresenter {
     @Override
     public void endButtonClick(View view, Application application) {
         onBoardingView.finishButton(view);
-        SharedPreferences sharedPreferences = application.getApplicationContext().getSharedPreferences("onBoarding", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = application.getApplicationContext().getSharedPreferences(Consts.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("onBoardingDone", true);
+        editor.putBoolean(Consts.ON_BOARDING_FLAG, true);
         editor.apply();
     }
 }
