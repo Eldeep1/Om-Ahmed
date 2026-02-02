@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/veiwPagerFragment"
-        android:name="com.depogramming.omahmed.onboarding.VeiwPagerFragment"
+        android:name="com.depogramming.omahmed.presentation.onboarding.views.VeiwPagerFragment"
         android:label="fragment_veiw_pager"
         tools:layout="@layout/fragment_veiw_pager" >
         <action

@@ -1,4 +1,4 @@
-package com.depogramming.omahmed.onboarding;
+package com.depogramming.omahmed.presentation.onboarding.views;
 
 import android.os.Bundle;
 
@@ -12,9 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.onboarding.views.FirstOnBoarding;
-import com.depogramming.omahmed.onboarding.views.SecondOnBoarding;
-import com.depogramming.omahmed.onboarding.views.ThirdOnBoarding;
 
 import java.util.ArrayList;
 import java.util.List;

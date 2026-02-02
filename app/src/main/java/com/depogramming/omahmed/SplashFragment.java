@@ -28,7 +28,7 @@ public class SplashFragment extends Fragment {
                 .alpha(1f)
                 .translationY(0f)
                 .setDuration(800)
-                .setStartDelay(1000) // Wait for logo to start first
+                .setStartDelay(1000)
                 .start();
 
         return view;
@@ -38,9 +38,9 @@ public class SplashFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if(onBoardingFinished()){
-            Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment);
+            new Handler().postDelayed(() -> Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment), 4000);
         }else {
-            new Handler().postDelayed(() -> Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_veiwPagerFragment), 3500);
+            new Handler().postDelayed(() -> Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_veiwPagerFragment), 4000);
         }
     }
 

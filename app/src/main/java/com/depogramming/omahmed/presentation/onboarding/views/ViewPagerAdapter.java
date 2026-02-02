@@ -1,4 +1,4 @@
-package com.depogramming.omahmed.onboarding;
+package com.depogramming.omahmed.presentation.onboarding.views;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

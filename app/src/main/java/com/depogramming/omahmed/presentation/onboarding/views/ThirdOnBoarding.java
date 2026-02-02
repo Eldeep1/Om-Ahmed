@@ -1,4 +1,4 @@
-package com.depogramming.omahmed.onboarding.views;
+package com.depogramming.omahmed.presentation.onboarding.views;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,28 +13,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.depogramming.omahmed.R;
+import com.depogramming.omahmed.presentation.onboarding.presenter.OnBoardingPresenter;
+import com.depogramming.omahmed.presentation.onboarding.presenter.OnBoardingScreenPresenterImp;
 
 
-public class ThirdOnBoarding extends Fragment {
+public class ThirdOnBoarding extends Fragment implements OnBoardingView{
 
     Button nextButton;
+    OnBoardingPresenter onBoardingPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_third_on_boarding, container, false);
+        onBoardingPresenter = new OnBoardingScreenPresenterImp(this);
         nextButton=view.findViewById(R.id.third_on_boarding_next_button);
-        nextButton.setOnClickListener(view1 -> {
-            Navigation.findNavController(view).navigate(R.id.action_veiwPagerFragment_to_loginFragment);
-            onBoardingFinished();
-        });
+
+        nextButton.setOnClickListener((view1)->onBoardingPresenter.endButtonClick(view,requireActivity().getApplication()));
         return view;
     }
-    private void onBoardingFinished(){
-        SharedPreferences sharedPreferences= getActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putBoolean("onBoardingDone",true);
-        editor.apply();
+    @Override
+    public void nextButton() {
+
     }
 }

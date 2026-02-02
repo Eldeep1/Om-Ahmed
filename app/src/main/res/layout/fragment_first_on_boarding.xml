@@ -8,7 +8,7 @@
     android:background="@color/background_color"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
-    tools:context=".onboarding.views.FirstOnBoarding">
+    tools:context=".presentation.onboarding.views.FirstOnBoarding">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"
