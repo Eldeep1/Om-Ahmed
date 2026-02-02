@@ -49,11 +49,11 @@ public class SplashFragment extends Fragment implements SplashView {
 
     @Override
     public void navigateToLogin() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_splashFragment_to_veiwPagerFragment);
+        Navigation.findNavController(requireView()).navigate(R.id.action_splashFragment_to_loginFragment);
     }
 
     @Override
     public void navigateToOnBoarding() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_splashFragment_to_loginFragment);
+        Navigation.findNavController(requireView()).navigate(R.id.action_splashFragment_to_veiwPagerFragment);
     }
 }
