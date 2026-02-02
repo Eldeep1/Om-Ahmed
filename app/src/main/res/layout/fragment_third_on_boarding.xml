@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/third_on_boarding_constraint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    tools:context=".onboarding.views.ThirdOnBoarding">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/third_on_boarding_lottie"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/aimessanger" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/third_on_boarding_title"
+        style="@style/Text.OmAhmed.onBoardingTitles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:text="@string/ai_kitchen_assistant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/third_on_boarding_lottie" />
+
+    <TextView
+        android:id="@+id/third_on_boarding_description"
+        style="@style/Text.OmAhmed.onBoardingText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/chat_with_om_ahmed_ai_to_get_instant_recipe_ideas_cooking_tips_and_meal_plan_help"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/third_on_boarding_title" />
+    <ImageView
+        android:id="@+id/third_on_boarding_second_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/empty_dots"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/third_on_boarding_first_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/empty_dots"
+        app:layout_constraintBottom_toBottomOf="@id/third_on_boarding_second_dot"
+        app:layout_constraintEnd_toStartOf="@id/third_on_boarding_second_dot"
+        app:layout_constraintTop_toTopOf="@id/third_on_boarding_second_dot" />
+
+    <ImageView
+        android:id="@+id/third_on_boarding_third_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/filled_red_dot"
+        app:layout_constraintBottom_toBottomOf="@id/third_on_boarding_second_dot"
+        app:layout_constraintStart_toEndOf="@id/third_on_boarding_second_dot"
+        app:layout_constraintTop_toTopOf="@id/third_on_boarding_second_dot" />
+
+    <Button
+        android:id="@+id/third_on_boarding_next_button"
+        style="@style/Text.OmAhmed.onBoardingButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/get_started"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/third_on_boarding_first_dot"
+        app:layout_constraintEnd_toEndOf="@id/third_on_boarding_description"
+        app:layout_constraintStart_toStartOf="@id/third_on_boarding_description" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
