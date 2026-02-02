@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Om Ahmed</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="discover_delicious_recipes">Discover Delicious Recipes</string>
+    <string name="explore_thousands_of_traditional_and_modern_dishes_at_your_fingertips">Explore thousands of traditional and modern dishes at your fingertips.</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="personalized_planning">Personalized Planning</string>
+    <string name="plan_your_meals_easily_and_stay_organized_every_day">Plan your meals easily and stay organized every Day</string>
+    <string name="ai_kitchen_assistant">AI Kitchen Assistant</string>
+    <string name="chat_with_om_ahmed_ai_to_get_instant_recipe_ideas_cooking_tips_and_meal_plan_help">Chat with Om Ahmed AI to get instant recipe ideas, cooking tips, and meal plan help</string>
+    <string name="get_started">Get Started</string>
+    <string name="cooking_with_love">Cooking With Love</string>
 </resources>

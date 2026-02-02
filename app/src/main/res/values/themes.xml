@@ -1,9 +1,36 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.OmAhmed" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    </style>
+
+    <style name="Text_OmAhmed" parent="TextAppearance.Material3.BodyMedium" />
+
+    <style name="Text.OmAhmed.onBoardingTitles" parent="Text_OmAhmed">
+        <item name="fontFamily">@font/plus_jakarta_sans_bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="Text.OmAhmed.onBoardingText" parent="Text_OmAhmed">
+        <item name="fontFamily">@font/plus_jakarta_sans</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.OmAhmed.onBoardingSkipText" parent="Text_OmAhmed">
+        <item name="fontFamily">@font/plus_jakarta_sans_bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.OmAhmed.onBoardingButtons" parent="Text_OmAhmed">
+        <item name="fontFamily">@font/plus_jakarta_sans_bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/on_boarding_buttons_background</item>
+        <item name="backgroundTint">@null</item>
     </style>
 
     <style name="Theme.OmAhmed" parent="Base.Theme.OmAhmed" />
+
 </resources>
