@@ -1,11 +1,8 @@
 package com.depogramming.omahmed.presentation.onboarding.views;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +14,7 @@ import com.depogramming.omahmed.presentation.onboarding.presenter.OnBoardingPres
 import com.depogramming.omahmed.presentation.onboarding.presenter.OnBoardingScreenPresenterImp;
 
 
-public class ThirdOnBoarding extends Fragment implements OnBoardingView{
+public class ThirdOnBoarding extends Fragment implements OnBoardingView {
 
     Button nextButton;
     OnBoardingPresenter onBoardingPresenter;
@@ -27,12 +24,13 @@ public class ThirdOnBoarding extends Fragment implements OnBoardingView{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_third_on_boarding, container, false);
-        onBoardingPresenter = new OnBoardingScreenPresenterImp(this);
-        nextButton=view.findViewById(R.id.third_on_boarding_next_button);
+        onBoardingPresenter = new OnBoardingScreenPresenterImp(this, requireActivity().getApplicationContext());
+        nextButton = view.findViewById(R.id.third_on_boarding_next_button);
 
-        nextButton.setOnClickListener((view1)->onBoardingPresenter.endButtonClick(view,requireActivity().getApplication()));
+        nextButton.setOnClickListener((view1) -> onBoardingPresenter.endButtonClick(view, requireActivity().getApplication()));
         return view;
     }
+
     @Override
     public void nextButton() {
 

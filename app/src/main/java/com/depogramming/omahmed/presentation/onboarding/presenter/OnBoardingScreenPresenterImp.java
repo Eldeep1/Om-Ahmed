@@ -2,17 +2,18 @@ package com.depogramming.omahmed.presentation.onboarding.presenter;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.View;
 
+import com.depogramming.omahmed.data.onboarding.repository.UserPreferencesRepository;
 import com.depogramming.omahmed.presentation.onboarding.views.OnBoardingView;
-import com.depogramming.omahmed.utils.Consts;
 
 public class OnBoardingScreenPresenterImp implements OnBoardingPresenter {
     OnBoardingView onBoardingView;
+    UserPreferencesRepository userPreferencesRepository;
 
-    public OnBoardingScreenPresenterImp(OnBoardingView onBoardingView) {
+    public OnBoardingScreenPresenterImp(OnBoardingView onBoardingView, Context context) {
         this.onBoardingView = onBoardingView;
+        userPreferencesRepository = new UserPreferencesRepository(context);
     }
 
     @Override
@@ -23,9 +24,6 @@ public class OnBoardingScreenPresenterImp implements OnBoardingPresenter {
     @Override
     public void endButtonClick(View view, Application application) {
         onBoardingView.finishButton(view);
-        SharedPreferences sharedPreferences = application.getApplicationContext().getSharedPreferences(Consts.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(Consts.ON_BOARDING_FLAG, true);
-        editor.apply();
+        userPreferencesRepository.setOnBoardingFlag(true);
     }
 }

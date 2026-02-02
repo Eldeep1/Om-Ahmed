@@ -27,7 +27,7 @@ public class SecondOnBoarding extends Fragment implements OnBoardingView{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_second_on_boarding, container, false);
-        onBoardingPresenter = new OnBoardingScreenPresenterImp(this);
+        onBoardingPresenter = new OnBoardingScreenPresenterImp(this,requireActivity().getApplicationContext());
         intiUI(view);
         return view;
     }

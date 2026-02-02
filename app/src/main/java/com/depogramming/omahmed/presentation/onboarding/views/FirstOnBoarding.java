@@ -26,7 +26,7 @@ public class FirstOnBoarding extends Fragment implements OnBoardingView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first_on_boarding, container, false);
-        onBoardingPresenter = new OnBoardingScreenPresenterImp(this);
+        onBoardingPresenter = new OnBoardingScreenPresenterImp(this,requireActivity().getApplicationContext());
         initUI(view);
 
         return view;

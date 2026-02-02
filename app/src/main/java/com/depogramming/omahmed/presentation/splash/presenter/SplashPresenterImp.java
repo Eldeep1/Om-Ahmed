@@ -1,25 +1,24 @@
 package com.depogramming.omahmed.presentation.splash.presenter;
 
-import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
+import android.content.Context;
+
+import com.depogramming.omahmed.data.onboarding.repository.UserPreferencesRepository;
 import com.depogramming.omahmed.presentation.splash.view.SplashView;
-import com.depogramming.omahmed.utils.Consts;
 
 public class SplashPresenterImp implements SplashPresenter {
     SplashView splashView;
-    private final SharedPreferences sharedPreferences;
+    UserPreferencesRepository userPreferencesRepository;
 
-    public SplashPresenterImp(SplashView splashView, Application application) {
-        sharedPreferences = application.getApplicationContext().getSharedPreferences(Consts.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+    public SplashPresenterImp(SplashView splashView, Context context) {
+        userPreferencesRepository = new UserPreferencesRepository(context);
         this.splashView = splashView;
     }
 
     @Override
     public void decideNextScreen() {
         //get data from shared pref and then decide where to go
-        boolean finished = sharedPreferences.getBoolean(Consts.ON_BOARDING_FLAG, false);
+        boolean finished = userPreferencesRepository.getOnBoardingFlag();
         if (finished) {
             splashView.navigateToLogin();
         } else {
