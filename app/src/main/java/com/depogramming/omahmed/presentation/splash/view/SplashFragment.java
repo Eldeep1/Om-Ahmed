@@ -37,7 +37,7 @@ public class SplashFragment extends Fragment implements SplashView {
     }
 
     private void setupAnimation(View view) {
-        TextView text = view.findViewById(R.id.splash_text);
+        TextView text = view.findViewById(R.id.splashText);
         text.setTranslationY(50f);
         text.animate()
                 .alpha(1f)

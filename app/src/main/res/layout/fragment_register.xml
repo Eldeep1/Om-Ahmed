@@ -122,7 +122,7 @@
         android:layout_marginEnd="8dp"
         android:text="@string/google"
         app:icon="@drawable/google_icon"
-        app:layout_constraintEnd_toStartOf="@+id/signUpFacebookButton"
+        app:layout_constraintEnd_toStartOf="@id/signUpFacebookButton"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@id/signUpButton"
         app:layout_constraintTop_toBottomOf="@id/signUpButton"
@@ -145,7 +145,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpGoogleButton">
+        app:layout_constraintTop_toBottomOf="@id/signUpGoogleButton">
 
         <TextView
             android:layout_width="wrap_content"
