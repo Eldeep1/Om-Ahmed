@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Base.Theme.OmAhmed" parent="Theme.Material3.DayNight.NoActionBar">
 
     </style>
@@ -7,30 +8,79 @@
 
     <style name="Text.OmAhmed.onBoardingTitles" parent="Text_OmAhmed">
         <item name="fontFamily">@font/plus_jakarta_sans_bold</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">24sp</item>
     </style>
 
+    <style name="Text.OmAhmed.AuthTitles" parent="Text_OmAhmed">
+        <item name="fontFamily">@font/plus_jakarta_sans_bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    `
+
     <style name="Text.OmAhmed.onBoardingText" parent="Text_OmAhmed">
         <item name="fontFamily">@font/plus_jakarta_sans</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Text.OmAhmed.onBoardingSkipText" parent="Text_OmAhmed">
         <item name="fontFamily">@font/plus_jakarta_sans_bold</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Text.OmAhmed.onBoardingButtons" parent="Text_OmAhmed">
         <item name="fontFamily">@font/plus_jakarta_sans_bold</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
         <item name="android:background">@drawable/on_boarding_buttons_background</item>
         <item name="backgroundTint">@null</item>
     </style>
 
+    <style name="Text.OmAhmed.guestButton" parent="Text_OmAhmed">
+        <item name="fontFamily">@font/plus_jakarta_sans_bold</item>
+        <item name="android:textColor">@color/oriental_pink</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/guest_login_button</item>
+        <item name="backgroundTint">@null</item>
+    </style>
     <style name="Theme.OmAhmed" parent="Base.Theme.OmAhmed" />
 
+
+    <style name="Widget.OmAhmed.InputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/crater_brown</item>
+        <item name="boxCornerRadiusTopStart">@dimen/input_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/input_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/input_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/input_radius</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@android:color/transparent</item>
+        <item name="hintEnabled">false</item>
+    </style>
+
+    <style name="Widget.OmAhmed.InputEditText" parent="Widget.Material3.TextInputEditText.FilledBox">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/oriental_pink</item>
+        <item name="android:padding">@dimen/input_padding</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="Widget.OmAhmed.SocialButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/google_button_background</item>
+        <item name="backgroundTint">@null</item>
+
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">8dp</item>
+        <item name="iconTint">@null</item>
+    </style>
 </resources>
