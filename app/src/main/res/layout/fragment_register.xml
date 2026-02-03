@@ -2,11 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    tools:context=".presentation.Authentication.login.view.LoginFragment">
+    tools:context=".RegisterFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -20,7 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-        android:src="@drawable/login_image"
+        android:src="@drawable/register_image"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -34,14 +33,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/welcome_back"
+        android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/signUpPageImage" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signUpEmail"
+        android:id="@+id/signUpFullName"
         style="@style/Widget.OmAhmed.InputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,6 +50,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/signUpPageTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.OmAhmed.InputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:hint="@string/full_name"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpEmail"
+        style="@style/Widget.OmAhmed.InputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/signUpFullName"
+        app:layout_constraintStart_toStartOf="@id/signUpFullName"
+        app:layout_constraintTop_toBottomOf="@id/signUpFullName">
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/Widget.OmAhmed.InputEditText"
@@ -89,7 +109,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/login"
+        android:text="@string/sign_up"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@id/singUpPassword"
         app:layout_constraintStart_toStartOf="@id/singUpPassword"
@@ -118,20 +138,6 @@
         app:layout_constraintStart_toEndOf="@id/signUpGoogleButton"
         app:layout_constraintTop_toTopOf="@id/signUpGoogleButton" />
 
-
-    <Button
-        android:id="@+id/guest_button_login"
-        style="@style/Text.OmAhmed.guestButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/continue_as_guest"
-
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/signUpButton"
-        app:layout_constraintStart_toStartOf="@id/signUpButton"
-        app:layout_constraintTop_toBottomOf="@id/signUpGoogleButton" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,27 +145,26 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guest_button_login">
+        app:layout_constraintTop_toBottomOf="@+id/signUpGoogleButton">
 
         <TextView
-            android:id="@+id/signUpText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/plus_jakarta_sans"
-            android:text="@string/don_t_have_an_account"
+            android:text="@string/already_have_an_account"
             android:textColor="@color/oriental_pink"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/signUpTextAction"
+            android:id="@+id/loginTextAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/plus_jakarta_sans"
-            android:text="@string/sign_up"
+            android:text="@string/login"
             android:textColor="@color/button_color"
-            android:textStyle="bold"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 
