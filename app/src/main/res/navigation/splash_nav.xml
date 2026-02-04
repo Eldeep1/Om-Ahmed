@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.depogramming.omahmed.RegisterFragment"
+        android:name="com.depogramming.omahmed.presentation.Authentication.register.view.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
 </navigation>
