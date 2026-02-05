@@ -1,5 +1,6 @@
 package com.depogramming.omahmed.presentation.splash.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.depogramming.omahmed.R;
+import com.depogramming.omahmed.presentation.home.view.HomeActiivity;
 import com.depogramming.omahmed.presentation.splash.presenter.SplashPresenter;
 import com.depogramming.omahmed.presentation.splash.presenter.SplashPresenterImp;
 
@@ -55,5 +57,15 @@ public class SplashFragment extends Fragment implements SplashView {
     @Override
     public void navigateToOnBoarding() {
         Navigation.findNavController(requireView()).navigate(R.id.action_splashFragment_to_veiwPagerFragment);
+    }
+
+    @Override
+    public void navigateToHome() {
+        Intent intent = new Intent(getActivity(), HomeActiivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        if (getActivity() != null) {
+            getActivity().finish();
+        }
     }
 }

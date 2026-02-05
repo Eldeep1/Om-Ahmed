@@ -3,7 +3,7 @@ package com.depogramming.omahmed.presentation.Authentication.register.presenter;
 
 import androidx.annotation.NonNull;
 
-import com.depogramming.omahmed.data.auth.register.RegisterRepo;
+import com.depogramming.omahmed.data.auth.register.AuthRepo;
 import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
 import com.depogramming.omahmed.presentation.Authentication.register.view.RegisterView;
 import com.google.firebase.auth.AuthResult;
@@ -16,10 +16,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class RegisterPresenterImp implements RegisterPresenter {
     RegisterView registerView;
 
-    RegisterRepo registerRepo;
+    AuthRepo authRepo;
 
     public RegisterPresenterImp(RegisterView registerView) {
-        registerRepo = new RegisterRepo();
+        authRepo = new AuthRepo();
         this.registerView=registerView;
     }
 
@@ -29,7 +29,7 @@ public class RegisterPresenterImp implements RegisterPresenter {
         if (validateUser(userDTO)) {
             registerView.registerLoading();
 
-            registerRepo.register(userDTO)
+            authRepo.register(userDTO)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new SingleObserver<>() {

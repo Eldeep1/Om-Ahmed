@@ -65,7 +65,6 @@ public class RegisterFragment extends Fragment implements RegisterView {
         if (getActivity() != null) {
             getActivity().finish();
         }
-
     }
     @Override
     public void registerError(String errorMessage) {
