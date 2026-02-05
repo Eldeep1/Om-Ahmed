@@ -3,7 +3,6 @@ package com.depogramming.omahmed.presentation.onboarding.views;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -37,8 +36,8 @@ public class SecondOnBoarding extends Fragment implements OnBoardingView{
         viewPager2=getActivity().findViewById(R.id.view_pager);
         nextButton= view.findViewById(R.id.second_on_boarding_next_button);
         skipText= view.findViewById(R.id.second_on_boarding_skip_button);
-        skipText.setOnClickListener((view1)-> onBoardingPresenter.nextButtonClick());
-        nextButton.setOnClickListener((view1)-> onBoardingPresenter.endButtonClick(view,requireActivity().getApplication()));
+        nextButton.setOnClickListener((view1)-> onBoardingPresenter.nextButtonClick());
+        skipText.setOnClickListener((view1)-> onBoardingPresenter.endButtonClick(view,requireActivity().getApplication()));
     }
 
     @Override
