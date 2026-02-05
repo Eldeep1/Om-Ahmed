@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "511329985322",
+    "project_id": "omahmed-7b43c",
+    "storage_bucket": "omahmed-7b43c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511329985322:android:1c396a31015f344a423453",
+        "android_client_info": {
+          "package_name": "com.depogramming.omahmed"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkXQWR8EH6jppfRfsEZdmkPcEAy7idAes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,6 +17,7 @@ import com.depogramming.omahmed.presentation.Authentication.register.presenter.R
 import com.depogramming.omahmed.presentation.Authentication.register.presenter.RegisterPresenterImp;
 import com.depogramming.omahmed.presentation.home.view.HomeActiivity;
 import com.depogramming.omahmed.utils.UserAlerts;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterFragment extends Fragment implements RegisterView {
@@ -25,6 +26,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
     TextInputEditText signUpEmailEditText;
     TextInputEditText signUpPasswordEditText;
     RegisterPresenter registerPresenter;
+    MaterialButton registerGoogleButton;
     LottieAnimationView lottieAnimationView;
     FrameLayout pageConstraintLayout;
     @Override
@@ -43,9 +45,15 @@ public class RegisterFragment extends Fragment implements RegisterView {
         signUpPasswordEditText=view.findViewById(R.id.signUpPasswordEditText);
         lottieAnimationView=view.findViewById(R.id.registerLottieAnimation);
         pageConstraintLayout=view.findViewById(R.id.registerLoadingOverlay);
+        registerGoogleButton=view.findViewById(R.id.registerGoogleButton);
 
+        registerGoogleButton.setOnClickListener(view1 -> googleRegister());
         registerButton.setOnClickListener(view1 -> register());
         return view;
+    }
+
+    private void googleRegister() {
+        registerPresenter.googleAuth(getActivity());
     }
 
     private void register() {

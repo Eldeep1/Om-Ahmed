@@ -1,12 +1,12 @@
 package com.depogramming.omahmed.presentation.Authentication.register.presenter;
 
-
+import android.app.Activity;
 import androidx.annotation.NonNull;
-
 import com.depogramming.omahmed.data.auth.register.AuthRepo;
 import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
 import com.depogramming.omahmed.presentation.Authentication.register.view.RegisterView;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.SingleObserver;
@@ -21,6 +21,28 @@ public class RegisterPresenterImp implements RegisterPresenter {
     public RegisterPresenterImp(RegisterView registerView) {
         authRepo = new AuthRepo();
         this.registerView=registerView;
+    }
+
+    public void googleAuth(Activity activity) {
+        registerView.registerLoading();
+        authRepo.googleAuth(activity).onErrorReturn(throwable -> );
+        authRepo.googleAuth(activity).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                //TODO:
+                // add 'd' to a CompositeDisposable to prevent memory leaks
+            }
+
+            @Override
+            public void onSuccess(FirebaseUser firebaseUser) {
+                registerView.registerSuccess();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                registerView.registerError(e.getMessage());
+            }
+        });
     }
 
     public void register(String fullName, String email, String password) {

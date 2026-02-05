@@ -15,6 +15,9 @@ fragment = "1.8.9"
 viewpager2 = "1.1.0"
 lottieVersion = "6.7.1"
 rxandroid = "3.0.2"
+credentials = "1.5.0"
+credentialsPlayServicesAuth = "1.5.0"
+googleid = "1.1.1"
 
 [libraries]
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -34,6 +37,9 @@ navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx",
 fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottieVersion" }
+credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
+credentials-play-services-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentialsPlayServicesAuth" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

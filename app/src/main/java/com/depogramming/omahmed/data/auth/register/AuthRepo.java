@@ -1,5 +1,8 @@
 package com.depogramming.omahmed.data.auth.register;
 
+import android.app.Activity;
+import android.app.Application;
+
 import com.depogramming.omahmed.data.auth.register.datasource.FirebaseDataSource;
 import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
 import com.google.firebase.auth.AuthResult;
@@ -18,5 +21,8 @@ public class AuthRepo {
     }
     public Maybe<FirebaseUser> getRegisteredUser(){
         return firebaseDataSource.getRegisteredUser();
+    }
+    public Single<FirebaseUser> googleAuth(Activity activity){
+       return firebaseDataSource.signInWithGoogle(activity);
     }
 }
