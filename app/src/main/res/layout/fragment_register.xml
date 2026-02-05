@@ -178,6 +178,8 @@
         android:layout_height="0dp"
         android:background="#80000000"
         android:elevation="10dp"
+        android:focusable="true"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@id/registerScreen"
         app:layout_constraintEnd_toEndOf="@id/registerScreen"
         app:layout_constraintStart_toStartOf="@id/registerScreen"

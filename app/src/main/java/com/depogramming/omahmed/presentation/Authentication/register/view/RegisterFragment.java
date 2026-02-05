@@ -3,6 +3,7 @@ package com.depogramming.omahmed.presentation.Authentication.register.view;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
     RegisterPresenter registerPresenter;
     MaterialButton registerGoogleButton;
     LottieAnimationView lottieAnimationView;
-    FrameLayout pageConstraintLayout;
+    FrameLayout lottieContainer;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
         signUpEmailEditText=view.findViewById(R.id.signUpEmailEditText);
         signUpPasswordEditText=view.findViewById(R.id.signUpPasswordEditText);
         lottieAnimationView=view.findViewById(R.id.registerLottieAnimation);
-        pageConstraintLayout=view.findViewById(R.id.registerLoadingOverlay);
+        lottieContainer =view.findViewById(R.id.registerLoadingOverlay);
         registerGoogleButton=view.findViewById(R.id.registerGoogleButton);
 
         registerGoogleButton.setOnClickListener(view1 -> googleRegister());
@@ -83,8 +84,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
     @Override
     public void registerLoading() {
         lottieAnimationView.playAnimation();
-        pageConstraintLayout.setVisibility(View.VISIBLE);
-        pageConstraintLayout.setClickable(false);
+        lottieContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -94,8 +94,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
     }
     private void stopAnimation(){
         lottieAnimationView.pauseAnimation();
-        pageConstraintLayout.setVisibility(View.GONE);
-        pageConstraintLayout.setClickable(true);
+        lottieContainer.setVisibility(View.GONE);
     }
     @Override
     public void onDestroyView() {

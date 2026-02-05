@@ -15,6 +15,7 @@ import androidx.credentials.GetCredentialResponse;
 import androidx.credentials.exceptions.GetCredentialException;
 
 import com.depogramming.omahmed.R;
+import com.depogramming.omahmed.data.auth.login.LoginUserDTO;
 import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
@@ -70,7 +71,14 @@ public class FirebaseDataSource {
                 }));
     }
 
-    private void handleSignIn(
+    public Single<AuthResult> login(LoginUserDTO loginUserDTO) {
+        return Single.create(emitter -> mAuth.signInWithEmailAndPassword(loginUserDTO.getEmail(), loginUserDTO.getPassword())
+                .addOnSuccessListener(authResult -> emitter.onSuccess(authResult))
+                .addOnFailureListener(e -> emitter.onError(e)));
+
+    }
+
+    private void handleGoogleSignIn(
             Credential credential,
             SingleEmitter<FirebaseUser> emitter
     ) {
@@ -100,7 +108,6 @@ public class FirebaseDataSource {
         );
     }
 
-
     public Single<FirebaseUser> signInWithGoogle(Activity activity) {
         return Single.create(emitter -> {
 
@@ -125,7 +132,7 @@ public class FirebaseDataSource {
                     new CredentialManagerCallback<>() {
                         @Override
                         public void onResult(GetCredentialResponse result) {
-                            handleSignIn(result.getCredential(), emitter);
+                            handleGoogleSignIn(result.getCredential(), emitter);
                         }
 
                         @Override

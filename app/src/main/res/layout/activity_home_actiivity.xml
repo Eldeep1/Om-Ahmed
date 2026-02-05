@@ -5,7 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.home.view.HomeActiivity">
+    tools:context=".presentation.home.view.HomeActiivity"
+    android:background="@color/crater_brown"
+    >
 
     <Button
         android:id="@+id/button"
