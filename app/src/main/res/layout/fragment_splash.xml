@@ -9,7 +9,7 @@
     tools:context=".presentation.splash.view.SplashFragment">
 
     <TextView
-        android:id="@+id/splash_text"
+        android:id="@+id/splashText"
         style="@style/Text.OmAhmed.onBoardingTitles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lottiemain"
+        app:layout_constraintTop_toBottomOf="@id/lottieAnim"
         app:layout_constraintVertical_bias="0.115" />
 
     <com.airbnb.lottie.LottieAnimationView
@@ -27,9 +27,9 @@
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="-10dp"
-        app:layout_constraintBottom_toBottomOf="@id/splash_text"
+        app:layout_constraintBottom_toBottomOf="@id/splashText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/splash_text"
+        app:layout_constraintTop_toTopOf="@id/splashText"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_repeatCount="2"
@@ -37,7 +37,7 @@
 
     <com.airbnb.lottie.LottieAnimationView
 
-        android:id="@+id/lottiemain"
+        android:id="@+id/lottieAnim"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
