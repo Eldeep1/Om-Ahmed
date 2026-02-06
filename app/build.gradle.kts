@@ -59,4 +59,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.glide)
+    implementation(libs.rxjava3)
+    implementation(libs.adapter.rxjava3)
+    implementation(libs.room.runtime)
+    implementation(libs.room.rxjava3)
+    annotationProcessor(libs.room.compiler)
+    annotationProcessor(libs.glide.compiler)
+
 }

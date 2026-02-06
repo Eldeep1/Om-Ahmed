@@ -1,4 +1,4 @@
-package com.depogramming.omahmed.data.auth.register.datasource;
+package com.depogramming.omahmed.data.auth.datasource;
 
 import android.app.Activity;
 import android.os.CancellationSignal;
@@ -15,7 +15,7 @@ import androidx.credentials.GetCredentialResponse;
 import androidx.credentials.exceptions.GetCredentialException;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.auth.login.LoginUserDTO;
+import com.depogramming.omahmed.data.auth.login.model.LoginUserDTO;
 import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
