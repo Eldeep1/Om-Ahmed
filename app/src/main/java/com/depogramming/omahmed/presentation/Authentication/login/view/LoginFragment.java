@@ -17,7 +17,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.presentation.Authentication.login.presenter.LoginPresenter;
 import com.depogramming.omahmed.presentation.Authentication.login.presenter.LoginPresenterImp;
-import com.depogramming.omahmed.presentation.home.view.HomeActiivity;
+import com.depogramming.omahmed.HomeActivity;
 import com.depogramming.omahmed.utils.UserAlerts;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -70,7 +70,7 @@ public class LoginFragment extends Fragment implements LoginView {
     }
     @Override
     public void loginSuccess() {
-        Intent intent = new Intent(getActivity(), HomeActiivity.class);
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         if (getActivity() != null) {
