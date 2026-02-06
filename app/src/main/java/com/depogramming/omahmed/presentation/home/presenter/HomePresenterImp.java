@@ -37,19 +37,22 @@ public class HomePresenterImp implements HomePresenter {
     }
 
     public void getDailyRecommendations() {
+        homeView.recommendationMealsLoading();
         List<Character> randomChars = getDailyChars();
 
         //TODO: another disposable here...
         Disposable subscribe = mealsRepo.getDailyRecommendations(randomChars).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        meals -> homeView.mealsGotSuccessfully(meals),
-                        throwable -> homeView.mealsFailed(throwable.getMessage())
+                        meals -> homeView.recommendationsMealsSuccessful(meals),
+                        throwable -> homeView.recommendationsMealsFailed(throwable.getMessage())
                 );
     }
 
     @Override
     public void getDailyMeal() {
+        homeView.dailyMealLoading();
+
         Disposable subscribe = mealsRepo.getDailyMeal().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

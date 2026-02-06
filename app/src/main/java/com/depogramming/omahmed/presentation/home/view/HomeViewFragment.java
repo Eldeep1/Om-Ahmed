@@ -100,17 +100,17 @@ public class HomeViewFragment extends Fragment implements HomeView {
     }
 
     @Override
-    public void mealsLoading() {
+    public void recommendationMealsLoading() {
 
     }
 
     @Override
-    public void mealsGotSuccessfully(List<Meal> meals) {
+    public void recommendationsMealsSuccessful(List<Meal> meals) {
         recommendationsAdapter.setMeals(meals);
     }
 
     @Override
-    public void mealsFailed(String errorMessage) {
+    public void recommendationsMealsFailed(String errorMessage) {
 
     }
 
