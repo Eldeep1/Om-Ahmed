@@ -2,6 +2,7 @@ package com.depogramming.omahmed.data.network;
 
 
 import com.depogramming.omahmed.data.home.datasource.remote.CategoriesService;
+import com.depogramming.omahmed.data.home.datasource.remote.MealsService;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -10,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Network {
     private static Network instance = null;
     private CategoriesService categoryService;
+    private MealsService mealsService;
     private final Retrofit retrofit;
     private Network() { // Private constructor
         retrofit = new Retrofit.Builder()
@@ -31,5 +33,11 @@ public class Network {
             categoryService=retrofit.create(CategoriesService.class);
         }
         return categoryService;
+    }
+    public MealsService getMealsService(){
+        if(mealsService==null){
+            mealsService=retrofit.create(MealsService.class);
+        }
+        return mealsService;
     }
 }

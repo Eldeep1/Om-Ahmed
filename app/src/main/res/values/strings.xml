@@ -23,4 +23,8 @@
     <string name="don_t_have_an_account">Don\'t Have An Account ?</string>
     <string name="already_have_an_account">Already Have An Account</string>
     <string name="full_name">Full Name</string>
+    <string name="meal_of_the_day">Meal Of The Day</string>
+    <string name="view_details">View Details</string>
+    <string name="categories">Categories</string>
+    <string name="daily_recommendations">Daily Recommendations</string>
 </resources>
