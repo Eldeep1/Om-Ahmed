@@ -9,5 +9,6 @@ public interface HomePresenter {
     void getDailyRecommendations();
     void getDailyMeal();
     void retryAllButton();
-    void changeFavState(Meal meal);
+    void changeDailyMealFavState(Meal meal);
+    void changeRecommendationsFavState(Meal meal,int position);
 }

@@ -71,9 +71,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick
 
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         recommendationsRecyclerView.setLayoutManager(gridLayoutManager);
-
-//        mealOfTheDayFavButton.setOnClickListener(view1 -> homePresenter.toggleFavouriteState(Meal meal));
-
         return view;
     }
 
@@ -126,9 +123,14 @@ public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick
         mealOfTheDayCountry.setText(meal.strArea);
         mealOfTheDayTitle.setText(meal.strMeal);
         mealOfTheDayFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
+        mealOfTheDayFavButton.setOnClickListener(view -> {
+            homePresenter.changeDailyMealFavState(meal);});
         Glide.with(getActivity()).load(meal.strMealThumb).into(mealOfTheDayImage);
     }
-
+    @Override
+    public void updateDailyMealFavState(boolean isFav) {
+        mealOfTheDayFavButton.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
+    }
     @Override
     public void dailyMealFailed(String errorMessage) {
 
@@ -141,9 +143,12 @@ public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick
 
     @Override
     public void onHeartClicked(Meal meal, int position) {
-        homePresenter.changeFavState(meal);
-        meal.isFav = !meal.isFav;
+        homePresenter.changeRecommendationsFavState(meal,position);
+    }
+    @Override
+    public void updateListViewHeart(int position){
         recommendationsAdapter.notifyItemChanged(position);
+
     }
 
 
