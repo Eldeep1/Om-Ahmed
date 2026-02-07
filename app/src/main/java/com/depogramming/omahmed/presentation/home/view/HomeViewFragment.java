@@ -25,7 +25,7 @@ import com.depogramming.omahmed.presentation.home.presenter.HomePresenterImp;
 
 import java.util.List;
 
-public class HomeViewFragment extends Fragment implements HomeView {
+public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick {
 
     HomePresenter homePresenter;
     RecyclerView categoriesRecyclerView;
@@ -42,7 +42,7 @@ public class HomeViewFragment extends Fragment implements HomeView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homePresenter = new HomePresenterImp(this);
+        homePresenter = new HomePresenterImp(this, getActivity().getApplicationContext());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class HomeViewFragment extends Fragment implements HomeView {
         recommendationsRecyclerView = view.findViewById(R.id.dailyRecommendationsListView);
 
         horizontalCategoriesAdapter = new HorizontalCategoriesAdapter();
-        recommendationsAdapter = new RecommendationsAdapter();
+        recommendationsAdapter = new RecommendationsAdapter(this);
 
         categoriesRecyclerView.setAdapter(horizontalCategoriesAdapter);
         recommendationsRecyclerView.setAdapter(recommendationsAdapter);
@@ -72,6 +72,7 @@ public class HomeViewFragment extends Fragment implements HomeView {
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         recommendationsRecyclerView.setLayoutManager(gridLayoutManager);
 
+//        mealOfTheDayFavButton.setOnClickListener(view1 -> homePresenter.toggleFavouriteState(Meal meal));
 
         return view;
     }
@@ -124,6 +125,7 @@ public class HomeViewFragment extends Fragment implements HomeView {
         mealOfTheDayCategory.setText(meal.strCategory);
         mealOfTheDayCountry.setText(meal.strArea);
         mealOfTheDayTitle.setText(meal.strMeal);
+        mealOfTheDayFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
         Glide.with(getActivity()).load(meal.strMealThumb).into(mealOfTheDayImage);
     }
 
@@ -136,4 +138,13 @@ public class HomeViewFragment extends Fragment implements HomeView {
     public void networkError() {
 
     }
+
+    @Override
+    public void onHeartClicked(Meal meal, int position) {
+        homePresenter.changeFavState(meal);
+        meal.isFav = !meal.isFav;
+        recommendationsAdapter.notifyItemChanged(position);
+    }
+
+
 }

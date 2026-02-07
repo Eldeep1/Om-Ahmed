@@ -1,10 +1,17 @@
 package com.depogramming.omahmed.data.home.models;
 
-public class Meal{
-    public boolean isFav;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Favourites")
+public class FavouriteMeals {
+
+    public boolean favouriteFlag;
+    @PrimaryKey
+    @NonNull
     public String idMeal;
     public String strMeal;
-    public Object strMealAlternate;
     public String strCategory;
     public String strArea;
     public String strInstructions;
@@ -52,7 +59,5 @@ public class Meal{
     public String strMeasure19;
     public String strMeasure20;
     public String strSource;
-    public Object strImageSource;
-    public Object strCreativeCommonsConfirmed;
     public String dateModified;
 }

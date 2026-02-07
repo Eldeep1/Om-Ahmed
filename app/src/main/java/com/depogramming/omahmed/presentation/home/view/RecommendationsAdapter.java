@@ -17,6 +17,11 @@ import java.util.List;
 
 public class RecommendationsAdapter extends RecyclerView.Adapter<RecommendationsAdapter.ViewHolder> {
     List<Meal> meals;
+    OnHeartClick onHeartClick;
+
+    public RecommendationsAdapter(OnHeartClick onHeartClick) {
+        this.onHeartClick = onHeartClick;
+    }
 
     @NonNull
     @Override
@@ -29,6 +34,9 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Meal meal = meals.get(position);
         holder.bind(meal);
+        holder.recommendationFavouriteIcon.setOnClickListener(v -> {
+                onHeartClick.onHeartClicked(meal, position);
+        });
     }
 
     @Override
@@ -37,10 +45,11 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
     }
     public void setMeals(List<Meal> meals){
         this.meals=meals;
-        notifyItemRangeInserted(0, meals.size());
+        notifyDataSetChanged(); // ✅ safe
+
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         private final ImageView recommendationImageView;
         private final ImageView recommendationFavouriteIcon;
@@ -55,7 +64,7 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         public void bind(Meal meal){
             recommendationName.setText(meal.strMeal);
             Glide.with(itemView).load(meal.strMealThumb).into(recommendationImageView);
-            recommendationFavouriteIcon.setImageResource(R.drawable.addfav);
+            recommendationFavouriteIcon.setImageResource(meal.isFav?R.drawable.alreadyfav:R.drawable.addfav);
         }
 
     }

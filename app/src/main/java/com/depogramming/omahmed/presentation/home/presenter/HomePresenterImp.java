@@ -1,5 +1,8 @@
 package com.depogramming.omahmed.presentation.home.presenter;
 
+import android.content.Context;
+
+import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.home.view.HomeView;
@@ -17,9 +20,9 @@ public class HomePresenterImp implements HomePresenter {
     CategoriesRepo categoriesRepo;
     MealsRepo mealsRepo;
 
-    public HomePresenterImp(HomeView homeView) {
+    public HomePresenterImp(HomeView homeView, Context context) {
         this.homeView = homeView;
-        this.mealsRepo = new MealsRepo();
+        this.mealsRepo = new MealsRepo(context);
         this.categoriesRepo = new CategoriesRepo();
     }
 
@@ -67,6 +70,11 @@ public class HomePresenterImp implements HomePresenter {
         getAllCategories();
         getDailyRecommendations();
         getDailyMeal();
+    }
+
+    @Override
+    public void changeFavState(Meal meal) {
+        mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe();
     }
 
     private List<Character> getDailyChars() {
