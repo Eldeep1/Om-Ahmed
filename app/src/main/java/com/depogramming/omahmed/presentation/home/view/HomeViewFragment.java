@@ -96,7 +96,7 @@ public class HomeViewFragment extends Fragment implements HomeView {
 
     @Override
     public void categoriesFailed(String errorMessage) {
-        System.out.println(errorMessage);
+
     }
 
     @Override
@@ -129,6 +129,11 @@ public class HomeViewFragment extends Fragment implements HomeView {
 
     @Override
     public void dailyMealFailed(String errorMessage) {
+
+    }
+
+    @Override
+    public void networkError() {
 
     }
 }

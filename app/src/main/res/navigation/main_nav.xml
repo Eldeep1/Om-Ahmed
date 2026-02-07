@@ -30,4 +30,14 @@
         android:name="com.depogramming.omahmed.presentation.search.view.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/homeFragmentLoading"
+        android:name="com.depogramming.omahmed.HomeFragmentLoading"
+        android:label="fragment_home_loading"
+        tools:layout="@layout/fragment_home_loading" />
+    <fragment
+        android:id="@+id/homeFragmentError"
+        android:name="com.depogramming.omahmed.HomeFragmentError"
+        android:label="fragment_home_error"
+        tools:layout="@layout/fragment_home_error" />
 </navigation>

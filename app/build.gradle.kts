@@ -68,5 +68,5 @@ dependencies {
     implementation(libs.room.rxjava3)
     annotationProcessor(libs.room.compiler)
     annotationProcessor(libs.glide.compiler)
-
+    implementation(libs.shimmer)
 }

@@ -36,6 +36,7 @@ public class HomePresenterImp implements HomePresenter {
                 );
     }
 
+    @Override
     public void getDailyRecommendations() {
         homeView.recommendationMealsLoading();
         List<Character> randomChars = getDailyChars();
@@ -59,6 +60,13 @@ public class HomePresenterImp implements HomePresenter {
                         meal -> homeView.dailyMealSuccessfully(meal),
                         throwable -> homeView.dailyMealFailed(throwable.getMessage())
                 );
+    }
+
+    @Override
+    public void retryAllButton() {
+        getAllCategories();
+        getDailyRecommendations();
+        getDailyMeal();
     }
 
     private List<Character> getDailyChars() {
