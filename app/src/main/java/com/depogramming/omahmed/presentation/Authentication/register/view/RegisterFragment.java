@@ -3,7 +3,6 @@ package com.depogramming.omahmed.presentation.Authentication.register.view;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.presentation.Authentication.register.presenter.RegisterPresenter;
 import com.depogramming.omahmed.presentation.Authentication.register.presenter.RegisterPresenterImp;
-import com.depogramming.omahmed.presentation.home.view.HomeActiivity;
+import com.depogramming.omahmed.HomeActivity;
 import com.depogramming.omahmed.utils.UserAlerts;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -68,7 +67,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
 
     @Override
     public void registerSuccess() {
-        Intent intent = new Intent(getActivity(), HomeActiivity.class);
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         if (getActivity() != null) {

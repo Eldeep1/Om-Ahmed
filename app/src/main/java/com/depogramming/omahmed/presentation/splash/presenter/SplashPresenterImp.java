@@ -4,7 +4,7 @@ package com.depogramming.omahmed.presentation.splash.presenter;
 import android.content.Context;
 import android.util.Log;
 
-import com.depogramming.omahmed.data.auth.register.AuthRepo;
+import com.depogramming.omahmed.data.auth.repository.AuthRepo;
 import com.depogramming.omahmed.data.onboarding.repository.UserPreferencesRepository;
 import com.depogramming.omahmed.presentation.splash.view.SplashView;
 

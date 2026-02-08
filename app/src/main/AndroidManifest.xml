@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OmAhmed">
         <activity
-            android:name=".presentation.home.view.HomeActiivity"
+            android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

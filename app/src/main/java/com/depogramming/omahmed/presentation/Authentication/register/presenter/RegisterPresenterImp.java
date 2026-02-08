@@ -2,7 +2,7 @@ package com.depogramming.omahmed.presentation.Authentication.register.presenter;
 
 import android.app.Activity;
 import androidx.annotation.NonNull;
-import com.depogramming.omahmed.data.auth.register.AuthRepo;
+import com.depogramming.omahmed.data.auth.repository.AuthRepo;
 import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
 import com.depogramming.omahmed.presentation.Authentication.register.view.RegisterView;
 import com.google.firebase.auth.AuthResult;

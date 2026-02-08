@@ -18,6 +18,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 
     buildTypes {
         release {
@@ -52,7 +55,18 @@ dependencies {
     implementation(libs.credentials)
     implementation(libs.credentials.play.services.auth)
     implementation(libs.googleid)
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.glide)
+    implementation(libs.rxjava3)
+    implementation(libs.adapter.rxjava3)
+    implementation(libs.room.runtime)
+    implementation(libs.room.rxjava3)
+    annotationProcessor(libs.room.compiler)
+    annotationProcessor(libs.glide.compiler)
+    implementation(libs.shimmer)
 }

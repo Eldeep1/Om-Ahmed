@@ -1,4 +1,4 @@
-package com.depogramming.omahmed.data.auth.login;
+package com.depogramming.omahmed.data.auth.login.model;
 
 public class LoginUserDTO {
     private String email;

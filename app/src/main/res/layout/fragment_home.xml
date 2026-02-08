@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".presentation.home.view.HomeViewFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/mealOfTheDayImage"
+            android:layout_width="0dp"
+            android:layout_height="380dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#80000000"
+            app:layout_constraintBottom_toBottomOf="@id/mealOfTheDayImage"
+            app:layout_constraintEnd_toEndOf="@id/mealOfTheDayImage"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/mealOfTheDayImage"
+            app:layout_constraintTop_toTopOf="@id/mealOfTheDayImage"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/mealOfTheDayFavButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/addfav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            style="@style/Text.OmAhmed.mealOfTheDay"
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/meal_of_the_day"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            style="@style/Text.OmAhmed.onBoardingButtons"
+            android:id="@+id/mealOfTheDayDetailsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/view_details"
+            app:layout_constraintBottom_toBottomOf="@id/mealOfTheDayImage"
+            app:layout_constraintEnd_toEndOf="@id/mealOfTheDayImage"
+            app:layout_constraintStart_toStartOf="@id/mealOfTheDayImage" />
+
+        <TextView
+            android:id="@+id/mealOfTheDayTitle"
+            style="@style/Text.OmAhmed.mealOfTheDayText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/plus_jakarta_sans_extrabold"
+            app:layout_constraintBottom_toTopOf="@id/mealOfTheDayDetailsButton"
+            app:layout_constraintStart_toStartOf="@id/mealOfTheDayDetailsButton" />
+
+        <TextView
+            android:id="@+id/mealOfTheDayCategory"
+            style="@style/Text.OmAhmed.mealOfTheDayCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/mealOfTheDayTitle"
+            app:layout_constraintStart_toStartOf="@id/mealOfTheDayTitle" />
+
+        <TextView
+            android:id="@+id/mealOfTheDayCountry"
+            style="@style/Text.OmAhmed.mealOfTheDayCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/mealOfTheDayCategory"
+            app:layout_constraintStart_toEndOf="@id/imageView6" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/separatory_dot"
+            app:layout_constraintBottom_toBottomOf="@id/mealOfTheDayCategory"
+            app:layout_constraintStart_toEndOf="@id/mealOfTheDayCategory"
+            app:layout_constraintTop_toTopOf="@id/mealOfTheDayCategory" />
+
+        <TextView
+            android:id="@+id/textView9"
+            style="@style/Text.OmAhmed.mealOfTheDayCategoriesList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/categories"
+            app:layout_constraintStart_toStartOf="@id/mealOfTheDayImage"
+            app:layout_constraintTop_toBottomOf="@id/mealOfTheDayImage" />
+
+
+        <TextView
+            style="@style/Text.OmAhmed.mealOfTheDayCategoriesList"
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/daily_recommendations"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/homeCategoriesHorizontalList" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/homeCategoriesHorizontalList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@id/mealOfTheDayImage"
+            app:layout_constraintStart_toStartOf="@id/mealOfTheDayImage"
+            app:layout_constraintTop_toBottomOf="@id/textView9" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dailyRecommendationsListView"
+            android:layout_width="0dp"
+            android:layout_height="800dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@id/mealOfTheDayImage"
+            app:layout_constraintStart_toStartOf="@id/mealOfTheDayImage"
+            app:layout_constraintTop_toBottomOf="@id/textView11" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
