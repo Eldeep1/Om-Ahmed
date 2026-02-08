@@ -38,6 +38,15 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
                 onHeartClick.onHeartClicked(meal, position);
         });
     }
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if (!payloads.isEmpty()) {
+            boolean isFav = (boolean) payloads.get(0);
+            holder.recommendationFavouriteIcon.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
+        } else {
+            onBindViewHolder(holder, position);
+        }
+    }
 
     @Override
     public int getItemCount() {
@@ -45,7 +54,7 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
     }
     public void setMeals(List<Meal> meals){
         this.meals=meals;
-        notifyDataSetChanged(); // ✅ safe
+        notifyDataSetChanged();
 
     }
 

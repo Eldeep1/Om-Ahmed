@@ -7,5 +7,5 @@ public interface HomeView extends CategoriesView, RecommendationMeals, DailyMeal
 
     void networkError();
 
-    void updateListViewHeart(int position);
+    void updateListViewHeart(int position, boolean isFavourite);
 }

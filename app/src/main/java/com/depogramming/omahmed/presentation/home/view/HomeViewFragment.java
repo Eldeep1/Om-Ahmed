@@ -146,9 +146,8 @@ public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick
         homePresenter.changeRecommendationsFavState(meal,position);
     }
     @Override
-    public void updateListViewHeart(int position){
-        recommendationsAdapter.notifyItemChanged(position);
-
+    public void updateListViewHeart(int position, boolean isFavourite){
+        recommendationsAdapter.notifyItemChanged(position,isFavourite);
     }
 
 
