@@ -21,8 +21,7 @@ public class MealDetailsAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if (position == 1) {
-//            return InstructionsFragment.newInstance(meal);
-//            return InstructionsFragment.newInstance();
+            return InstructionsFragment.newInstance();
         }
         return IngredientsFragment.newInstance(meal);
     }

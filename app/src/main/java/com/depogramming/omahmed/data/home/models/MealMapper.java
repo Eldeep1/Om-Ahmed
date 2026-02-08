@@ -1,4 +1,8 @@
 package com.depogramming.omahmed.data.home.models;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public final class MealMapper {
 
     private MealMapper() {
@@ -126,5 +130,52 @@ public final class MealMapper {
         meal.dateModified = fav.dateModified;
 
         return meal;
+    }
+
+    public static List<Ingredients> mapMealToIngredients(Meal meal) {
+        if (meal == null) {
+            return new ArrayList<>();
+        }
+
+        List<Ingredients> ingredientsList = new ArrayList<>();
+
+        addIngredient(ingredientsList, meal.strIngredient1, meal.strMeasure1);
+        addIngredient(ingredientsList, meal.strIngredient2, meal.strMeasure2);
+        addIngredient(ingredientsList, meal.strIngredient3, meal.strMeasure3);
+        addIngredient(ingredientsList, meal.strIngredient4, meal.strMeasure4);
+        addIngredient(ingredientsList, meal.strIngredient5, meal.strMeasure5);
+        addIngredient(ingredientsList, meal.strIngredient6, meal.strMeasure6);
+        addIngredient(ingredientsList, meal.strIngredient7, meal.strMeasure7);
+        addIngredient(ingredientsList, meal.strIngredient8, meal.strMeasure8);
+        addIngredient(ingredientsList, meal.strIngredient9, meal.strMeasure9);
+        addIngredient(ingredientsList, meal.strIngredient10, meal.strMeasure10);
+        addIngredient(ingredientsList, meal.strIngredient11, meal.strMeasure11);
+        addIngredient(ingredientsList, meal.strIngredient12, meal.strMeasure12);
+        addIngredient(ingredientsList, meal.strIngredient13, meal.strMeasure13);
+        addIngredient(ingredientsList, meal.strIngredient14, meal.strMeasure14);
+        addIngredient(ingredientsList, meal.strIngredient15, meal.strMeasure15);
+        addIngredient(ingredientsList, meal.strIngredient16, meal.strMeasure16);
+        addIngredient(ingredientsList, meal.strIngredient17, meal.strMeasure17);
+        addIngredient(ingredientsList, meal.strIngredient18, meal.strMeasure18);
+        addIngredient(ingredientsList, meal.strIngredient19, meal.strMeasure19);
+        addIngredient(ingredientsList, meal.strIngredient20, meal.strMeasure20);
+
+        return ingredientsList;
+    }
+    private static void addIngredient(List<Ingredients> list, String ingredient, String measure) {
+        if (ingredient != null && !ingredient.trim().isEmpty()) {
+            Ingredients ing = new Ingredients();
+            ing.setIngredient(ingredient);
+            ing.setMeasurement(measure != null ? measure.trim() : "");
+            list.add(ing);
+        }
+    }
+
+    public static String getInstructions(Meal meal) {
+        return meal != null ? meal.strInstructions : "";
+    }
+
+    public static String getYoutubeUrl(Meal meal) {
+        return meal != null ? meal.strYoutube : "";
     }
 }
