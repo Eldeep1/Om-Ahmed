@@ -92,11 +92,17 @@ public class MealsRepo {
     }
 
     public Completable toggleFavourite(Meal meal) {
-        System.out.println(meal.isFav);
         if (meal.isFav) {
             return mealsLocalDataSource.deleteMeal(MealMapper.toFavourite(meal));
         } else {
             return mealsLocalDataSource.insertMeal(MealMapper.toFavourite(meal));
         }
+    }
+
+    public Observable<List<FavouriteMeals>> getFavouriteMeals(){
+        return mealsLocalDataSource.getAllMeals();
+    }
+    public Completable removeFavourite(FavouriteMeals favouriteMeals){
+        return mealsLocalDataSource.deleteMeal(favouriteMeals);
     }
 }
