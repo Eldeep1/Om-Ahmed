@@ -1,6 +1,7 @@
 package com.depogramming.omahmed.presentation.home.presenter;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
@@ -99,6 +100,13 @@ public class HomePresenterImp implements HomePresenter {
                     System.out.println("inside "+meal.isFav);
                 },throwable -> System.out.println("lol, we got an error"+throwable));
 
+    }
+
+    @Override
+    public void navigateToMealDetails(Meal meal) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("meal", meal);
+        homeView.navigateToMealDetails(bundle);
     }
 
     private List<Character> getDailyChars() {
