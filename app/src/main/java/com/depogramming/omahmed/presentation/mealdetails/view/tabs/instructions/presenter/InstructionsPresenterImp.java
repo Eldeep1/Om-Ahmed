@@ -29,7 +29,7 @@ public class InstructionsPresenterImp implements InstructionsPresenter{
                             MealMapper.getYoutubeVideoId(meal);
                     return new Result(instructions, videoId);
                 })
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {

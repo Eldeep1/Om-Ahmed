@@ -119,10 +119,11 @@
 
 
         <TextView
-            style="@style/Text.OmAhmed.mealOfTheDayCategoriesList"
             android:id="@+id/textView11"
+            style="@style/Text.OmAhmed.mealOfTheDayCategoriesList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="20dp"
             android:text="@string/daily_recommendations"
             app:layout_constraintStart_toStartOf="parent"
