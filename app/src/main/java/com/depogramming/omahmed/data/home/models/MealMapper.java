@@ -1,6 +1,9 @@
 package com.depogramming.omahmed.data.home.models;
 
+import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -306,5 +309,131 @@ public final class MealMapper {
         }
 
         return description;
+    }
+
+    public static MealsPlanModel toMealPlanner(Meal meal, Date plannedDate) {
+        if (meal == null) {
+            return null;
+        }
+
+        MealsPlanModel planModel = new MealsPlanModel();
+
+        planModel.date = plannedDate;
+
+        planModel.favouriteFlag = meal.isFav;
+        planModel.idMeal = meal.idMeal;
+        planModel.strMeal = meal.strMeal;
+        planModel.strCategory = meal.strCategory;
+        planModel.strArea = meal.strArea;
+        planModel.strInstructions = meal.strInstructions;
+        planModel.strMealThumb = meal.strMealThumb;
+        planModel.strTags = meal.strTags;
+        planModel.strYoutube = meal.strYoutube;
+        planModel.strIngredient1 = meal.strIngredient1;
+        planModel.strIngredient2 = meal.strIngredient2;
+        planModel.strIngredient3 = meal.strIngredient3;
+        planModel.strIngredient4 = meal.strIngredient4;
+        planModel.strIngredient5 = meal.strIngredient5;
+        planModel.strIngredient6 = meal.strIngredient6;
+        planModel.strIngredient7 = meal.strIngredient7;
+        planModel.strIngredient8 = meal.strIngredient8;
+        planModel.strIngredient9 = meal.strIngredient9;
+        planModel.strIngredient10 = meal.strIngredient10;
+        planModel.strIngredient11 = meal.strIngredient11;
+        planModel.strIngredient12 = meal.strIngredient12;
+        planModel.strIngredient13 = meal.strIngredient13;
+        planModel.strIngredient14 = meal.strIngredient14;
+        planModel.strIngredient15 = meal.strIngredient15;
+        planModel.strIngredient16 = meal.strIngredient16;
+        planModel.strIngredient17 = meal.strIngredient17;
+        planModel.strIngredient18 = meal.strIngredient18;
+        planModel.strIngredient19 = meal.strIngredient19;
+        planModel.strIngredient20 = meal.strIngredient20;
+        planModel.strMeasure1 = meal.strMeasure1;
+        planModel.strMeasure2 = meal.strMeasure2;
+        planModel.strMeasure3 = meal.strMeasure3;
+        planModel.strMeasure4 = meal.strMeasure4;
+        planModel.strMeasure5 = meal.strMeasure5;
+        planModel.strMeasure6 = meal.strMeasure6;
+        planModel.strMeasure7 = meal.strMeasure7;
+        planModel.strMeasure8 = meal.strMeasure8;
+        planModel.strMeasure9 = meal.strMeasure9;
+        planModel.strMeasure10 = meal.strMeasure10;
+        planModel.strMeasure11 = meal.strMeasure11;
+        planModel.strMeasure12 = meal.strMeasure12;
+        planModel.strMeasure13 = meal.strMeasure13;
+        planModel.strMeasure14 = meal.strMeasure14;
+        planModel.strMeasure15 = meal.strMeasure15;
+        planModel.strMeasure16 = meal.strMeasure16;
+        planModel.strMeasure17 = meal.strMeasure17;
+        planModel.strMeasure18 = meal.strMeasure18;
+        planModel.strMeasure19 = meal.strMeasure19;
+        planModel.strMeasure20 = meal.strMeasure20;
+        planModel.strSource = meal.strSource;
+        planModel.dateModified = meal.dateModified;
+
+        return planModel;
+    }
+
+    public static Meal toMeal(MealsPlanModel planModel) {
+        if (planModel == null) {
+            return null;
+        }
+
+        Meal meal = new Meal();
+
+        meal.isFav = planModel.favouriteFlag;
+        meal.idMeal = planModel.idMeal;
+        meal.strMeal = planModel.strMeal;
+        meal.strCategory = planModel.strCategory;
+        meal.strArea = planModel.strArea;
+        meal.strInstructions = planModel.strInstructions;
+        meal.strMealThumb = planModel.strMealThumb;
+        meal.strTags = planModel.strTags;
+        meal.strYoutube = planModel.strYoutube;
+        meal.strIngredient1 = planModel.strIngredient1;
+        meal.strIngredient2 = planModel.strIngredient2;
+        meal.strIngredient3 = planModel.strIngredient3;
+        meal.strIngredient4 = planModel.strIngredient4;
+        meal.strIngredient5 = planModel.strIngredient5;
+        meal.strIngredient6 = planModel.strIngredient6;
+        meal.strIngredient7 = planModel.strIngredient7;
+        meal.strIngredient8 = planModel.strIngredient8;
+        meal.strIngredient9 = planModel.strIngredient9;
+        meal.strIngredient10 = planModel.strIngredient10;
+        meal.strIngredient11 = planModel.strIngredient11;
+        meal.strIngredient12 = planModel.strIngredient12;
+        meal.strIngredient13 = planModel.strIngredient13;
+        meal.strIngredient14 = planModel.strIngredient14;
+        meal.strIngredient15 = planModel.strIngredient15;
+        meal.strIngredient16 = planModel.strIngredient16;
+        meal.strIngredient17 = planModel.strIngredient17;
+        meal.strIngredient18 = planModel.strIngredient18;
+        meal.strIngredient19 = planModel.strIngredient19;
+        meal.strIngredient20 = planModel.strIngredient20;
+        meal.strMeasure1 = planModel.strMeasure1;
+        meal.strMeasure2 = planModel.strMeasure2;
+        meal.strMeasure3 = planModel.strMeasure3;
+        meal.strMeasure4 = planModel.strMeasure4;
+        meal.strMeasure5 = planModel.strMeasure5;
+        meal.strMeasure6 = planModel.strMeasure6;
+        meal.strMeasure7 = planModel.strMeasure7;
+        meal.strMeasure8 = planModel.strMeasure8;
+        meal.strMeasure9 = planModel.strMeasure9;
+        meal.strMeasure10 = planModel.strMeasure10;
+        meal.strMeasure11 = planModel.strMeasure11;
+        meal.strMeasure12 = planModel.strMeasure12;
+        meal.strMeasure13 = planModel.strMeasure13;
+        meal.strMeasure14 = planModel.strMeasure14;
+        meal.strMeasure15 = planModel.strMeasure15;
+        meal.strMeasure16 = planModel.strMeasure16;
+        meal.strMeasure17 = planModel.strMeasure17;
+        meal.strMeasure18 = planModel.strMeasure18;
+        meal.strMeasure19 = planModel.strMeasure19;
+        meal.strMeasure20 = planModel.strMeasure20;
+        meal.strSource = planModel.strSource;
+        meal.dateModified = planModel.dateModified;
+
+        return meal;
     }
 }
