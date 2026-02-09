@@ -1,5 +1,6 @@
 [versions]
 agp = "9.0.0"
+core = "13.0.0"
 coreSplashscreen = "1.2.0"
 firebaseBom = "34.8.0"
 junit = "4.13.2"
@@ -24,8 +25,10 @@ retrofit = "3.0.0"
 rxjava = "3.1.12"
 room = "2.6.1"
 glide = "5.0.5"
+navigation = "2.9.7"
 
 [libraries]
+core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "core" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -61,4 +64,5 @@ adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.r
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 

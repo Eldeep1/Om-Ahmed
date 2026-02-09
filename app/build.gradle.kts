@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
+    alias(libs.plugins.androidx.navigation.safeargs)
 }
 
 android {
@@ -69,4 +70,5 @@ dependencies {
     annotationProcessor(libs.room.compiler)
     annotationProcessor(libs.glide.compiler)
     implementation(libs.shimmer)
+    implementation(libs.core)
 }

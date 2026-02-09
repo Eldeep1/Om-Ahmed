@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".presentation.mealdetails.view.MealDetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/selectedMealImage"
+            android:layout_width="0dp"
+            android:layout_height="260dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedBottomCorners" />
+
+        <View
+            android:id="@+id/view_overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/overlay_rounded_bottom"
+            app:layout_constraintBottom_toBottomOf="@id/selectedMealImage"
+            app:layout_constraintEnd_toEndOf="@id/selectedMealImage"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/selectedMealImage"
+            app:layout_constraintTop_toTopOf="@id/selectedMealImage"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/selectedMealFavButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/addfav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/selectedMealTitle"
+            style="@style/Text.OmAhmed.mealOfTheDayText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/plus_jakarta_sans_extrabold"
+            app:layout_constraintBottom_toBottomOf="@+id/selectedMealImage"
+            app:layout_constraintStart_toStartOf="@id/selectedMealImage" />
+
+        <TextView
+            android:id="@+id/selectedMealCategory"
+            style="@style/Text.OmAhmed.mealOfTheDayCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/selectedMealTitle"
+            app:layout_constraintStart_toStartOf="@id/selectedMealTitle" />
+
+        <TextView
+            android:id="@+id/selectedMealCountry"
+            style="@style/Text.OmAhmed.mealOfTheDayCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/selectedMealCategory"
+            app:layout_constraintStart_toEndOf="@id/imageView6" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/separatory_dot"
+            app:layout_constraintBottom_toBottomOf="@id/selectedMealCategory"
+            app:layout_constraintStart_toEndOf="@id/selectedMealCategory"
+            app:layout_constraintTop_toTopOf="@id/selectedMealCategory" />
+
+        <Button
+            android:id="@+id/addToPlannerButton"
+            style="@style/Text.OmAhmed.addToPlannerButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:text="@string/add_to_planner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selectedMealImage" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorHeight="3dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addToPlannerButton"
+            app:tabIndicatorColor="@color/oriental_pink"
+            app:tabSelectedTextColor="@color/oriental_pink"
+            app:tabTextColor="#80FFFFFF" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="@+id/tabLayout"
+            app:layout_constraintStart_toStartOf="@+id/tabLayout"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

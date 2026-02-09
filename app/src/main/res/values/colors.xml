@@ -10,4 +10,6 @@
     <color name="oriental_pink">#C89295</color>
     <color name="crater_brown">#472426</color>
     <color name="crater_brown_darker">#261C1C</color>
+    <color name="planner_border">#33EA2A33</color>
+    <color name="planner_bg">#19EA2A33</color>
 </resources>

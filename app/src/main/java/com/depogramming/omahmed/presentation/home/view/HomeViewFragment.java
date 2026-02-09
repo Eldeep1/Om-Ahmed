@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +26,7 @@ import com.depogramming.omahmed.presentation.home.presenter.HomePresenterImp;
 
 import java.util.List;
 
-public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick {
+public class HomeViewFragment extends Fragment implements HomeView, OnItemClick {
 
     HomePresenter homePresenter;
     RecyclerView categoriesRecyclerView;
@@ -126,6 +127,9 @@ public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick
         mealOfTheDayFavButton.setOnClickListener(view -> {
             homePresenter.changeDailyMealFavState(meal);});
         Glide.with(getActivity()).load(meal.strMealThumb).into(mealOfTheDayImage);
+        mealOfTheDayDetailsButton.setOnClickListener(v ->
+                homePresenter.navigateToMealDetails(meal)
+        );
     }
     @Override
     public void updateDailyMealFavState(boolean isFav) {
@@ -145,9 +149,21 @@ public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick
     public void onHeartClicked(Meal meal, int position) {
         homePresenter.changeRecommendationsFavState(meal,position);
     }
+
+    @Override
+    public void onCardClicked(Meal meal) {
+        homePresenter.navigateToMealDetails(meal);
+    }
+
     @Override
     public void updateListViewHeart(int position, boolean isFavourite){
         recommendationsAdapter.notifyItemChanged(position,isFavourite);
+    }
+
+    @Override
+    public void navigateToMealDetails(Bundle bundle) {
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_homeFragment_to_mealDetailsFragment, bundle);
     }
 
 

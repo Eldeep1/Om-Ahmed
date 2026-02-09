@@ -1,6 +1,7 @@
 package com.depogramming.omahmed.presentation.home.presenter;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
@@ -87,18 +88,21 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void changeRecommendationsFavState(Meal meal,int position) {
-        System.out.println("start of the function");
-        System.out.println("before "+meal.isFav);
         Disposable subscribe = mealsRepo.toggleFavourite(meal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
                     meal.isFav = !meal.isFav;
                     homeView.updateListViewHeart(position, meal.isFav);
-                    System.out.println("end of the function");
-                    System.out.println("inside "+meal.isFav);
                 },throwable -> System.out.println("lol, we got an error"+throwable));
 
+    }
+
+    @Override
+    public void navigateToMealDetails(Meal meal) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("meal", meal);
+        homeView.navigateToMealDetails(bundle);
     }
 
     private List<Character> getDailyChars() {

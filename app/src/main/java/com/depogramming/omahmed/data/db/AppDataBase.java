@@ -8,11 +8,14 @@ import androidx.room.RoomDatabase;
 
 import com.depogramming.omahmed.data.home.datasource.local.MealsDao;
 import com.depogramming.omahmed.data.home.models.FavouriteMeals;
+import com.depogramming.omahmed.data.mealsplan.datasource.local.MealsPlanDao;
+import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 
 
-@Database(entities = {FavouriteMeals.class},version = 1)
+@Database(entities = {FavouriteMeals.class, MealsPlanModel.class},version = 1,exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
     public abstract MealsDao mealsDao();
+    public abstract MealsPlanDao mealsPlanDao();
     private static AppDataBase Instance;
     public static AppDataBase getInstance(Context context){
         if(Instance==null){

@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.depogramming.omahmed.presentation.home.view.HomeViewFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.depogramming.omahmed.presentation.profile.view.ProfileFragment"
@@ -31,13 +35,12 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
-        android:id="@+id/homeFragmentLoading"
-        android:name="com.depogramming.omahmed.HomeFragmentLoading"
-        android:label="fragment_home_loading"
-        tools:layout="@layout/fragment_home_loading" />
-    <fragment
-        android:id="@+id/homeFragmentError"
-        android:name="com.depogramming.omahmed.HomeFragmentError"
-        android:label="fragment_home_error"
-        tools:layout="@layout/fragment_home_error" />
+        android:id="@+id/mealDetailsFragment"
+        android:name="com.depogramming.omahmed.presentation.mealdetails.view.MealDetailsFragment"
+        android:label="fragment_meal_details"
+        tools:layout="@layout/fragment_meal_details" >
+        <argument
+            android:name="selectedMeal"
+            app:argType="com.depogramming.omahmed.data.home.models.Meal" />
+    </fragment>
 </navigation>

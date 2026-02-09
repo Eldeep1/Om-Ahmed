@@ -27,4 +27,7 @@
     <string name="view_details">View Details</string>
     <string name="categories">Categories</string>
     <string name="daily_recommendations">Daily Recommendations</string>
+    <string name="add_to_planner">ADD TO PLANNER</string>
+    <string name="measurement">MEASUREMENT</string>
+    <string name="ingredient">INGREDIENT</string>
 </resources>
