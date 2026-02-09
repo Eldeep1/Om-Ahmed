@@ -88,16 +88,12 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void changeRecommendationsFavState(Meal meal,int position) {
-        System.out.println("start of the function");
-        System.out.println("before "+meal.isFav);
         Disposable subscribe = mealsRepo.toggleFavourite(meal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
                     meal.isFav = !meal.isFav;
                     homeView.updateListViewHeart(position, meal.isFav);
-                    System.out.println("end of the function");
-                    System.out.println("inside "+meal.isFav);
                 },throwable -> System.out.println("lol, we got an error"+throwable));
 
     }

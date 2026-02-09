@@ -4,7 +4,6 @@ import com.depogramming.omahmed.data.home.models.Meal;
 
 public interface MealDetailsView {
     void showMealIngredients(Meal meal);
-    void showMealInstructions(String instructions);
-    void showMealVideo(String strYoutube);
-    void showError();
+    void toggleFavouriteButton(boolean isFav);
+
 }

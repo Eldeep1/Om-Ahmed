@@ -4,8 +4,6 @@ import com.depogramming.omahmed.data.home.models.Meal;
 
 public interface MealDetailsPresenter {
     void getMealIngredients();
-    void getMealInstructions();
-    void getMealVideo();
-    void toggleFavourite(Meal meal);
+    void toggleFavourite();
 
 }

@@ -18,7 +18,6 @@ import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.presentation.mealdetails.presentation.MealDetailsPresenter;
 import com.depogramming.omahmed.presentation.mealdetails.presentation.MealDetailsPresenterImp;
-import com.depogramming.omahmed.presentation.onboarding.views.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -52,8 +51,9 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         selectedMealTitle = view.findViewById(R.id.selectedMealTitle);
         selectedMealCategory = view.findViewById(R.id.selectedMealCategory);
         selectedMealCountry = view.findViewById(R.id.selectedMealCountry);
+
         Meal meal = getArguments().getParcelable("meal");
-        mealDetailsPresenter = new MealDetailsPresenterImp(this, meal);
+        mealDetailsPresenter = new MealDetailsPresenterImp(this, meal,getContext().getApplicationContext());
 
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
@@ -82,24 +82,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         Glide.with(getActivity().getApplicationContext()).load(meal.strMealThumb).into(selectedMealImage);
 
         selectedMealFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
-        selectedMealFavButton.setOnClickListener(v -> mealDetailsPresenter.toggleFavourite(meal));
+        selectedMealFavButton.setOnClickListener(v -> mealDetailsPresenter.toggleFavourite());
         selectedMealTitle.setText(meal.strMeal);
         selectedMealCategory.setText(meal.strCategory);
         selectedMealCountry.setText(meal.strCategory);
     }
 
     @Override
-    public void showMealInstructions(String instructions) {
-
+    public void toggleFavouriteButton(boolean isFav) {
+        selectedMealFavButton.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
     }
 
-    @Override
-    public void showMealVideo(String strYoutube) {
 
-    }
-
-    @Override
-    public void showError() {
-
-    }
 }
