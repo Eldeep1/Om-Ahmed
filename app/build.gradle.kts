@@ -70,4 +70,5 @@ dependencies {
     annotationProcessor(libs.room.compiler)
     annotationProcessor(libs.glide.compiler)
     implementation(libs.shimmer)
+    implementation(libs.core)
 }

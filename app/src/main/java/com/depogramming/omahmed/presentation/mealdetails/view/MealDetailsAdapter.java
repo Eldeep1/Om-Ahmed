@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.presentation.mealdetails.view.tabs.ingredients.IngredientsFragment;
-import com.depogramming.omahmed.presentation.mealdetails.view.tabs.instructions.InstructionsFragment;
+import com.depogramming.omahmed.presentation.mealdetails.view.tabs.instructions.view.InstructionsFragment;
 
 public class MealDetailsAdapter extends FragmentStateAdapter {
     private Meal meal;
@@ -21,7 +21,7 @@ public class MealDetailsAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if (position == 1) {
-            return InstructionsFragment.newInstance();
+            return InstructionsFragment.newInstance(meal);
         }
         return IngredientsFragment.newInstance(meal);
     }

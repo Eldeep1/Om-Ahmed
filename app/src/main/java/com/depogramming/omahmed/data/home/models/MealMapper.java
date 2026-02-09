@@ -2,6 +2,8 @@ package com.depogramming.omahmed.data.home.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class MealMapper {
 
@@ -170,12 +172,139 @@ public final class MealMapper {
             list.add(ing);
         }
     }
+    public static String getYoutubeVideoId(Meal meal) {
+        if (meal == null || meal.strYoutube == null || meal.strYoutube.isEmpty()) {
+            return null;
+        }
 
-    public static String getInstructions(Meal meal) {
-        return meal != null ? meal.strInstructions : "";
+        // Extract video ID from YouTube URL
+        // Format: https://www.youtube.com/watch?v=VIDEO_ID
+        String url = meal.strYoutube;
+
+        // Method 1: Standard YouTube URL
+        if (url.contains("youtube.com/watch?v=")) {
+            String[] parts = url.split("v=");
+            if (parts.length > 1) {
+                String videoId = parts[1];
+                // Remove any additional parameters
+                int ampersandPosition = videoId.indexOf('&');
+                if (ampersandPosition != -1) {
+                    videoId = videoId.substring(0, ampersandPosition);
+                }
+                return videoId;
+            }
+        }
+
+        if (url.contains("youtu.be/")) {
+            String[] parts = url.split("youtu.be/");
+            if (parts.length > 1) {
+                String videoId = parts[1];
+                // Remove any additional parameters
+                int questionPosition = videoId.indexOf('?');
+                if (questionPosition != -1) {
+                    videoId = videoId.substring(0, questionPosition);
+                }
+                return videoId;
+            }
+        }
+
+        return null;
     }
 
-    public static String getYoutubeUrl(Meal meal) {
-        return meal != null ? meal.strYoutube : "";
+    public static List<Instructions> mapMealToInstructions(Meal meal) {
+        List<Instructions> instructionsList = new ArrayList<>();
+
+        if (meal == null || meal.strInstructions == null || meal.strInstructions.isEmpty()) {
+            return instructionsList;
+        }
+
+        String instructions = meal.strInstructions
+                .replace("\\r\\n", "\n")
+                .replace("\r\n", "\n")
+                .replace("\\n", "\n")
+                .trim();
+
+        String[] steps = instructions.split("\n\n+");
+
+        for (String step : steps) {
+            step = step.trim();
+            if (step.isEmpty()) {
+                continue;
+            }
+
+            String title;
+            String description;
+
+            Pattern numberedPattern = Pattern.compile("^(\\d+)\\s+(.+)", Pattern.DOTALL);
+            Matcher numberedMatcher = numberedPattern.matcher(step);
+
+            if (numberedMatcher.matches()) {
+                description = numberedMatcher.group(2).trim();
+                title = extractTitle(description);
+            } else {
+                Pattern headerPattern = Pattern.compile("^(.+?):\\s*\n(.+)", Pattern.DOTALL);
+                Matcher headerMatcher = headerPattern.matcher(step);
+
+                if (headerMatcher.matches()) {
+                    title = headerMatcher.group(1).trim();
+                    description = headerMatcher.group(2).trim();
+                } else {
+                    Pattern stepPattern = Pattern.compile("^step\\s*(\\d+)\\s*\n(.+)", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+                    Matcher stepMatcher = stepPattern.matcher(step);
+
+                    if (stepMatcher.matches()) {
+                        description = stepMatcher.group(2).trim();
+                        title = extractTitle(description);
+                    } else {
+                        description = step;
+                        title = extractTitle(description);
+                    }
+                }
+            }
+
+            instructionsList.add(new Instructions(title, description));
+        }
+
+        return instructionsList;
+    }
+
+    private static String extractTitle(String description) {
+        if (description == null || description.isEmpty()) {
+            return "";
+        }
+
+        description = description.replaceFirst("(?i)^(step\\s*)?\\d+\\s*[:\\-\\.]*\\s*", "").trim();
+
+        int firstNewline = description.indexOf('\n');
+        if (firstNewline > 0 && firstNewline < 80) {
+            String firstLine = description.substring(0, firstNewline).trim();
+            if (firstLine.endsWith(":")) {
+                return firstLine.substring(0, firstLine.length() - 1).trim();
+            }
+        }
+
+        int firstPeriod = description.indexOf('.');
+        if (firstPeriod > 0 && firstPeriod < 120) {
+            String title = description.substring(0, firstPeriod).trim();
+
+            if (title.length() < 25 && firstPeriod < description.length() - 1) {
+                int secondPeriod = description.indexOf('.', firstPeriod + 1);
+                if (secondPeriod > 0 && secondPeriod < 180) {
+                    return description.substring(0, secondPeriod).trim();
+                }
+            }
+
+            return title;
+        }
+
+        if (description.length() > 75) {
+            int lastSpace = description.lastIndexOf(' ', 75);
+            if (lastSpace > 45) {
+                return description.substring(0, lastSpace).trim() + "...";
+            }
+            return description.substring(0, 75).trim() + "...";
+        }
+
+        return description;
     }
 }
