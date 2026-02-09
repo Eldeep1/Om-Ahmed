@@ -12,15 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.Meal;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
 public class RecommendationsAdapter extends RecyclerView.Adapter<RecommendationsAdapter.ViewHolder> {
     List<Meal> meals;
-    OnHeartClick onHeartClick;
+    OnItemClick onItemClick;
 
-    public RecommendationsAdapter(OnHeartClick onHeartClick) {
-        this.onHeartClick = onHeartClick;
+    public RecommendationsAdapter(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
     }
 
     @NonNull
@@ -35,7 +36,7 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
         Meal meal = meals.get(position);
         holder.bind(meal);
         holder.recommendationFavouriteIcon.setOnClickListener(v -> {
-                onHeartClick.onHeartClicked(meal, position);
+                onItemClick.onHeartClicked(meal, position);
         });
     }
     @Override
@@ -60,6 +61,7 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
+        private final MaterialCardView materialCardView;
         private final ImageView recommendationImageView;
         private final ImageView recommendationFavouriteIcon;
         private final TextView recommendationName;
@@ -69,11 +71,13 @@ public class RecommendationsAdapter extends RecyclerView.Adapter<Recommendations
             recommendationImageView=itemView.findViewById(R.id.recommendationImageView);
             recommendationFavouriteIcon=itemView.findViewById(R.id.recommendationFavouriteIcon);
             recommendationName=itemView.findViewById(R.id.recommendationName);
+            materialCardView=itemView.findViewById(R.id.recommendationFullItem);
         }
         public void bind(Meal meal){
             recommendationName.setText(meal.strMeal);
             Glide.with(itemView).load(meal.strMealThumb).into(recommendationImageView);
             recommendationFavouriteIcon.setImageResource(meal.isFav?R.drawable.alreadyfav:R.drawable.addfav);
+            materialCardView.setOnClickListener(view ->onItemClick.onCardClicked(meal));
         }
 
     }

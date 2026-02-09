@@ -26,7 +26,7 @@ import com.depogramming.omahmed.presentation.home.presenter.HomePresenterImp;
 
 import java.util.List;
 
-public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick {
+public class HomeViewFragment extends Fragment implements HomeView, OnItemClick {
 
     HomePresenter homePresenter;
     RecyclerView categoriesRecyclerView;
@@ -149,6 +149,12 @@ public class HomeViewFragment extends Fragment implements HomeView, OnHeartClick
     public void onHeartClicked(Meal meal, int position) {
         homePresenter.changeRecommendationsFavState(meal,position);
     }
+
+    @Override
+    public void onCardClicked(Meal meal) {
+        homePresenter.navigateToMealDetails(meal);
+    }
+
     @Override
     public void updateListViewHeart(int position, boolean isFavourite){
         recommendationsAdapter.notifyItemChanged(position,isFavourite);

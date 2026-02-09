@@ -52,7 +52,6 @@ public class IngredientsRecyclerAdapter extends RecyclerView.Adapter<Ingredients
         public void bind(Ingredients ingredient) {
             ingredientTextView.setText(ingredient.getIngredient());
             measurementTextView.setText(ingredient.getMeasurement());
-            System.out.println("the ingredient to be binded:"+ingredient.getIngredient());
         }
     }
 }
