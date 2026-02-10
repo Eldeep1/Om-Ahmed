@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.depogramming.omahmed.R;
@@ -29,6 +31,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
     MaterialButton registerGoogleButton;
     LottieAnimationView lottieAnimationView;
     FrameLayout lottieContainer;
+    TextView loginTextAction;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +49,8 @@ public class RegisterFragment extends Fragment implements RegisterView {
         lottieAnimationView=view.findViewById(R.id.registerLottieAnimation);
         lottieContainer =view.findViewById(R.id.registerLoadingOverlay);
         registerGoogleButton=view.findViewById(R.id.registerGoogleButton);
-
+        loginTextAction=view.findViewById(R.id.loginTextAction);
+        loginTextAction.setOnClickListener(view1 -> Navigation.findNavController(view).popBackStack());
         registerGoogleButton.setOnClickListener(view1 -> googleRegister());
         registerButton.setOnClickListener(view1 -> register());
         return view;
