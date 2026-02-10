@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -107,7 +108,7 @@ public class PlannerFragment extends Fragment implements CalenderView,OnDayClick
 
     @Override
     public void onCardClicked(MealsPlanModel meal) {
-
+        plannerPresenter.navigateToDetails(meal);
     }
 
     @Override
@@ -117,7 +118,8 @@ public class PlannerFragment extends Fragment implements CalenderView,OnDayClick
     }
 
     @Override
-    public void onCardClickedAction(Meal meal) {
-
+    public void onCardClickedAction(Bundle bundle) {
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_plannerFragment_to_mealDetailsFragment, bundle);
     }
 }

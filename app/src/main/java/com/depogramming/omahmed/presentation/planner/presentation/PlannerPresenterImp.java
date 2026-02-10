@@ -1,7 +1,9 @@
 package com.depogramming.omahmed.presentation.planner.presentation;
 
 import android.content.Context;
+import android.os.Bundle;
 
+import com.depogramming.omahmed.data.home.models.MealMapper;
 import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 import com.depogramming.omahmed.data.mealsplan.repo.MealsPlanRepo;
@@ -115,6 +117,13 @@ public class PlannerPresenterImp implements PlannerPresenter {
                         }, throwable -> System.out.println("ما علينا من النقطه دي")
                 );
 
+    }
+
+    @Override
+    public void navigateToDetails(MealsPlanModel meal) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("meal", MealMapper.toMeal(meal));
+        onPlannedMealClick.onCardClickedAction(bundle);
     }
 
     private void loadMealsForToday() {

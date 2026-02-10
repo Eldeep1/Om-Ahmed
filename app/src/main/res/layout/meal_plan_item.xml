@@ -19,15 +19,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/plannerImageView"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/plannerImageViewContainer"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="12dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/plannerImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/plannerMealName"
@@ -42,10 +51,10 @@
             android:text="aaaaaa"
             android:textAlignment="viewStart"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@id/plannerImageView"
+            app:layout_constraintBottom_toBottomOf="@id/plannerImageViewContainer"
             app:layout_constraintEnd_toStartOf="@+id/removeButton"
-            app:layout_constraintStart_toEndOf="@+id/plannerImageView"
-            app:layout_constraintTop_toTopOf="@+id/plannerImageView" />
+            app:layout_constraintStart_toEndOf="@+id/plannerImageViewContainer"
+            app:layout_constraintTop_toTopOf="@+id/plannerImageViewContainer" />
 
         <ImageView
             android:id="@+id/removeButton"

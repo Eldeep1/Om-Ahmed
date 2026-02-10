@@ -9,4 +9,5 @@ public interface PlannerPresenter {
     void loadMealsForDay(CalendarDay day, int position);
     void removeFromPlanned(MealsPlanModel meal, int position);
 
+    void navigateToDetails(MealsPlanModel meal);
 }

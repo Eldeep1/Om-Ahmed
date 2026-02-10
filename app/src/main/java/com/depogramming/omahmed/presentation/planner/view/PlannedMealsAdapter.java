@@ -65,8 +65,6 @@ public class PlannedMealsAdapter extends RecyclerView.Adapter<PlannedMealsAdapte
         }
 
         public void bind(MealsPlanModel mealsPlanModel) {
-            System.out.println(mealsPlanModel.isFav);
-            System.out.println("this is the binding result");
             plannerMealName.setText(mealsPlanModel.strMeal);
             Glide.with(itemView.getContext()).load(mealsPlanModel.strMealThumb).into(plannerImageView);
         }
