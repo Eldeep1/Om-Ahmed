@@ -6,4 +6,5 @@ public interface MealDetailsView {
     void showMealIngredients(Meal meal);
     void toggleFavouriteButton(boolean isFav);
     void addToPlannerSuccess();
+    void backButtonClicked();
 }

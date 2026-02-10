@@ -28,7 +28,7 @@
             android:background="@drawable/overlay_rounded_bottom"
             app:layout_constraintBottom_toBottomOf="@id/selectedMealImage"
             app:layout_constraintEnd_toEndOf="@id/selectedMealImage"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/selectedMealImage"
             app:layout_constraintTop_toTopOf="@id/selectedMealImage"
             app:layout_constraintVertical_bias="0.0" />
@@ -118,5 +118,15 @@
             app:layout_constraintEnd_toEndOf="@+id/tabLayout"
             app:layout_constraintStart_toStartOf="@+id/tabLayout"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+        <ImageView
+            android:id="@+id/selectedMealBacButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/selectedMealFavButton" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
