@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -19,6 +20,6 @@ public interface MealsPlanDao {
     Completable addToPlan(MealsPlanModel meal);
     @Delete
     Completable removeFromPlan(MealsPlanModel meal);
-    @Query("SELECT * FROM plan")
-    Observable<List<MealsPlanModel>> getPlan();
+    @Query("SELECT * FROM plan WHERE date >= :startTimestamp AND date < :endTimestamp")
+    Observable<List<MealsPlanModel>> getPlanByDateRange(long startTimestamp, long endTimestamp);
 }

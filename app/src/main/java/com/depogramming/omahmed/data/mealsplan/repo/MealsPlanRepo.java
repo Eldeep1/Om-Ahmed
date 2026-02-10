@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.depogramming.omahmed.data.mealsplan.datasource.local.MealsPlanLocalDataSource;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.utils.DateUtils;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -16,8 +18,10 @@ public class MealsPlanRepo {
     public MealsPlanRepo(Context context){
         mealsPlanLocalDataSource=new MealsPlanLocalDataSource(context);
     }
-    public Observable<List<MealsPlanModel>> getAllPlannedMeals(){
-        return mealsPlanLocalDataSource.getAllPlannedMeals();
+    public Observable<List<MealsPlanModel>> getAllPlannedMeals(Date day){
+        Date startOfDay = DateUtils.getStartOfDay(day);
+        Date endOfDay = DateUtils.getEndOfDay(day);
+        return mealsPlanLocalDataSource.getDayPlans(startOfDay,endOfDay);
     }
     public Completable insertPlanned(MealsPlanModel meal){
         return mealsPlanLocalDataSource.insertPlanned(meal);

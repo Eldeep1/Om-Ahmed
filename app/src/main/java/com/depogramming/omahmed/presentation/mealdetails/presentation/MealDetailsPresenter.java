@@ -9,4 +9,5 @@ public interface MealDetailsPresenter {
     void toggleFavourite();
 
     void addToPlanner(Date date);
+    void backButton();
 }

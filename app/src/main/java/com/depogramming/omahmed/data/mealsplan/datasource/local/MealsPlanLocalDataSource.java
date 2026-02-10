@@ -5,6 +5,7 @@ import android.content.Context;
 import com.depogramming.omahmed.data.db.AppDataBase;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -17,8 +18,8 @@ public class MealsPlanLocalDataSource {
         mealsPlanDao = AppDataBase.getInstance(context).mealsPlanDao();
     }
 
-    public Observable<List<MealsPlanModel>> getAllPlannedMeals() {
-        return mealsPlanDao.getPlan();
+    public Observable<List<MealsPlanModel>> getDayPlans(Date startOfDay, Date endOfDay) {
+        return mealsPlanDao.getPlanByDateRange(startOfDay.getTime(),endOfDay.getTime());
     }
 
     public Completable insertPlanned(MealsPlanModel meal) {

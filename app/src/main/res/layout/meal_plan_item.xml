@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/plannerFullItem"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/crater_brown_darker"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    app:rippleColor="@color/white_80_opacity"
+    app:strokeColor="@color/planner_item_bg"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_gravity="start|center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/plannerImageViewContainer"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/plannerImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/plannerMealName"
+            style="@style/Text.OmAhmed.dailyRecommendationFoodName"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center|start"
+            android:paddingStart="20dp"
+            android:paddingEnd="8dp"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@id/plannerImageViewContainer"
+            app:layout_constraintEnd_toStartOf="@+id/removeButton"
+            app:layout_constraintStart_toEndOf="@+id/plannerImageViewContainer"
+            app:layout_constraintTop_toTopOf="@+id/plannerImageViewContainer" />
+
+        <ImageView
+            android:id="@+id/removeButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/delete_button"
+            app:layout_constraintBottom_toBottomOf="@+id/plannerMealName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/plannerMealName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

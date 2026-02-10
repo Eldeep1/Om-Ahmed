@@ -7,5 +7,6 @@ import java.util.List;
 public interface FavouritesPresenter {
     void getAllFavourites();
     void changeFavouritesFavState(FavouriteMeals favouriteMeals, int position);
+    void onCardClicked(FavouriteMeals favouriteMeals);
 
 }

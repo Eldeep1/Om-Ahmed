@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     MealDetailsPresenter mealDetailsPresenter;
     ImageView selectedMealImage;
     ImageView selectedMealFavButton;
+    ImageView selectedMealBacButton;
     TextView selectedMealTitle;
     TextView selectedMealCategory;
     TextView selectedMealCountry;
@@ -53,6 +55,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         selectedMealFavButton = view.findViewById(R.id.selectedMealFavButton);
         selectedMealTitle = view.findViewById(R.id.selectedMealTitle);
         selectedMealCategory = view.findViewById(R.id.selectedMealCategory);
+        selectedMealBacButton = view.findViewById(R.id.selectedMealBacButton);
         selectedMealCountry = view.findViewById(R.id.selectedMealCountry);
         addToPlannerButton = view.findViewById(R.id.addToPlannerButton);
         addToPlannerButton.setOnClickListener(v -> {
@@ -90,6 +93,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         }).attach();
 
         mealDetailsPresenter.getMealIngredients();
+        selectedMealBacButton.setOnClickListener(view1 -> mealDetailsPresenter.backButton());
+
         return view;
     }
 
@@ -118,6 +123,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public void addToPlannerSuccess() {
         Toast.makeText(requireContext(), "Added Successfully!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void backButtonClicked() {
+        Navigation.findNavController(getView()).popBackStack();
     }
 
 

@@ -67,4 +67,9 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter{
 
 // In your Fragment or Activity
     }
+
+    @Override
+    public void backButton() {
+        view.backButtonClicked();
+    }
 }
