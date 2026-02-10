@@ -48,7 +48,6 @@
             android:gravity="center|start"
             android:paddingStart="20dp"
             android:paddingEnd="8dp"
-            android:text="aaaaaa"
             android:textAlignment="viewStart"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@id/plannerImageViewContainer"
