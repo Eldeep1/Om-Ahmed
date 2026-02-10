@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.FavouriteMeals;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -19,8 +20,10 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
     List<FavouriteMeals> favouriteMeals;
     OnHeartClicked onHeartClicked;
+    OnCardClicked onCardClicked;
 
-    public FavouritesAdapter(OnHeartClicked onHeartClicked) {
+    public FavouritesAdapter(OnHeartClicked onHeartClicked, OnCardClicked onCardClicked) {
+        this.onCardClicked=onCardClicked;
         this.onHeartClicked = onHeartClicked;
     }
 
@@ -35,6 +38,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FavouriteMeals favouriteMeals1=favouriteMeals.get(position);
         holder.recommendationFavouriteIcon.setOnClickListener(view -> onHeartClicked.removeFavouriteLogic(favouriteMeals1,position));
+        holder.recommendationFullItem.setOnClickListener(view -> onCardClicked.onCardClicked(favouriteMeals1));
         holder.bind(favouriteMeals1);
     }
     public void setFavouriteMeals(List<FavouriteMeals> favouriteMeals){
@@ -51,11 +55,13 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         private final ImageView recommendationImageView;
         private final ImageView recommendationFavouriteIcon;
         private final TextView recommendationName;
+        private final MaterialCardView recommendationFullItem;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             recommendationImageView=itemView.findViewById(R.id.recommendationImageView);
             recommendationFavouriteIcon=itemView.findViewById(R.id.recommendationFavouriteIcon);
             recommendationName=itemView.findViewById(R.id.recommendationName);
+            recommendationFullItem=itemView.findViewById(R.id.recommendationFullItem);
         }
 
         public void bind(FavouriteMeals favouriteMeals) {
