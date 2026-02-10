@@ -6,6 +6,11 @@ public class Category{
     private String strCategoryThumb;
     private String strCategoryDescription;
 
+    public Category(String strCategory, String strCategoryThumb) {
+        this.strCategory = strCategory;
+        this.strCategoryThumb = strCategoryThumb;
+    }
+
     public String getIdCategory() {
         return idCategory;
     }

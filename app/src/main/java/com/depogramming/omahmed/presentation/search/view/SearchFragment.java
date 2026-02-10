@@ -13,18 +13,23 @@ import android.view.ViewGroup;
 import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.Category;
 import com.depogramming.omahmed.data.home.models.CountryModel;
+import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.presentation.search.presentation.SearchPresenter;
+import com.depogramming.omahmed.presentation.search.presentation.SearchPresenterImp;
 import com.depogramming.omahmed.presentation.search.view.utils.CustomDropdown;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.search.SearchBar;
+import com.google.android.material.search.SearchView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment implements OnDropDownItemSelected {
+public class SearchFragment extends Fragment implements OnDropDownItemSelected, SearchViewInterface {
     private MaterialButton categoriesButton;
     private MaterialButton countriesButton;
     private CustomDropdown customDropdown;
     SearchPresenter presenter;
+    SearchBar searchBar;
+    SearchView searchView;
     private String selectedCategory = "All Categories";
     private String selectedCountry = "All Countries";
     @Override
@@ -34,49 +39,28 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         categoriesButton = view.findViewById(R.id.categoriesButton);
         countriesButton = view.findViewById(R.id.countriesButton);
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        List<Category> categories = new ArrayList<>();
-//        Category category = new Category();
-//        category.setIdCategory("1");
-//        category.setStrCategory("Meow");
-//        category.setStrCategoryThumb("https://www.themealdb.com/images/category/beef.png");
-//        categories.add(category);
-//        categories.add(category);
-//        categories.add(category);
-//        categories.add(category);
-//        categories.add(category);
+        customDropdown= new CustomDropdown(this);
 
-
-//        showCategories(categories);
+        presenter = new SearchPresenterImp(this);
         //if bundle is not null, then get meals where category equals bundle's category
         presenter.getSearchMeals(selectedCountry, selectedCategory);
         presenter.getAreas();
         presenter.getCategories();
 
-        List<CountryModel> countryModels = new ArrayList<>();
-        countryModels.add(new CountryModel("", "All Countries"));
-        countryModels.add(new CountryModel("https://www.themealdb.com/images/flags/ae.png", "United Arab Emirates"));
-        countryModels.add(new CountryModel("https://www.themealdb.com/images/category/beef.png", "United Arab Emirates"));
-        countryModels.add(new CountryModel("https://www.themealdb.com/images/flags/ae.png", "United Arab Emirates"));
-        countryModels.add(new CountryModel("https://www.themealdb.com/images/flags/ae.png", "United Arab Emirates"));
+    }
 
-        showCountries(countryModels);
+    @Override
+    public void showMeals(List<Meal> meals) {
 
-        customDropdown= new CustomDropdown(this);
     }
 
     public void showCategories(List<Category> dropdownItems) {
-        // Convert API categories to dropdown items
-        Category all = new Category();
-        all.setStrCategory("All Categories");
-
-        dropdownItems.add(all);
 
         categoriesButton.setOnClickListener(view -> {
             customDropdown.showCategories(requireContext(), view, dropdownItems);

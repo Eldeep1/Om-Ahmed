@@ -1,6 +1,31 @@
 package com.depogramming.omahmed.presentation.search.presentation;
 
-public class SearchPresenterImp implements SearchPresenter{
+import com.depogramming.omahmed.data.home.models.Category;
+import com.depogramming.omahmed.data.home.models.CountryModel;
+import com.depogramming.omahmed.data.home.models.CountryUtils;
+import com.depogramming.omahmed.data.home.repository.AreasRepo;
+import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
+import com.depogramming.omahmed.presentation.search.view.SearchViewInterface;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class SearchPresenterImp implements SearchPresenter {
+    CategoriesRepo categoriesRepo;
+    SearchViewInterface searchView;
+    AreasRepo areasRepo;
+
+    public SearchPresenterImp(SearchViewInterface searchView) {
+        this.searchView = searchView;
+        categoriesRepo = new CategoriesRepo();
+        areasRepo = new AreasRepo();
+    }
+
     @Override
     public void getSearchMeals(String selectedCountry, String selectedCategory) {
         //call view method that shows list of meals
@@ -9,11 +34,49 @@ public class SearchPresenterImp implements SearchPresenter{
 
     @Override
     public void getAreas() {
-        //calls the view method that shows list of areas
+        Disposable disposable =
+                areasRepo.getAreas()
+                        .subscribeOn(Schedulers.io())
+                        .map(areas ->
+                                areas.stream()
+                                        .filter(a -> a != null && a.strArea != null)
+                                        .map(a -> new CountryModel(
+                                                CountryUtils.getFlagUrl(a.strArea),
+                                                a.strArea
+                                        ))
+                                        .collect(Collectors.toList())
+                        )
+                        .map(countries -> {
+                            List<CountryModel> result = new ArrayList<>(countries.size() + 1);
+                            result.add(new CountryModel("", "All Countries"));
+                            result.addAll(countries);
+                            return result;
+                        })
+
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                searchView::showCountries,
+                                Throwable::printStackTrace
+                        );
     }
+
 
     @Override
     public void getCategories() {
+        Disposable subscribe = categoriesRepo.getAllCategories().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).map(
+                        categoriesResponse -> {
+                            List<Category> result = new ArrayList<>(categoriesResponse.getCategories().size() + 1);
 
+                            result.add(new Category("All Categories", ""));
+                            result.addAll(categoriesResponse.getCategories());
+
+                            return result;
+                        }
+                )
+                .subscribe(categoriesResponse -> {
+                    searchView.showCategories(categoriesResponse);
+                }, throwable -> {
+                });
     }
 }
