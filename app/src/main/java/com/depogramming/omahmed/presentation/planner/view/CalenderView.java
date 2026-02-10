@@ -9,4 +9,5 @@ public interface CalenderView {
     void updateCalendar(List<CalendarDay> days);
     void updateMonthYear(String monthYear);
     void loadDayMeals(List<MealsPlanModel> mealsPlanModels);
+    void updateCalenderMonth(List<CalendarDay> days);
 }

@@ -320,7 +320,7 @@ public final class MealMapper {
 
         planModel.date = plannedDate;
 
-        planModel.favouriteFlag = meal.isFav;
+        planModel.isFav = meal.isFav;
         planModel.idMeal = meal.idMeal;
         planModel.strMeal = meal.strMeal;
         planModel.strCategory = meal.strCategory;
@@ -382,7 +382,7 @@ public final class MealMapper {
 
         Meal meal = new Meal();
 
-        meal.isFav = planModel.favouriteFlag;
+        meal.isFav = planModel.isFav;
         meal.idMeal = planModel.idMeal;
         meal.strMeal = planModel.strMeal;
         meal.strCategory = planModel.strCategory;

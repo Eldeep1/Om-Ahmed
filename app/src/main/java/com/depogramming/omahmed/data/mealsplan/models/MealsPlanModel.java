@@ -14,7 +14,7 @@ import java.util.Date;
 @TypeConverters({ DateConverter.class })
 public class MealsPlanModel {
 
-    public boolean favouriteFlag;
+    public boolean isFav;
     public Date date;
     @PrimaryKey
     @NonNull

@@ -12,4 +12,5 @@
     <color name="crater_brown_darker">#261C1C</color>
     <color name="planner_border">#33EA2A33</color>
     <color name="planner_bg">#19EA2A33</color>
+    <color name="planner_item_bg">#331A1B</color>
 </resources>
