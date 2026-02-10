@@ -30,4 +30,5 @@
     <string name="add_to_planner">ADD TO PLANNER</string>
     <string name="measurement">MEASUREMENT</string>
     <string name="ingredient">INGREDIENT</string>
+    <string name="selected_day_meals">Selected Day Meals</string>
 </resources>
