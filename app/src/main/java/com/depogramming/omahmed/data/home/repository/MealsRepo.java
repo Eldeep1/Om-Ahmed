@@ -22,7 +22,20 @@ public class MealsRepo {
         mealsRemoteDataSource=new MealsRemoteDataSource();
         mealsLocalDataSource=new MealsLocalDataSource(context);
     }
-    public Observable<List<Meal>> searchForMealsByFirstChar(char c) {
+    public Observable<List<Meal>> getAllMeals() {
+
+        return Observable.range('a', 26)
+                .map(i -> (char) i.intValue())
+                .flatMap(c ->
+                        searchForMealsByFirstChar(c))
+                .map(response ->
+                        response != null
+                                ? response
+                                : new ArrayList<>()
+                ); // emit Meal one by one
+    }
+
+    private Observable<List<Meal>> searchForMealsByFirstChar(char c) {
         return Observable.combineLatest(
                 mealsRemoteDataSource
                         .searchForMealsByFirstChar(c)

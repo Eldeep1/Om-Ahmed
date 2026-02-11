@@ -4,6 +4,8 @@ import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.models.MealsResponse;
 import com.depogramming.omahmed.data.network.Network;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Observable;
 
 public class MealsRemoteDataSource {
@@ -18,4 +20,5 @@ public class MealsRemoteDataSource {
     public Observable<MealsResponse> getRandomMeal(){
         return mealsService.randomMeal();
     }
+
 }
