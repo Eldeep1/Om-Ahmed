@@ -28,27 +28,36 @@ public class SearchPresenterImp implements SearchPresenter {
     AreasRepo areasRepo;
     MealsRepo mealsRepo;
 
+    List<Meal> allMeals;
     public SearchPresenterImp(SearchViewInterface searchView, Context context,OnSearchItemClick onSearchItemClick) {
         this.searchView = searchView;
         categoriesRepo = new CategoriesRepo();
         areasRepo = new AreasRepo();
         mealsRepo = new MealsRepo(context);
         this.onSearchItemClick=onSearchItemClick;
+        allMeals=new ArrayList<>();
     }
 
     @Override
     public void getSearchMeals(String selectedCountry, String selectedCategory) {
         //call view method that shows list of meals
         //like passing the meals as a parameter
+        searchView.setMeals(new ArrayList<>());
         Disposable subscribe = mealsRepo.getAllMeals().subscribeOn(Schedulers.io())
                 .onErrorResumeNext(throwable -> observer -> {}).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        meals -> searchView.showMeals(meals)
+                        meals -> {
+                            allMeals.addAll(meals);
+                            if(selectedCategory.equals("All Categories")){
+                                searchView.showMeals(meals);
+                            }
+                            else{
+                                List<Meal> filteredMeals = meals.stream()
+                                        .filter(meal -> meal.strCategory.equals(selectedCategory)).collect(Collectors.toList());
+                                searchView.showMeals(filteredMeals);
+                            }
+                        }
                 );
-        if (selectedCategory.equals("All Categories")) {
-
-        }
-
     }
 
     @Override

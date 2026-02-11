@@ -105,6 +105,13 @@ public class HomePresenterImp implements HomePresenter {
         homeView.navigateToMealDetails(bundle);
     }
 
+    @Override
+    public void navigateToSearch(String category) {
+        Bundle result = new Bundle();
+        result.putString("category", category);
+        homeView.onCategoryClickAction(result);
+    }
+
     private List<Character> getDailyChars() {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
 

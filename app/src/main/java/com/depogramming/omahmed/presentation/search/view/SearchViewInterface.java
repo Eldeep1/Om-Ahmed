@@ -10,4 +10,5 @@ public interface SearchViewInterface {
     void showMeals(List<Meal> meals);
     void showCategories(List<Category> categories);
     void showCountries(List<CountryModel> countries);
+    void setMeals(List<Meal> meals);
 }

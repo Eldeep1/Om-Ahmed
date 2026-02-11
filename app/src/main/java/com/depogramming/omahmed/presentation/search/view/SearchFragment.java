@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,6 +29,7 @@ import com.depogramming.omahmed.presentation.search.presentation.SearchPresenter
 import com.depogramming.omahmed.presentation.search.presentation.SearchPresenterImp;
 import com.depogramming.omahmed.presentation.search.view.utils.CustomDropdown;
 import com.google.android.material.button.MaterialButton;
+
 import java.util.List;
 
 public class SearchFragment extends Fragment implements OnDropDownItemSelected, SearchViewInterface, OnSearchItemClick {
@@ -41,6 +43,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
 
     private String selectedCategory = "All Categories";
     private String selectedCountry = "All Countries";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,23 +52,37 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         categoriesButton = view.findViewById(R.id.categoriesButton);
         countriesButton = view.findViewById(R.id.countriesButton);
         RecyclerView searchResultsRecyclerView = view.findViewById(R.id.searchResultsRecyclerView);
-        searchResultsRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(),2,LinearLayoutManager.VERTICAL,false));
+        searchResultsRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false));
         searchedMealsAdapter = new SearchedMealsAdapter(this);
         searchResultsRecyclerView.setAdapter(searchedMealsAdapter);
         searchEditText = view.findViewById(R.id.searchEditText);
         backButton = view.findViewById(R.id.backButton);
 
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, bundle) -> {
+            if (bundle.getString("category") != null) {
+                selectedCategory = bundle.getString("category");
+                System.out.println("yaaaaay");
+                categoriesButton.setText(selectedCategory);
+            }
+        });
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        customDropdown= new CustomDropdown(this);
+        customDropdown = new CustomDropdown(this);
 
-        presenter = new SearchPresenterImp(this, requireContext(),this);
+        presenter = new SearchPresenterImp(this, requireContext(), this);
         setupSearchBar();
         //if bundle is not null, then get meals where category equals bundle's category
+
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey("category")) {
+            System.out.println("interestinggggg");
+            selectedCategory = bundle.getString("category");
+            categoriesButton.setText(selectedCategory);
+        }
         presenter.getSearchMeals(selectedCountry, selectedCategory);
         presenter.getAreas();
         presenter.getCategories();
@@ -80,7 +97,8 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         // Search text change listener
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -88,12 +106,14 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
                 if (s.length() > 0) {
 
 
-                // Perform search
+                    // Perform search
 //                performSearch(s.toString());
-            }}
+                }
+            }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         // Search action from keyboard
@@ -107,6 +127,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         });
 
     }
+
     private void hideKeyboard() {
 
 
@@ -117,6 +138,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
             imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
         }
     }
+
     @Override
     public void showMeals(List<Meal> meals) {
         searchedMealsAdapter.addToList(meals);
@@ -128,8 +150,13 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         });
     }
 
-    public void showCountries(List<CountryModel> countries){
-        countriesButton.setOnClickListener(view -> customDropdown.showCountries(requireContext(),view,countries));
+    public void showCountries(List<CountryModel> countries) {
+        countriesButton.setOnClickListener(view -> customDropdown.showCountries(requireContext(), view, countries));
+    }
+
+    @Override
+    public void setMeals(List<Meal> meals) {
+        searchedMealsAdapter.setMeals(meals);
     }
 
 
@@ -178,7 +205,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
 
     @Override
     public void onHeartClicked(Meal meal, int position) {
-        presenter.toggleFavourite(meal,position);
+        presenter.toggleFavourite(meal, position);
     }
 
     @Override

@@ -16,10 +16,11 @@ import com.depogramming.omahmed.data.home.models.Category;
 
 import java.util.List;
 
-public class HorizontalCategoriesAdapter extends RecyclerView.Adapter<HorizontalCategoriesAdapter.ViewHolder> {
+public class HorizontalCategoriesAdapter extends RecyclerView.Adapter<HorizontalCategoriesAdapter.ViewHolder>{
     private List<Category> categories;
-
-    public HorizontalCategoriesAdapter() {
+    CategoriesView categoriesView;
+    public HorizontalCategoriesAdapter(CategoriesView categoriesView) {
+        this.categoriesView=categoriesView;
     }
 
     @NonNull
@@ -46,7 +47,7 @@ public class HorizontalCategoriesAdapter extends RecyclerView.Adapter<Horizontal
 
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView imageView;
         private final TextView textView;
@@ -61,6 +62,7 @@ public class HorizontalCategoriesAdapter extends RecyclerView.Adapter<Horizontal
             Glide.with(itemView)
                     .load(category.getStrCategoryThumb())
                     .into(imageView);
+            itemView.setOnClickListener(view -> categoriesView.onCategoryClick(category.getStrCategory()));
         }
     }
 }
