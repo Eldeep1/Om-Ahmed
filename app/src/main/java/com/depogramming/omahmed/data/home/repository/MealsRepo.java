@@ -11,6 +11,7 @@ import com.depogramming.omahmed.data.home.models.MealsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
@@ -35,7 +36,7 @@ public class MealsRepo {
                 ); // emit Meal one by one
     }
 
-    private Observable<List<Meal>> searchForMealsByFirstChar(char c) {
+    public Observable<List<Meal>> searchForMealsByFirstChar(char c) {
         return Observable.combineLatest(
                 mealsRemoteDataSource
                         .searchForMealsByFirstChar(c)
@@ -67,10 +68,10 @@ public class MealsRepo {
         );
     }
 
-    public Observable<Meal> getDailyMeal() {
+    public Observable<Meal> getDailyMeal(char c) {
         return Observable.combineLatest(
                 mealsRemoteDataSource
-                        .getRandomMeal()
+                        .searchForMealsByFirstChar(c)
                         .map(r -> r.getMeals().get(0)),
 
                 mealsLocalDataSource.getAllMeals(),
