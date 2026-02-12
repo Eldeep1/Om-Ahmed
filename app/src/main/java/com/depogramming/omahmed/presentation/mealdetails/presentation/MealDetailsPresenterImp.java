@@ -17,14 +17,16 @@ import com.depogramming.omahmed.presentation.mealdetails.view.MealDetailsView;
 import java.util.Date;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealDetailsPresenterImp implements MealDetailsPresenter {
-    private final MealDetailsView view;
+    private MealDetailsView view;
     private final MealsPlanRepo mealsPlanRepo;
     private final MealsRepo mealsRepo;
     Meal meal;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     public MealDetailsPresenterImp(MealDetailsView view, Meal meal, Context context) {
         this.view = view;
@@ -45,13 +47,13 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
         if (UserData.isGuest) {
             GuestModeDialog.show(context);
         } else {
-            Disposable subscribe = mealsRepo.toggleFavourite(meal)
+            disposables.add(mealsRepo.toggleFavourite(meal)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
                         meal.isFav = !meal.isFav;
                         view.toggleFavouriteButton(meal.isFav);
-                    });
+                    }));
         }
     }
 
@@ -61,10 +63,10 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
             GuestModeDialog.show(context);
         } else {
             MealsPlanModel mealPlan = MealMapper.toMealPlanner(meal, date);
-            Disposable subscribe = mealsPlanRepo.insertPlanned(mealPlan)
+            disposables.add(mealsPlanRepo.insertPlanned(mealPlan)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(view::addToPlannerSuccess);
+                    .subscribe(view::addToPlannerSuccess));
         }
 
     }
@@ -72,5 +74,11 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
     @Override
     public void backButton() {
         view.backButtonClicked();
+    }
+
+    @Override
+    public void clear() {
+        disposables.clear();
+        view = null;
     }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -25,12 +26,14 @@ public class PlannerPresenterImp implements PlannerPresenter {
     MealsPlanRepo mealsPlanRepo;
     CalenderView calenderView;
     OnPlannedMealClick onPlannedMealClick;
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
 
     public PlannerPresenterImp(CalenderView calenderView, OnPlannedMealClick onPlannedMealClick, Context context) {
         this.calenderView = calenderView;
         currentCalendar = Calendar.getInstance();
         mealsPlanRepo = new MealsPlanRepo(context);
-        this.onPlannedMealClick=onPlannedMealClick;
+        this.onPlannedMealClick = onPlannedMealClick;
         loadMealsForToday();
         updateCalendar();
     }
@@ -64,6 +67,7 @@ public class PlannerPresenterImp implements PlannerPresenter {
         calenderView.updateCalendar(generateCalendarDays(currentCalendar));
         updateMonthYear();
     }
+
     private void updateCalendarMonth() {
         calenderView.updateCalenderMonth(generateCalendarDays(currentCalendar));
         updateMonthYear();
@@ -89,33 +93,29 @@ public class PlannerPresenterImp implements PlannerPresenter {
 
     @Override
     public void loadMealsForDay(CalendarDay day, int position) {
-        Disposable subscribe = mealsPlanRepo.getAllPlannedMeals(day.calendar.getTime())
+        disposables.add(mealsPlanRepo.getAllPlannedMeals(day.calendar.getTime())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         mealsPlanModels -> {
-                            for (MealsPlanModel meal:mealsPlanModels) {
+                            for (MealsPlanModel meal : mealsPlanModels) {
                                 System.out.println(meal.isFav);
                             }
                             calenderView.loadDayMeals(mealsPlanModels);
                         },
                         throwable -> System.out.println("interesting" + throwable)
-                );
-
-        //1. get the meals from the database
-        //2. sent the planned meals list to the view
-//        calenderView.loadDayMeals();
+                ));
     }
 
     @Override
     public void removeFromPlanned(MealsPlanModel plannedMeal, int position) {
-        Disposable subscribe = mealsPlanRepo.deletePlannedMeal(plannedMeal).subscribeOn(Schedulers.io())
+        disposables.add(mealsPlanRepo.deletePlannedMeal(plannedMeal).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(
                         () -> {
-                            plannedMeal.isFav=!plannedMeal.isFav;
+                            plannedMeal.isFav = !plannedMeal.isFav;
                             onPlannedMealClick.onRemoveButtonAction(plannedMeal, position);
                         }, throwable -> System.out.println("ما علينا من النقطه دي")
-                );
+                ));
 
     }
 
@@ -135,5 +135,12 @@ public class PlannerPresenterImp implements PlannerPresenter {
                 true
         );
         loadMealsForDay(todayCalendarDay, -1);
+    }
+
+    @Override
+    public void clear() {
+        disposables.clear();
+        calenderView = null;
+        onPlannedMealClick = null;
     }
 }

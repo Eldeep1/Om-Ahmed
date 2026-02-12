@@ -108,6 +108,12 @@ public class LoginFragment extends Fragment implements LoginView {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        loginPresenter.clear();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (lottieAnimationView != null) {

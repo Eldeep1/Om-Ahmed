@@ -11,5 +11,5 @@ public interface SearchPresenter {
     void navigateToMealDetails(Meal meal);
     void toggleFavourite(Meal meal, int position, Context context);
     void searchBySpecificMeal(String query, String selectedCountry, String selectedCategory);
-
+    void clear();
 }

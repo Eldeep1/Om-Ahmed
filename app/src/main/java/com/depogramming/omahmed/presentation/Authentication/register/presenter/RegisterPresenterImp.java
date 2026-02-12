@@ -11,12 +11,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RegisterPresenterImp implements RegisterPresenter {
     RegisterView registerView;
-
+    private final CompositeDisposable disposables = new CompositeDisposable();
     AuthRepo authRepo;
 
     public RegisterPresenterImp(RegisterView registerView) {
@@ -30,8 +31,7 @@ public class RegisterPresenterImp implements RegisterPresenter {
         authRepo.googleAuth(activity).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<>() {
             @Override
             public void onSubscribe(Disposable d) {
-                //TODO:
-                // add 'd' to a CompositeDisposable to prevent memory leaks
+                disposables.add(d);
             }
 
             @Override
@@ -59,8 +59,7 @@ public class RegisterPresenterImp implements RegisterPresenter {
                     .subscribe(new SingleObserver<>() {
                         @Override
                         public void onSubscribe(Disposable d) {
-                            //TODO:
-                            // add 'd' to a CompositeDisposable to prevent memory leaks
+                            disposables.add(d);
                         }
 
                         @Override
@@ -98,5 +97,10 @@ public class RegisterPresenterImp implements RegisterPresenter {
             return false;
         }
         return true;
+    }
+    @Override
+    public void clear() {
+        disposables.clear();
+        registerView = null;
     }
 }

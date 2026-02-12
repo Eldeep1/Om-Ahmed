@@ -122,4 +122,10 @@ public class PlannerFragment extends Fragment implements CalenderView,OnDayClick
         NavHostFragment.findNavController(this)
                 .navigate(R.id.action_plannerFragment_to_mealDetailsFragment, bundle);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        plannerPresenter.clear();
+    }
 }

@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
@@ -31,7 +32,7 @@ public class SearchPresenterImp implements SearchPresenter {
     OnSearchItemClick onSearchItemClick;
     AreasRepo areasRepo;
     MealsRepo mealsRepo;
-
+    private final CompositeDisposable disposables = new CompositeDisposable();
     List<Meal> allMeals;
     private final PublishSubject<Object[]> searchSubject = PublishSubject.create();
 
@@ -43,7 +44,7 @@ public class SearchPresenterImp implements SearchPresenter {
         this.onSearchItemClick = onSearchItemClick;
         allMeals = new ArrayList<>();
 
-        Disposable subscribe = searchSubject
+        disposables.add(searchSubject
                 .debounce(300, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.io())
                 .distinctUntilChanged((oldArr, newArr) ->
                         oldArr[0].equals(newArr[0]) &&
@@ -83,7 +84,7 @@ public class SearchPresenterImp implements SearchPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(filteredMeals -> {
                     searchView.setMeals(filteredMeals);
-                });
+                }));
 
 
     }
@@ -93,7 +94,7 @@ public class SearchPresenterImp implements SearchPresenter {
 
         searchView.setMeals(new ArrayList<>());
 
-        Disposable subscribe = mealsRepo.getAllMeals()
+        disposables.add(mealsRepo.getAllMeals()
                 .subscribeOn(Schedulers.io())
                 .map(meals -> meals.stream()
                         .filter(meal -> {
@@ -114,13 +115,12 @@ public class SearchPresenterImp implements SearchPresenter {
                         throwable -> {
                             //show error page?
                         }
-                );
+                ));
     }
 
     @Override
     public void getAreas() {
-        Disposable disposable =
-                areasRepo.getAreas()
+        disposables.add(areasRepo.getAreas()
                         .subscribeOn(Schedulers.io())
                         .map(areas ->
                                 areas.stream()
@@ -142,13 +142,13 @@ public class SearchPresenterImp implements SearchPresenter {
                         .subscribe(
                                 searchView::showCountries,
                                 Throwable::printStackTrace
-                        );
+                        ));
     }
 
 
     @Override
     public void getCategories() {
-        Disposable subscribe = categoriesRepo.getAllCategories().subscribeOn(Schedulers.io())
+        disposables.add(categoriesRepo.getAllCategories().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).map(
                         categoriesResponse -> {
                             List<Category> result = new ArrayList<>(categoriesResponse.getCategories().size() + 1);
@@ -162,7 +162,7 @@ public class SearchPresenterImp implements SearchPresenter {
                 .subscribe(categoriesResponse -> {
                     searchView.showCategories(categoriesResponse);
                 }, throwable -> {
-                });
+                }));
     }
 
     @Override
@@ -177,14 +177,14 @@ public class SearchPresenterImp implements SearchPresenter {
         if (UserData.isGuest) {
             GuestModeDialog.show(context);
         } else {
-            Disposable subscribe = mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io())
+            disposables.add(mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             () -> {
                                 meal.isFav = !meal.isFav;
                                 onSearchItemClick.onHeartClickedAction(meal, position);
                             }
-                    );
+                    ));
         }
     }
 
@@ -192,4 +192,12 @@ public class SearchPresenterImp implements SearchPresenter {
     public void searchBySpecificMeal(String query, String selectedCountry, String selectedCategory) {
         searchSubject.onNext(new Object[]{query, selectedCountry, selectedCategory});
     }
+
+    @Override
+    public void clear() {
+        disposables.clear();
+        searchView = null;
+        onSearchItemClick = null;
+    }
+
 }

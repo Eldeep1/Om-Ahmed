@@ -13,6 +13,6 @@ public interface HomePresenter {
     void changeDailyMealFavState(Meal meal,Context context);
     void changeRecommendationsFavState(Meal meal, int position, Context context);
     void navigateToMealDetails(Meal meal);
-
+    void clear();
     void navigateToSearch(String category);
 }

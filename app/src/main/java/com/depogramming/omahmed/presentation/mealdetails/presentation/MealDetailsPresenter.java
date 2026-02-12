@@ -12,4 +12,5 @@ public interface MealDetailsPresenter {
 
     void addToPlanner(Date date, Context context);
     void backButton();
+    void clear();
 }

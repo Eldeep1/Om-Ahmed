@@ -5,4 +5,5 @@ import android.app.Activity;
 public interface RegisterPresenter {
     void register(String fullName,String email, String password);
     void googleAuth(Activity activity);
+    public void clear();
 }

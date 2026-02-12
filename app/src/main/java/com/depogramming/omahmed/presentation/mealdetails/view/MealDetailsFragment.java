@@ -129,5 +129,9 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         Navigation.findNavController(getView()).popBackStack();
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        mealDetailsPresenter.clear();
+    }
 }

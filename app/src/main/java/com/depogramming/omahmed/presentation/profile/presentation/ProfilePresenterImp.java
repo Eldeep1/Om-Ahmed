@@ -8,6 +8,7 @@ import com.depogramming.omahmed.presentation.profile.view.ProfileView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -15,26 +16,29 @@ public class ProfilePresenterImp implements ProfilePresenter {
     ProfileView profileView;
     AuthRepo authRepo;
     SyncingRepo syncingRepo;
-    public ProfilePresenterImp(ProfileView profileView, Context context){
-        this.profileView=profileView;
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
+    public ProfilePresenterImp(ProfileView profileView, Context context) {
+        this.profileView = profileView;
         authRepo = new AuthRepo();
         syncingRepo = new SyncingRepo(context);
     }
+
     @Override
     public void onUploadClick() {
 
-        Disposable disposable = syncingRepo.uploadAllUsersData().
+        disposables.add(syncingRepo.uploadAllUsersData().
                 subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(
                         () -> profileView.onUploadClickAction(),
                         throwable -> System.out.println("Interesting")
-                );
+                ));
 
     }
 
     @Override
     public void onDownloadClick() {
-        Disposable disposable = syncingRepo.downloadAllUsersData()
+        disposables.add(syncingRepo.downloadAllUsersData()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         () -> profileView.onDownloadClickAction(),
@@ -42,7 +46,7 @@ public class ProfilePresenterImp implements ProfilePresenter {
                             System.out.println("wtf");
                             throwable.printStackTrace();
                         }
-                );
+                ));
     }
 
     @Override
@@ -50,9 +54,15 @@ public class ProfilePresenterImp implements ProfilePresenter {
         new Thread(() -> authRepo.logout(context)).start();
         profileView.onLogoutClickAction();
     }
+
     @Override
     public void getData() {
         String userName = authRepo.getUserName();
         profileView.setName(userName);
+    }
+    @Override
+    public void clear() {
+        disposables.clear();
+        profileView = null;
     }
 }

@@ -190,5 +190,9 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         searchedMealsAdapter.notifyItemChanged(position);
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.clear();
+    }
 }

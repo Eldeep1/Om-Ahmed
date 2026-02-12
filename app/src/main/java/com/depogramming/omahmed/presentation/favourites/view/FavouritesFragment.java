@@ -80,4 +80,10 @@ public class FavouritesFragment extends Fragment implements FavouritesView, OnHe
         NavHostFragment.findNavController(this)
                 .navigate(R.id.action_favouritesFragment_to_mealDetailsFragment, bundle);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        favouritesPresenter.clear();
+    }
 }

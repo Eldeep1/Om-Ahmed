@@ -182,5 +182,9 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
                 .navigate(R.id.action_homeFragment_to_mealDetailsFragment, bundle);
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        homePresenter.clear();
+    }
 }

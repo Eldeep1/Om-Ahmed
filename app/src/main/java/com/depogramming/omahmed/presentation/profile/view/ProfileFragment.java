@@ -19,7 +19,7 @@ import com.depogramming.omahmed.presentation.profile.presentation.ProfilePresent
 import com.depogramming.omahmed.presentation.profile.presentation.ProfilePresenterImp;
 import com.depogramming.omahmed.utils.UserAlerts;
 
-public class ProfileFragment extends Fragment implements ProfileView{
+public class ProfileFragment extends Fragment implements ProfileView {
 
     LinearLayout uploadDataCard;
     LinearLayout downloadDataCard;
@@ -27,6 +27,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
     TextView nameTextView;
     TextView nameCharTextView;
     ProfilePresenter profilePresenter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,18 +36,18 @@ public class ProfileFragment extends Fragment implements ProfileView{
         uploadDataCard = view.findViewById(R.id.uploadDataCard);
         downloadDataCard = view.findViewById(R.id.downloadDataCard);
         logoutDataCard = view.findViewById(R.id.logoutDataCard);
-        logoutDataCard.setOnClickListener(v->onLogoutClick());
-        uploadDataCard.setOnClickListener(v->onUploadClick());
-        downloadDataCard.setOnClickListener(v->onDownloadClick());
-        nameTextView= view.findViewById(R.id.nameTextView);
-        nameCharTextView= view.findViewById(R.id.nameCharTextView);
+        logoutDataCard.setOnClickListener(v -> onLogoutClick());
+        uploadDataCard.setOnClickListener(v -> onUploadClick());
+        downloadDataCard.setOnClickListener(v -> onDownloadClick());
+        nameTextView = view.findViewById(R.id.nameTextView);
+        nameCharTextView = view.findViewById(R.id.nameCharTextView);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profilePresenter= new ProfilePresenterImp(this,getActivity().getApplicationContext());
+        profilePresenter = new ProfilePresenterImp(this, getActivity().getApplicationContext());
         profilePresenter.getData();
     }
 
@@ -57,7 +58,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     @Override
     public void onUploadClickAction() {
-        UserAlerts.showSnackBar(getView(),"uploaded Successfully");
+        UserAlerts.showSnackBar(getView(), "uploaded Successfully");
     }
 
     @Override
@@ -67,7 +68,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     @Override
     public void onDownloadClickAction() {
-        UserAlerts.showSnackBar(getView(),"Downloaded Successfully");
+        UserAlerts.showSnackBar(getView(), "Downloaded Successfully");
     }
 
     @Override
@@ -86,6 +87,12 @@ public class ProfileFragment extends Fragment implements ProfileView{
     @Override
     public void setName(String name) {
         nameTextView.setText(name);
-        nameCharTextView.setText(name.toUpperCase().charAt(0)+"");
+        nameCharTextView.setText(name.toUpperCase().charAt(0) + "");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        profilePresenter.clear();
     }
 }

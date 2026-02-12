@@ -8,6 +8,6 @@ public interface PlannerPresenter {
     void previousMonth();
     void loadMealsForDay(CalendarDay day, int position);
     void removeFromPlanned(MealsPlanModel meal, int position);
-
+    void clear();
     void navigateToDetails(MealsPlanModel meal);
 }

@@ -99,6 +99,13 @@ public class RegisterFragment extends Fragment implements RegisterView {
         lottieAnimationView.pauseAnimation();
         lottieContainer.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        registerPresenter.clear();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

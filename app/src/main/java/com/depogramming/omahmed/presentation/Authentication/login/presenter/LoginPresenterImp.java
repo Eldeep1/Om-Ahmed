@@ -10,12 +10,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginPresenterImp implements LoginPresenter {
     AuthRepo authRepo;
-
+    private final CompositeDisposable disposables = new CompositeDisposable();
     LoginView loginView;
 
     public LoginPresenterImp(LoginView loginView) {
@@ -29,14 +30,14 @@ public class LoginPresenterImp implements LoginPresenter {
 
         if(validateUser(loginUserDTO)){
             loginView.loginLoading();
-            Disposable subscribe = authRepo.login(loginUserDTO)
+            disposables.add(authRepo.login(loginUserDTO)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(authResult -> {
                                 UserData.isGuest=false;
                                 loginView.loginSuccess();
                             },
-                            throwable -> loginView.loginError(throwable.getMessage()));
+                            throwable -> loginView.loginError(throwable.getMessage())));
         }
 
     }
@@ -91,5 +92,9 @@ public class LoginPresenterImp implements LoginPresenter {
     public void guestLogin() {
         UserData.isGuest=true;
         loginView.guestLogin();
+    }
+    public void clear() {
+        disposables.clear();
+        loginView = null;
     }
 }

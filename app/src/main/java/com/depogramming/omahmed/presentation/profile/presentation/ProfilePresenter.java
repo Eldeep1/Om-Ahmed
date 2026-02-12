@@ -7,4 +7,5 @@ public interface ProfilePresenter {
     void onDownloadClick();
     void onLogoutClick(Context context);
     void getData();
+    void clear();
 }
