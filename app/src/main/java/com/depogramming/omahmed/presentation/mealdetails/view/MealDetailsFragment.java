@@ -49,7 +49,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_meal_details, container, false);
         selectedMealImage = view.findViewById(R.id.selectedMealImage);
         selectedMealFavButton = view.findViewById(R.id.selectedMealFavButton);
@@ -110,7 +110,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         selectedMealFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
         selectedMealFavButton.setOnClickListener(v -> mealDetailsPresenter.toggleFavourite(getActivity()));
         selectedMealTitle.setText(meal.strMeal);
-        selectedMealCategory.setText(meal.strCategory);
+        selectedMealCategory.setText(meal.strArea);
         selectedMealCountry.setText(meal.strCategory);
     }
 

@@ -46,8 +46,8 @@ public class ProfilePresenterImp implements ProfilePresenter {
     }
 
     @Override
-    public void onLogoutClick() {
-        authRepo.logout();
+    public void onLogoutClick(Context context) {
+        new Thread(() -> authRepo.logout(context)).start();
         profileView.onLogoutClickAction();
     }
     @Override

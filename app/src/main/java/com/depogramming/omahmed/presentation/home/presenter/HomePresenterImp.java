@@ -8,11 +8,13 @@ import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.home.view.HomeView;
 import com.depogramming.omahmed.utils.GuestModeDialog;
-import com.depogramming.omahmed.utils.UserAlerts;
 import com.depogramming.omahmed.utils.UserData;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -62,7 +64,7 @@ public class HomePresenterImp implements HomePresenter {
     public void getDailyMeal() {
         homeView.dailyMealLoading();
 
-        Disposable subscribe = mealsRepo.getDailyMeal().subscribeOn(Schedulers.io())
+        Disposable subscribe = mealsRepo.getDailyMeal(generateRandomValidChar()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meal -> homeView.dailyMealSuccessfully(meal),
@@ -136,5 +138,18 @@ public class HomePresenterImp implements HomePresenter {
         }
 
         return Arrays.asList(char1, char2);
+    }
+    private char generateRandomValidChar() {
+        String alphabet = "abcdefghijklmnopqrstuvwyz";
+        long seed = getTodaySeed();
+        Random r = new Random(seed);
+        return alphabet.charAt(r.nextInt(alphabet.length()));
+    }
+
+    private long getTodaySeed() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        String dateString = sdf.format(new Date());
+        return Long.parseLong(dateString)+3;
     }
 }

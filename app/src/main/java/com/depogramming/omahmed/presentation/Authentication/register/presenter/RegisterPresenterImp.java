@@ -25,6 +25,7 @@ public class RegisterPresenterImp implements RegisterPresenter {
     }
 
     public void googleAuth(Activity activity) {
+        UserData.isGuest=false;
         registerView.registerLoading();
         authRepo.googleAuth(activity).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<>() {
             @Override
