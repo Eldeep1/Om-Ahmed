@@ -1,6 +1,7 @@
 package com.depogramming.omahmed.data.network;
 
 
+import com.depogramming.omahmed.data.home.datasource.remote.AreasService;
 import com.depogramming.omahmed.data.home.datasource.remote.CategoriesService;
 import com.depogramming.omahmed.data.home.datasource.remote.MealsService;
 
@@ -12,6 +13,7 @@ public class Network {
     private static Network instance = null;
     private CategoriesService categoryService;
     private MealsService mealsService;
+    private AreasService areasService;
     private final Retrofit retrofit;
     private Network() { // Private constructor
         retrofit = new Retrofit.Builder()
@@ -39,5 +41,11 @@ public class Network {
             mealsService=retrofit.create(MealsService.class);
         }
         return mealsService;
+    }
+    public AreasService getAreasService(){
+        if(areasService==null){
+            areasService=retrofit.create(AreasService.class);
+        }
+        return areasService;
     }
 }

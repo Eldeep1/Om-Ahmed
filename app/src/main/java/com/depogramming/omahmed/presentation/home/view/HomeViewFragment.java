@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -61,7 +63,7 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         categoriesRecyclerView = view.findViewById(R.id.homeCategoriesHorizontalList);
         recommendationsRecyclerView = view.findViewById(R.id.dailyRecommendationsListView);
 
-        horizontalCategoriesAdapter = new HorizontalCategoriesAdapter();
+        horizontalCategoriesAdapter = new HorizontalCategoriesAdapter(this);
         recommendationsAdapter = new RecommendationsAdapter(this);
 
         categoriesRecyclerView.setAdapter(horizontalCategoriesAdapter);
@@ -85,6 +87,7 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
     @Override
     public void categoriesLoading() {
+
     }
 
     @Override
@@ -92,10 +95,23 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         horizontalCategoriesAdapter.setCategories(categories);
     }
 
-
     @Override
     public void categoriesFailed(String errorMessage) {
 
+    }
+
+    @Override
+    public void onCategoryClick(String category) {
+        System.out.println("we have clicked on category");
+        homePresenter.navigateToSearch(category);
+    }
+
+    @Override
+    public void onCategoryClickAction(Bundle result) {
+        getParentFragmentManager().setFragmentResult("category", result);
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.bottomNavigationFragments);
+
+        navController.navigate(R.id.searchFragment, result);
     }
 
     @Override

@@ -12,4 +12,6 @@ public interface HomePresenter {
     void changeDailyMealFavState(Meal meal);
     void changeRecommendationsFavState(Meal meal,int position);
     void navigateToMealDetails(Meal meal);
+
+    void navigateToSearch(String category);
 }
