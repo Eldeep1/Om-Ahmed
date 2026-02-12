@@ -24,4 +24,6 @@ public interface MealsPlanDao {
     Observable<List<MealsPlanModel>> getPlanByDateRange(long startTimestamp, long endTimestamp);
     @Query("SELECT * FROM plan")
     Observable<List<MealsPlanModel>> getAllPlannedMeals();
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertAll(List<MealsPlanModel> meals);
 }

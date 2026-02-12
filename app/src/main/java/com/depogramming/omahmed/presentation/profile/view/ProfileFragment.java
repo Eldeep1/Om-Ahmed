@@ -37,6 +37,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
         logoutDataCard = view.findViewById(R.id.logoutDataCard);
         logoutDataCard.setOnClickListener(v->onLogoutClick());
         uploadDataCard.setOnClickListener(v->onUploadClick());
+        downloadDataCard.setOnClickListener(v->onDownloadClick());
         nameTextView= view.findViewById(R.id.nameTextView);
         nameCharTextView= view.findViewById(R.id.nameCharTextView);
         return view;
@@ -65,7 +66,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     @Override
     public void onDownloadClickAction() {
-
+        UserAlerts.showSnackBar(getView(),"Downloaded Successfully");
     }
 
     @Override

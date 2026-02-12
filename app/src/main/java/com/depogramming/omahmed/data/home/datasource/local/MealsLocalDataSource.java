@@ -29,4 +29,7 @@ public class MealsLocalDataSource {
     public Completable deleteMeal(FavouriteMeals meal) {
         return mealsDao.deleteMeal(meal);
     }
+    public Completable insertAll(List<FavouriteMeals> meals) {
+        return mealsDao.insertAll(meals);
+    }
 }

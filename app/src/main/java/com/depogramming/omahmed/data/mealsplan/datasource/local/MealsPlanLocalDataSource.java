@@ -33,4 +33,8 @@ public class MealsPlanLocalDataSource {
     public Observable<List<MealsPlanModel>> getAllPlannedMeals(){
         return mealsPlanDao.getAllPlannedMeals();
     }
+    public Completable insertAll(List<MealsPlanModel> plans) {
+        return mealsPlanDao.insertAll(plans);
+    }
+
 }

@@ -34,8 +34,15 @@ public class ProfilePresenterImp implements ProfilePresenter {
 
     @Override
     public void onDownloadClick() {
-        //1. download data from firestore
-        //2. show something to the user
+        Disposable disposable = syncingRepo.downloadAllUsersData()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> profileView.onDownloadClickAction(),
+                        throwable -> {
+                            System.out.println("wtf");
+                            throwable.printStackTrace();
+                        }
+                );
     }
 
     @Override

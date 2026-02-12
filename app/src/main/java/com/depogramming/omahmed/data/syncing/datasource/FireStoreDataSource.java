@@ -1,5 +1,7 @@
 package com.depogramming.omahmed.data.syncing.datasource;
 
+import android.util.Pair;
+
 import com.depogramming.omahmed.data.home.models.FavouriteMeals;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,6 +12,7 @@ import com.google.firebase.firestore.WriteBatch;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 
 public class FireStoreDataSource {
 
@@ -55,6 +58,48 @@ public class FireStoreDataSource {
                             emitter.onError(e);
                         }
                     });
+        });
+    }
+    public Single<Pair<List<MealsPlanModel>, List<FavouriteMeals>>> downloadAllUsersData() {
+
+        return Single.create(emitter -> {
+
+            String userId = auth.getCurrentUser().getUid();
+
+            DocumentReference userRef = db.collection("users").document(userId);
+
+            userRef.collection("mealPlans")
+                    .get()
+                    .addOnSuccessListener(planSnapshot -> {
+
+                        List<MealsPlanModel> plans =
+                                planSnapshot.toObjects(MealsPlanModel.class);
+
+                        userRef.collection("favourites")
+                                .get()
+                                .addOnSuccessListener(favSnapshot -> {
+
+                                    List<FavouriteMeals> favourites =
+                                            favSnapshot.toObjects(FavouriteMeals.class);
+
+                                    if (!emitter.isDisposed()) {
+                                        emitter.onSuccess(new Pair<>(plans, favourites));
+                                    }
+
+                                })
+                                .addOnFailureListener(e -> {
+                                    if (!emitter.isDisposed()) {
+                                        emitter.onError(e);
+                                    }
+                                });
+
+                    })
+                    .addOnFailureListener(e -> {
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(e);
+                        }
+                    });
+
         });
     }
 
