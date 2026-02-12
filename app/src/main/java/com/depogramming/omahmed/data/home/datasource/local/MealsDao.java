@@ -23,5 +23,6 @@ public interface MealsDao {
     Observable<List<FavouriteMeals>> getFavourites();
     @Delete
     Completable deleteMeal(FavouriteMeals meal);
-
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertAll(List<FavouriteMeals> meals);
 }

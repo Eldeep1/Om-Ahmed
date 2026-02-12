@@ -29,4 +29,10 @@ public class AuthRepo {
     public Single<FirebaseUser> googleAuth(Activity activity){
        return firebaseDataSource.signInWithGoogle(activity);
     }
+    public void logout(){
+        firebaseDataSource.logout();
+    }
+    public String getUserName(){
+        return firebaseDataSource.getUserName();
+    }
 }

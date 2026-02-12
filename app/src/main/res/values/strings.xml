@@ -31,4 +31,8 @@
     <string name="measurement">MEASUREMENT</string>
     <string name="ingredient">INGREDIENT</string>
     <string name="selected_day_meals">Selected Day Meals</string>
+    <string name="upload_data">Upload Data</string>
+    <string name="logout">Logout</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="download_data">Download Data</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -35,7 +36,12 @@ public class SplashFragment extends Fragment implements SplashView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new Handler().postDelayed(() -> presenter.decideNextScreen(), 4000);
+        if (getActivity().getIntent().getBooleanExtra("SKIP_SPLASH", false)) {
+            // Jump straight to login without showing splash animation/delay
+            NavHostFragment.findNavController(this).navigate(R.id.action_splashFragment_to_loginFragment);
+        } else {
+            new Handler().postDelayed(() -> presenter.decideNextScreen(), 4000);
+        }
     }
 
     private void setupAnimation(View view) {
