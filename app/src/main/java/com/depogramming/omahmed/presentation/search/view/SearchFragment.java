@@ -75,11 +75,9 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
 
         presenter = new SearchPresenterImp(this, requireContext(), this);
         setupSearchBar();
-        //if bundle is not null, then get meals where category equals bundle's category
 
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey("category")) {
-            System.out.println("interestinggggg");
             selectedCategory = bundle.getString("category");
             categoriesButton.setText(selectedCategory);
         }
@@ -105,9 +103,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
                 // Show/hide clear button with animation
                 if (s.length() > 0) {
 
-
-                    // Perform search
-//                performSearch(s.toString());
+                    presenter.searchBySpecificMeal(s.toString(),selectedCountry,selectedCategory);
                 }
             }
 
@@ -129,7 +125,6 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
     }
 
     private void hideKeyboard() {
-
 
         android.view.inputmethod.InputMethodManager imm =
                 (android.view.inputmethod.InputMethodManager)
@@ -164,16 +159,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
     public void onDropDownItemSelected(Category item) {
         selectedCategory = item.getStrCategory();
         categoriesButton.setText(selectedCategory);
-
-        if (item.getStrCategory().equals("All Categories")) {
-            System.out.println("Selected: All Categories");
-
-//                    presenter.searchMeals(null, selectedCountry.equals("All Countries") ? null : selectedCountry);
-        } else {
-            System.out.println("Selected category: " + item.getStrCategory());
-
-//                    presenter.searchMeals(item.getName(), selectedCountry.equals("All Countries") ? null : selectedCountry);
-        }
+        presenter.searchBySpecificMeal(searchEditText.getText().toString(),selectedCountry,selectedCategory);
     }
 
     @Override
@@ -181,15 +167,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         selectedCountry = item.getCountryName();
         countriesButton.setText(selectedCountry);
 
-        if (selectedCountry.equals("All Countries")) {
-            System.out.println("Selected: All Categories");
-
-//                    presenter.searchMeals(null, selectedCountry.equals("All Countries") ? null : selectedCountry);
-        } else {
-            System.out.println("Selected category: " + selectedCountry);
-
-//                    presenter.searchMeals(item.getName(), selectedCountry.equals("All Countries") ? null : selectedCountry);
-        }
+        presenter.searchBySpecificMeal(searchEditText.getText().toString(),selectedCountry,selectedCategory);
     }
 
     @Override

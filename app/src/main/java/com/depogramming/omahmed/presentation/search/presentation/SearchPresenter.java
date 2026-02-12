@@ -7,6 +7,7 @@ public interface SearchPresenter {
     void getAreas();
     void getCategories();
     void navigateToMealDetails(Meal meal);
-
     void toggleFavourite(Meal meal, int position);
+    void searchBySpecificMeal(String query, String selectedCountry, String selectedCategory);
+
 }

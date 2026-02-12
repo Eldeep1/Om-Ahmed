@@ -15,11 +15,13 @@ import com.depogramming.omahmed.presentation.search.view.SearchViewInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class SearchPresenterImp implements SearchPresenter {
     CategoriesRepo categoriesRepo;
@@ -29,33 +31,86 @@ public class SearchPresenterImp implements SearchPresenter {
     MealsRepo mealsRepo;
 
     List<Meal> allMeals;
-    public SearchPresenterImp(SearchViewInterface searchView, Context context,OnSearchItemClick onSearchItemClick) {
+    private final PublishSubject<Object[]> searchSubject = PublishSubject.create();
+
+    public SearchPresenterImp(SearchViewInterface searchView, Context context, OnSearchItemClick onSearchItemClick) {
         this.searchView = searchView;
         categoriesRepo = new CategoriesRepo();
         areasRepo = new AreasRepo();
         mealsRepo = new MealsRepo(context);
-        this.onSearchItemClick=onSearchItemClick;
-        allMeals=new ArrayList<>();
+        this.onSearchItemClick = onSearchItemClick;
+        allMeals = new ArrayList<>();
+
+        Disposable subscribe = searchSubject
+                .debounce(300, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.io())
+                .distinctUntilChanged((oldArr, newArr) ->
+                        oldArr[0].equals(newArr[0]) &&
+                                oldArr[1].equals(newArr[1]) &&
+                                oldArr[2].equals(newArr[2])
+                )
+                .map(arr -> {
+
+                    String query = (String) arr[0];
+                    String country = (String) arr[1];
+                    String category = (String) arr[2];
+
+                    List<Meal> result = new ArrayList<>();
+
+                    for (Meal meal : allMeals) {
+
+                        boolean matchesQuery =
+                                query == null || query.isEmpty()
+                                        || meal.strMeal.toLowerCase()
+                                        .contains(query.toLowerCase());
+
+                        boolean matchesCategory =
+                                category.equals("All Categories")
+                                        || meal.strCategory.equals(category);
+
+                        boolean matchesCountry =
+                                country.equals("All Countries")
+                                        || meal.strArea.equals(country);
+
+                        if (matchesQuery && matchesCategory && matchesCountry) {
+                            result.add(meal);
+                        }
+                    }
+
+                    return result;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(filteredMeals -> {
+                    searchView.setMeals(filteredMeals);
+                });
+
+
     }
 
     @Override
     public void getSearchMeals(String selectedCountry, String selectedCategory) {
-        //call view method that shows list of meals
-        //like passing the meals as a parameter
+
         searchView.setMeals(new ArrayList<>());
-        Disposable subscribe = mealsRepo.getAllMeals().subscribeOn(Schedulers.io())
-                .onErrorResumeNext(throwable -> observer -> {}).observeOn(AndroidSchedulers.mainThread())
+
+        Disposable subscribe = mealsRepo.getAllMeals()
+                .subscribeOn(Schedulers.io())
+                .map(meals -> meals.stream()
+                        .filter(meal -> {
+                            boolean matchesCategory = selectedCategory.equals("All Categories")
+                                    || meal.strCategory.equals(selectedCategory);
+                            boolean matchesCountry = selectedCountry.equals("All Countries")
+                                    || meal.strArea.equals(selectedCountry);
+                            return matchesCategory && matchesCountry;
+                        })
+                        .collect(Collectors.toList()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> searchView.setMeals(new ArrayList<>()))
                 .subscribe(
-                        meals -> {
-                            allMeals.addAll(meals);
-                            if(selectedCategory.equals("All Categories")){
-                                searchView.showMeals(meals);
-                            }
-                            else{
-                                List<Meal> filteredMeals = meals.stream()
-                                        .filter(meal -> meal.strCategory.equals(selectedCategory)).collect(Collectors.toList());
-                                searchView.showMeals(filteredMeals);
-                            }
+                        filteredMeals -> {
+                            allMeals.addAll(filteredMeals);
+                            searchView.showMeals(filteredMeals);
+                        },
+                        throwable -> {
+                            //show error page?
                         }
                 );
     }
@@ -121,9 +176,14 @@ public class SearchPresenterImp implements SearchPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         () -> {
-                            meal.isFav=!meal.isFav;
+                            meal.isFav = !meal.isFav;
                             onSearchItemClick.onHeartClickedAction(meal, position);
                         }
                 );
+    }
+
+    @Override
+    public void searchBySpecificMeal(String query, String selectedCountry, String selectedCategory) {
+        searchSubject.onNext(new Object[]{query, selectedCountry, selectedCategory});
     }
 }
