@@ -32,4 +32,7 @@ public class AuthRepo {
     public void logout(){
         firebaseDataSource.logout();
     }
+    public String getUserName(){
+        return firebaseDataSource.getUserName();
+    }
 }

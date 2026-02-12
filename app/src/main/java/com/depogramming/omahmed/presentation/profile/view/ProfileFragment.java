@@ -47,6 +47,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         profilePresenter= new ProfilePresenterImp(this,getActivity().getApplicationContext());
+        profilePresenter.getData();
     }
 
     @Override
@@ -85,6 +86,6 @@ public class ProfileFragment extends Fragment implements ProfileView{
     @Override
     public void setName(String name) {
         nameTextView.setText(name);
-        nameCharTextView.setText(name.toUpperCase().charAt(0));
+        nameCharTextView.setText(name.toUpperCase().charAt(0)+"");
     }
 }

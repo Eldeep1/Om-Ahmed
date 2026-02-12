@@ -52,5 +52,7 @@ public class ProfilePresenterImp implements ProfilePresenter {
     }
     @Override
     public void getData() {
+        String userName = authRepo.getUserName();
+        profileView.setName(userName);
     }
 }
