@@ -1,5 +1,6 @@
 package com.depogramming.omahmed.presentation.profile.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.depogramming.omahmed.MainActivity;
 import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.presentation.profile.presentation.ProfilePresenter;
 import com.depogramming.omahmed.presentation.profile.presentation.ProfilePresenterImp;
@@ -32,6 +34,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
         uploadDataCard = view.findViewById(R.id.uploadDataCard);
         downloadDataCard = view.findViewById(R.id.downloadDataCard);
         logoutDataCard = view.findViewById(R.id.logoutDataCard);
+        logoutDataCard.setOnClickListener(v->onLogoutClick());
         nameTextView= view.findViewById(R.id.nameTextView);
         nameCharTextView= view.findViewById(R.id.nameCharTextView);
         return view;
@@ -40,7 +43,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profilePresenter= new ProfilePresenterImp();
+        profilePresenter= new ProfilePresenterImp(this);
     }
 
     @Override
@@ -65,12 +68,15 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     @Override
     public void onLogoutClick() {
-        profilePresenter.onDownloadClick();
+        profilePresenter.onLogoutClick();
     }
 
     @Override
     public void onLogoutClickAction() {
-
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("SKIP_SPLASH", true);
+        startActivity(intent);
     }
 
     @Override

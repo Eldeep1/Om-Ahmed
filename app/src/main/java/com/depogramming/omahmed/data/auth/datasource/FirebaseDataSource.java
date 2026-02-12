@@ -171,4 +171,8 @@ public class FirebaseDataSource {
             }
         });
     }
+
+    public void logout(){
+        mAuth.signOut();
+    }
 }

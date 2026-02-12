@@ -1,6 +1,15 @@
 package com.depogramming.omahmed.presentation.profile.presentation;
 
+import com.depogramming.omahmed.data.auth.repository.AuthRepo;
+import com.depogramming.omahmed.presentation.profile.view.ProfileView;
+
 public class ProfilePresenterImp implements ProfilePresenter {
+    ProfileView profileView;
+    AuthRepo authRepo;
+    public ProfilePresenterImp(ProfileView profileView){
+        this.profileView=profileView;
+        authRepo = new AuthRepo();
+    }
     @Override
     public void onUploadClick() {
         //1. upload data to firestore
@@ -17,10 +26,11 @@ public class ProfilePresenterImp implements ProfilePresenter {
     public void onLogoutClick() {
         //1. just call the firebase logout function
         //2. navigate to login page
+        profileView.onLogoutClickAction();
     }
 
     @Override
     public void getData() {
-        //call firebase to get the user's name
+        authRepo.logout();
     }
 }
