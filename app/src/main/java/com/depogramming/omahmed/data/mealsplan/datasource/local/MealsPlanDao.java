@@ -22,4 +22,6 @@ public interface MealsPlanDao {
     Completable removeFromPlan(MealsPlanModel meal);
     @Query("SELECT * FROM plan WHERE date >= :startTimestamp AND date < :endTimestamp")
     Observable<List<MealsPlanModel>> getPlanByDateRange(long startTimestamp, long endTimestamp);
+    @Query("SELECT * FROM plan")
+    Observable<List<MealsPlanModel>> getAllPlannedMeals();
 }

@@ -17,6 +17,7 @@ import com.depogramming.omahmed.MainActivity;
 import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.presentation.profile.presentation.ProfilePresenter;
 import com.depogramming.omahmed.presentation.profile.presentation.ProfilePresenterImp;
+import com.depogramming.omahmed.utils.UserAlerts;
 
 public class ProfileFragment extends Fragment implements ProfileView{
 
@@ -35,6 +36,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
         downloadDataCard = view.findViewById(R.id.downloadDataCard);
         logoutDataCard = view.findViewById(R.id.logoutDataCard);
         logoutDataCard.setOnClickListener(v->onLogoutClick());
+        uploadDataCard.setOnClickListener(v->onUploadClick());
         nameTextView= view.findViewById(R.id.nameTextView);
         nameCharTextView= view.findViewById(R.id.nameCharTextView);
         return view;
@@ -43,7 +45,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profilePresenter= new ProfilePresenterImp(this);
+        profilePresenter= new ProfilePresenterImp(this,getActivity().getApplicationContext());
     }
 
     @Override
@@ -53,7 +55,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     @Override
     public void onUploadClickAction() {
-
+        UserAlerts.showSnackBar(getView(),"uploaded Successfully");
     }
 
     @Override

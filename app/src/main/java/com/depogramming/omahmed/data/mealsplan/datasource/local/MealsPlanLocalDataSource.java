@@ -29,4 +29,8 @@ public class MealsPlanLocalDataSource {
     public Completable deletePlannedMeal(MealsPlanModel meal) {
         return mealsPlanDao.removeFromPlan(meal);
     }
+
+    public Observable<List<MealsPlanModel>> getAllPlannedMeals(){
+        return mealsPlanDao.getAllPlannedMeals();
+    }
 }
