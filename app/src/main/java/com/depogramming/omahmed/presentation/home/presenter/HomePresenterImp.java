@@ -7,7 +7,9 @@ import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.home.view.HomeView;
+import com.depogramming.omahmed.utils.GuestModeDialog;
 import com.depogramming.omahmed.utils.UserAlerts;
+import com.depogramming.omahmed.utils.UserData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,7 +65,7 @@ public class HomePresenterImp implements HomePresenter {
         Disposable subscribe = mealsRepo.getDailyMeal().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        meal -> homeView.dailyMealSuccessfully(meal) ,
+                        meal -> homeView.dailyMealSuccessfully(meal),
                         throwable -> homeView.dailyMealFailed(throwable.getMessage())
                 );
     }
@@ -76,25 +78,33 @@ public class HomePresenterImp implements HomePresenter {
     }
 
     @Override
-    public void changeDailyMealFavState(Meal meal) {
-        Disposable subscribe = mealsRepo.toggleFavourite(meal)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                    meal.isFav = !meal.isFav;
-                    homeView.updateDailyMealFavState(meal.isFav);
-                });
+    public void changeDailyMealFavState(Meal meal, Context context) {
+        if (UserData.isGuest) {
+            GuestModeDialog.show(context);
+        } else {
+            Disposable subscribe = mealsRepo.toggleFavourite(meal)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> {
+                        meal.isFav = !meal.isFav;
+                        homeView.updateDailyMealFavState(meal.isFav);
+                    });
+        }
     }
 
     @Override
-    public void changeRecommendationsFavState(Meal meal,int position) {
-        Disposable subscribe = mealsRepo.toggleFavourite(meal)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                    meal.isFav = !meal.isFav;
-                    homeView.updateListViewHeart(position, meal.isFav);
-                },throwable -> System.out.println("lol, we got an error"+throwable));
+    public void changeRecommendationsFavState(Meal meal, int position, Context context) {
+        if (UserData.isGuest) {
+            GuestModeDialog.show(context);
+        } else {
+            Disposable subscribe = mealsRepo.toggleFavourite(meal)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> {
+                        meal.isFav = !meal.isFav;
+                        homeView.updateListViewHeart(position, meal.isFav);
+                    }, throwable -> System.out.println("lol, we got an error" + throwable));
+        }
 
     }
 

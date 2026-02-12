@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -183,7 +182,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
 
     @Override
     public void onHeartClicked(Meal meal, int position) {
-        presenter.toggleFavourite(meal, position);
+        presenter.toggleFavourite(meal, position,getActivity());
     }
 
     @Override

@@ -12,6 +12,8 @@ import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.search.view.OnSearchItemClick;
 import com.depogramming.omahmed.presentation.search.view.SearchViewInterface;
+import com.depogramming.omahmed.utils.GuestModeDialog;
+import com.depogramming.omahmed.utils.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,15 +173,19 @@ public class SearchPresenterImp implements SearchPresenter {
     }
 
     @Override
-    public void toggleFavourite(Meal meal, int position) {
-        Disposable subscribe = mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        () -> {
-                            meal.isFav = !meal.isFav;
-                            onSearchItemClick.onHeartClickedAction(meal, position);
-                        }
-                );
+    public void toggleFavourite(Meal meal, int position, Context context) {
+        if (UserData.isGuest) {
+            GuestModeDialog.show(context);
+        } else {
+            Disposable subscribe = mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            () -> {
+                                meal.isFav = !meal.isFav;
+                                onSearchItemClick.onHeartClickedAction(meal, position);
+                            }
+                    );
+        }
     }
 
     @Override

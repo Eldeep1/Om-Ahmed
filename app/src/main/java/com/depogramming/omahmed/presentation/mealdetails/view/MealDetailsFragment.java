@@ -59,14 +59,13 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         selectedMealCountry = view.findViewById(R.id.selectedMealCountry);
         addToPlannerButton = view.findViewById(R.id.addToPlannerButton);
         addToPlannerButton.setOnClickListener(v -> {
-
             MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Select Date")
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).setTheme(R.style.ThemeOverlay_App_DatePicker)
                     .build();
             datePicker.addOnPositiveButtonClickListener(selection -> {
                 Date selectedDate = new Date(selection);
-                mealDetailsPresenter.addToPlanner(selectedDate);
+                mealDetailsPresenter.addToPlanner(selectedDate,getActivity());
             });
 
             datePicker.show(getChildFragmentManager(), "DATE_PICKER");
@@ -109,7 +108,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         Glide.with(getActivity().getApplicationContext()).load(meal.strMealThumb).into(selectedMealImage);
 
         selectedMealFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
-        selectedMealFavButton.setOnClickListener(v -> mealDetailsPresenter.toggleFavourite());
+        selectedMealFavButton.setOnClickListener(v -> mealDetailsPresenter.toggleFavourite(getActivity()));
         selectedMealTitle.setText(meal.strMeal);
         selectedMealCategory.setText(meal.strCategory);
         selectedMealCountry.setText(meal.strCategory);

@@ -54,6 +54,7 @@ public class LoginFragment extends Fragment implements LoginView {
                 view1 -> googleLogin()
         );
         loginButton.setOnClickListener(view1 -> login());
+        loginGuestButton.setOnClickListener(view1 -> loginPresenter.guestLogin());
 
         return view;
     }
@@ -88,6 +89,11 @@ public class LoginFragment extends Fragment implements LoginView {
     public void loginLoading() {
         lottieAnimationView.playAnimation();
         lottieContainer.setVisibility(View.VISIBLE);
+    }
+    @Override
+    public void guestLogin(){
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override

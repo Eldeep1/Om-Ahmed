@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.depogramming.omahmed.data.auth.repository.AuthRepo;
 import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
 import com.depogramming.omahmed.presentation.Authentication.register.view.RegisterView;
+import com.depogramming.omahmed.utils.UserData;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -34,6 +35,7 @@ public class RegisterPresenterImp implements RegisterPresenter {
 
             @Override
             public void onSuccess(FirebaseUser firebaseUser) {
+                UserData.isGuest=false;
                 registerView.registerSuccess();
             }
 
@@ -63,6 +65,7 @@ public class RegisterPresenterImp implements RegisterPresenter {
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             registerView.registerSuccess();
+                            UserData.isGuest=false;
                         }
 
                         @Override
