@@ -24,13 +24,10 @@ public class ProfilePresenterImp implements ProfilePresenter {
 
     @Override
     public void onLogoutClick() {
-        //1. just call the firebase logout function
-        //2. navigate to login page
+        authRepo.logout();
         profileView.onLogoutClickAction();
     }
-
     @Override
     public void getData() {
-        authRepo.logout();
     }
 }
