@@ -110,7 +110,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         selectedMealFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
         selectedMealFavButton.setOnClickListener(v -> mealDetailsPresenter.toggleFavourite(getActivity()));
         selectedMealTitle.setText(meal.strMeal);
-        selectedMealCategory.setText(meal.strCategory);
+        selectedMealCategory.setText(meal.strArea);
         selectedMealCountry.setText(meal.strCategory);
     }
 

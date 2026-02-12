@@ -72,7 +72,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     @Override
     public void onLogoutClick() {
-        profilePresenter.onLogoutClick();
+        profilePresenter.onLogoutClick(getActivity());
     }
 
     @Override
