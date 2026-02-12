@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.depogramming.omahmed.data.auth.login.model.LoginUserDTO;
 import com.depogramming.omahmed.data.auth.repository.AuthRepo;
 import com.depogramming.omahmed.presentation.Authentication.login.view.LoginView;
+import com.depogramming.omahmed.utils.UserData;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -29,7 +30,10 @@ public class LoginPresenterImp implements LoginPresenter {
             Disposable subscribe = authRepo.login(loginUserDTO)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(authResult -> loginView.loginSuccess(),
+                    .subscribe(authResult -> {
+                                UserData.isGuest=false;
+                                loginView.loginSuccess();
+                            },
                             throwable -> loginView.loginError(throwable.getMessage()));
         }
 
@@ -58,6 +62,13 @@ public class LoginPresenterImp implements LoginPresenter {
 
     @Override
     public void googleAuth(Activity activity) {
+        UserData.isGuest=false;
 
+    }
+
+    @Override
+    public void guestLogin() {
+        UserData.isGuest=true;
+        loginView.guestLogin();
     }
 }

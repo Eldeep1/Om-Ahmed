@@ -6,4 +6,5 @@ public interface LoginView {
 
     void loginLoading();
     void validationFailed(String errorMessage);
+    public void guestLogin();
 }

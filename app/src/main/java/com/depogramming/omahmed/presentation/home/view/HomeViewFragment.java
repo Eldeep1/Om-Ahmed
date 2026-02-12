@@ -141,7 +141,7 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         mealOfTheDayTitle.setText(meal.strMeal);
         mealOfTheDayFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
         mealOfTheDayFavButton.setOnClickListener(view -> {
-            homePresenter.changeDailyMealFavState(meal);});
+            homePresenter.changeDailyMealFavState(meal,getActivity());});
         Glide.with(getActivity()).load(meal.strMealThumb).into(mealOfTheDayImage);
         mealOfTheDayDetailsButton.setOnClickListener(v ->
                 homePresenter.navigateToMealDetails(meal)
@@ -163,7 +163,7 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
     @Override
     public void onHeartClicked(Meal meal, int position) {
-        homePresenter.changeRecommendationsFavState(meal,position);
+        homePresenter.changeRecommendationsFavState(meal,position,getActivity());
     }
 
     @Override

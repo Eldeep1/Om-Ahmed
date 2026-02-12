@@ -1,5 +1,7 @@
 package com.depogramming.omahmed;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +19,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.depogramming.omahmed.databinding.ActivityHomeActiivityBinding;
+import com.depogramming.omahmed.utils.GuestModeDialog;
+import com.depogramming.omahmed.utils.UserData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     ActivityHomeActiivityBinding binding;
@@ -63,18 +70,33 @@ public class HomeActivity extends AppCompatActivity {
         );
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
 
+            // List of destination IDs that require a non-guest user
+            List<Integer> restrictedDestinations = Arrays.asList(
+                    R.id.favouritesFragment,
+                    R.id.plannerFragment,
+                    R.id.profileFragment
+            );
+
+            if (UserData.isGuest && restrictedDestinations.contains(destination.getId())) {
+                // Show guest dialog
+                GuestModeDialog.show(this);
+
+                controller.popBackStack();
+                return; // exit early
+            }
+
+            // Adjust visibility for toolbar/bottom nav
             if (destination.getId() == R.id.mealDetailsFragment) {
                 appbarTitle.setVisibility(View.GONE);
                 bottomNavigationView.setVisibility(View.GONE);
-            } else if(destination.getId() == R.id.searchFragment) {
+            } else if (destination.getId() == R.id.searchFragment) {
                 appbarTitle.setVisibility(View.GONE);
+            } else {
+                appbarTitle.setVisibility(View.VISIBLE);
+                bottomNavigationView.setVisibility(View.VISIBLE);
             }
-            else {
-                    appbarTitle.setVisibility(View.VISIBLE);
-                    bottomNavigationView.setVisibility(View.VISIBLE);
-                }
-
         });
+
 
     }
 }
