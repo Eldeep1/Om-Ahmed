@@ -18,7 +18,6 @@ import java.util.Locale;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PlannerPresenterImp implements PlannerPresenter {
@@ -29,13 +28,9 @@ public class PlannerPresenterImp implements PlannerPresenter {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
 
-    public PlannerPresenterImp(CalenderView calenderView, OnPlannedMealClick onPlannedMealClick, Context context) {
-        this.calenderView = calenderView;
+    public PlannerPresenterImp( Context context) {
         currentCalendar = Calendar.getInstance();
         mealsPlanRepo = new MealsPlanRepo(context);
-        this.onPlannedMealClick = onPlannedMealClick;
-        loadMealsForToday();
-        updateCalendar();
     }
 
     private List<CalendarDay> generateCalendarDays(Calendar calendar) {
@@ -142,5 +137,12 @@ public class PlannerPresenterImp implements PlannerPresenter {
         disposables.clear();
         calenderView = null;
         onPlannedMealClick = null;
+    }
+    @Override
+    public void init(CalenderView calenderView, OnPlannedMealClick onPlannedMealClick){
+        this.calenderView=calenderView;
+        this.onPlannedMealClick=onPlannedMealClick;
+        loadMealsForToday();
+        updateCalendar();
     }
 }

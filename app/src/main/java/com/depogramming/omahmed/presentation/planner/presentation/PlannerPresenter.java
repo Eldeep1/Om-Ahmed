@@ -2,6 +2,8 @@ package com.depogramming.omahmed.presentation.planner.presentation;
 
 import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.presentation.planner.view.CalenderView;
+import com.depogramming.omahmed.presentation.planner.view.OnPlannedMealClick;
 
 public interface PlannerPresenter {
     void nextMonth();
@@ -10,4 +12,6 @@ public interface PlannerPresenter {
     void removeFromPlanned(MealsPlanModel meal, int position);
     void clear();
     void navigateToDetails(MealsPlanModel meal);
+
+    void init(CalenderView calenderView, OnPlannedMealClick onPlannedMealClick);
 }
