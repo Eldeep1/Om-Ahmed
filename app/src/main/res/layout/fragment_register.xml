@@ -1,199 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/registerScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
     tools:context=".presentation.Authentication.register.view.RegisterFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".3" />
-
-    <ImageView
-        android:id="@+id/loginPageImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/register_image"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/loginPageTitle"
-        style="@style/Text.OmAhmed.AuthTitles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/sign_up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginPageImage" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signUpFullName"
-        style="@style/Widget.OmAhmed.InputLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/registerScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginPageTitle">
+        android:background="@color/background_color"
+        android:paddingBottom="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signUpFullNameEditText"
-            style="@style/Widget.OmAhmed.InputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/input_height"
-            android:hint="@string/full_name"
-            android:inputType="text" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerEmail"
-        style="@style/Widget.OmAhmed.InputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/signUpFullName"
-        app:layout_constraintStart_toStartOf="@id/signUpFullName"
-        app:layout_constraintTop_toBottomOf="@id/signUpFullName">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signUpEmailEditText"
-            style="@style/Widget.OmAhmed.InputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/input_height"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerPassword"
-        app:passwordToggleEnabled="true"
-        style="@style/Widget.OmAhmed.InputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="@id/registerEmail"
-        app:layout_constraintStart_toStartOf="@id/registerEmail"
-        app:layout_constraintTop_toBottomOf="@id/registerEmail">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signUpPasswordEditText"
-            style="@style/Widget.OmAhmed.InputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/input_height"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <Button
-        android:id="@+id/registerButton"
-        style="@style/Text.OmAhmed.onBoardingButtons"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/sign_up"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@id/registerPassword"
-        app:layout_constraintStart_toStartOf="@id/registerPassword"
-        app:layout_constraintTop_toBottomOf="@id/registerPassword" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/registerGoogleButton"
-        style="@style/Widget.OmAhmed.SocialButton"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/google"
-        app:icon="@drawable/google_icon"
-        app:layout_constraintEnd_toStartOf="@id/registerFacebookButton"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@id/registerButton"
-        app:layout_constraintTop_toBottomOf="@id/registerButton"
-        app:rippleColor="@color/white" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/registerFacebookButton"
-        style="@style/Widget.OmAhmed.SocialButton"
-        android:layout_marginStart="8dp"
-        android:text="@string/facebook"
-        app:icon="@drawable/facebook_icon"
-        app:layout_constraintEnd_toEndOf="@id/registerButton"
-        app:layout_constraintStart_toEndOf="@id/registerGoogleButton"
-        app:layout_constraintTop_toTopOf="@id/registerGoogleButton" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registerGoogleButton">
-
-        <TextView
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="@string/already_have_an_account"
-            android:textColor="@color/oriental_pink"
-            android:textSize="14sp" />
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".3" />
+
+        <ImageView
+            android:id="@+id/loginPageImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/food_image_of_register"
+            android:scaleType="fitXY"
+            android:src="@drawable/register_image"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/loginTextAction"
+            android:id="@+id/loginPageTitle"
+            style="@style/Text.OmAhmed.AuthTitles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="@string/login"
-            android:textColor="@color/button_color"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_marginTop="12dp"
+            android:text="@string/sign_up"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loginPageImage" />
 
-    <FrameLayout
-        android:visibility="gone"
-        android:id="@+id/registerLoadingOverlay"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#80000000"
-        android:elevation="10dp"
-        android:focusable="true"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="@id/registerScreen"
-        app:layout_constraintEnd_toEndOf="@id/registerScreen"
-        app:layout_constraintStart_toStartOf="@id/registerScreen"
-        app:layout_constraintTop_toTopOf="@id/registerScreen">
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/registerLottieAnimation"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signUpFullName"
+            style="@style/Widget.OmAhmed.InputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            app:lottie_autoPlay="false"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/cookingload" />
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loginPageTitle">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signUpFullNameEditText"
+                style="@style/Widget.OmAhmed.InputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:hint="@string/full_name"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerEmail"
+            style="@style/Widget.OmAhmed.InputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/signUpFullName"
+            app:layout_constraintStart_toStartOf="@id/signUpFullName"
+            app:layout_constraintTop_toBottomOf="@id/signUpFullName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signUpEmailEditText"
+                style="@style/Widget.OmAhmed.InputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerPassword"
+            style="@style/Widget.OmAhmed.InputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="@id/registerEmail"
+            app:layout_constraintStart_toStartOf="@id/registerEmail"
+            app:layout_constraintTop_toBottomOf="@id/registerEmail"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signUpPasswordEditText"
+                style="@style/Widget.OmAhmed.InputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/registerButton"
+            style="@style/Text.OmAhmed.onBoardingButtons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/sign_up"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/registerPassword"
+            app:layout_constraintStart_toStartOf="@id/registerPassword"
+            app:layout_constraintTop_toBottomOf="@id/registerPassword" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/registerGoogleButton"
+            style="@style/Widget.OmAhmed.SocialButton"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/google"
+            app:icon="@drawable/google_icon"
+            app:layout_constraintEnd_toStartOf="@id/registerFacebookButton"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="@id/registerButton"
+            app:layout_constraintTop_toBottomOf="@id/registerButton"
+            app:rippleColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/registerFacebookButton"
+            style="@style/Widget.OmAhmed.SocialButton"
+            android:layout_marginStart="8dp"
+            android:text="@string/facebook"
+            app:icon="@drawable/facebook_icon"
+            app:layout_constraintEnd_toEndOf="@id/registerButton"
+            app:layout_constraintStart_toEndOf="@id/registerGoogleButton"
+            app:layout_constraintTop_toTopOf="@id/registerGoogleButton" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registerGoogleButton">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="@string/already_have_an_account"
+                android:textColor="@color/oriental_pink"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/loginTextAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="@string/login"
+                android:textColor="@color/button_color"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/registerLoadingOverlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#80000000"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/registerScreen"
+            app:layout_constraintEnd_toEndOf="@id/registerScreen"
+            app:layout_constraintStart_toStartOf="@id/registerScreen"
+            app:layout_constraintTop_toTopOf="@id/registerScreen">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/registerLottieAnimation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/cookingload" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
