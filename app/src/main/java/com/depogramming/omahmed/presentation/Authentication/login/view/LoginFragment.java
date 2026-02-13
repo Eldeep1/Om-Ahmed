@@ -3,6 +3,7 @@ package com.depogramming.omahmed.presentation.Authentication.login.view;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -22,6 +23,8 @@ import com.depogramming.omahmed.utils.UserAlerts;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 public class LoginFragment extends Fragment implements LoginView {
 
     TextView singUpButton;
@@ -33,6 +36,12 @@ public class LoginFragment extends Fragment implements LoginView {
     LottieAnimationView lottieAnimationView;
     FrameLayout lottieContainer;
     LoginPresenter loginPresenter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loginPresenter=new LoginPresenterImp();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +57,6 @@ public class LoginFragment extends Fragment implements LoginView {
         lottieAnimationView = view.findViewById(R.id.loginLottieAnimation);
         lottieContainer = view.findViewById(R.id.loginLoadingOverlay);
 
-        loginPresenter=new LoginPresenterImp(this);
         singUpButton.setOnClickListener(view1 -> Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment));
         loginGoogleButton.setOnClickListener(
                 view1 -> googleLogin()
@@ -64,8 +72,8 @@ public class LoginFragment extends Fragment implements LoginView {
     }
 
     private void login() {
-        String email=loginEmailEditText.getText().toString();
-        String password=loginPasswordEditText.getText().toString();
+        String email= Objects.requireNonNull(loginEmailEditText.getText()).toString();
+        String password= Objects.requireNonNull(loginPasswordEditText.getText()).toString();
 
         loginPresenter.login(email,password);
     }
@@ -105,6 +113,12 @@ public class LoginFragment extends Fragment implements LoginView {
     private void stopAnimation() {
         lottieAnimationView.pauseAnimation();
         lottieContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loginPresenter.setView(this);
     }
 
     @Override

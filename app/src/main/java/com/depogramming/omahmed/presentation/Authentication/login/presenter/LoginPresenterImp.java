@@ -19,9 +19,8 @@ public class LoginPresenterImp implements LoginPresenter {
     private final CompositeDisposable disposables = new CompositeDisposable();
     LoginView loginView;
 
-    public LoginPresenterImp(LoginView loginView) {
+    public LoginPresenterImp() {
         authRepo = new AuthRepo();
-        this.loginView = loginView;
     }
 
     @Override
@@ -70,8 +69,8 @@ public class LoginPresenterImp implements LoginPresenter {
         authRepo.googleAuth(activity).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<>() {
             @Override
             public void onSubscribe(Disposable d) {
-                //TODO:
-                // add 'd' to a CompositeDisposable to prevent memory leaks
+                disposables.add(d);
+
             }
 
             @Override
@@ -93,6 +92,12 @@ public class LoginPresenterImp implements LoginPresenter {
         UserData.isGuest=true;
         loginView.guestLogin();
     }
+
+    @Override
+    public void setView(LoginView loginView) {
+        this.loginView = loginView;
+    }
+
     public void clear() {
         disposables.clear();
         loginView = null;
