@@ -27,13 +27,13 @@ public class LoginPresenterImp implements LoginPresenter {
     public void login(String email, String password) {
         LoginUserDTO loginUserDTO = new LoginUserDTO(email, password);
 
-        if(validateUser(loginUserDTO)){
+        if (validateUser(loginUserDTO)) {
             loginView.loginLoading();
             disposables.add(authRepo.login(loginUserDTO)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(authResult -> {
-                                UserData.isGuest=false;
+                                UserData.isGuest = false;
                                 loginView.loginSuccess();
                             },
                             throwable -> loginView.loginError(throwable.getMessage())));
@@ -44,27 +44,30 @@ public class LoginPresenterImp implements LoginPresenter {
     private boolean validateUser(LoginUserDTO loginUserDTO) {
 
         if (loginUserDTO.getEmail().trim().isEmpty()) {
-            loginView.validationFailed("Email address is required.");
+            loginView.failedEmailValidation("Email address is required.");
             return false;
         }
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(loginUserDTO.getEmail()).matches()) {
-            loginView.validationFailed("Please enter a valid email address.");
+            loginView.failedEmailValidation("Please enter a valid email address.");
             return false;
+        } else {
+            loginView.successEmailValidation();
         }
         if (loginUserDTO.getPassword().isEmpty()) {
-            loginView.validationFailed("Password cannot be empty.");
+            loginView.failedPasswordValidation("Password cannot be empty.");
             return false;
         }
         if (loginUserDTO.getPassword().length() < 6) {
-            loginView.validationFailed("Password must be at least 6 characters.");
+            loginView.failedPasswordValidation("Password must be at least 6 characters.");
             return false;
         }
+        loginView.successPasswordValidation();
         return true;
     }
 
     @Override
     public void googleAuth(Activity activity) {
-        UserData.isGuest=false;
+        UserData.isGuest = false;
         loginView.loginLoading();
         authRepo.googleAuth(activity).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new SingleObserver<>() {
             @Override
@@ -75,7 +78,7 @@ public class LoginPresenterImp implements LoginPresenter {
 
             @Override
             public void onSuccess(FirebaseUser firebaseUser) {
-                UserData.isGuest=false;
+                UserData.isGuest = false;
                 loginView.loginSuccess();
             }
 
@@ -89,7 +92,7 @@ public class LoginPresenterImp implements LoginPresenter {
 
     @Override
     public void guestLogin() {
-        UserData.isGuest=true;
+        UserData.isGuest = true;
         loginView.guestLogin();
     }
 
