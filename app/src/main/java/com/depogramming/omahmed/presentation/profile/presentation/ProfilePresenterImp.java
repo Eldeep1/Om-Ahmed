@@ -7,9 +7,7 @@ import com.depogramming.omahmed.data.syncing.repo.SyncingRepo;
 import com.depogramming.omahmed.presentation.profile.view.ProfileView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ProfilePresenterImp implements ProfilePresenter {
@@ -18,8 +16,7 @@ public class ProfilePresenterImp implements ProfilePresenter {
     SyncingRepo syncingRepo;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    public ProfilePresenterImp(ProfileView profileView, Context context) {
-        this.profileView = profileView;
+    public ProfilePresenterImp( Context context) {
         authRepo = new AuthRepo();
         syncingRepo = new SyncingRepo(context);
     }
@@ -64,5 +61,9 @@ public class ProfilePresenterImp implements ProfilePresenter {
     public void clear() {
         disposables.clear();
         profileView = null;
+    }
+    @Override
+    public void setView(ProfileView profileView){
+        this.profileView=profileView;
     }
 }
