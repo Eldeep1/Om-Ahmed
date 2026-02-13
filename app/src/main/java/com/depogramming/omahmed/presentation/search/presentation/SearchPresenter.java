@@ -3,6 +3,8 @@ package com.depogramming.omahmed.presentation.search.presentation;
 import android.content.Context;
 
 import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.presentation.search.view.OnSearchItemClick;
+import com.depogramming.omahmed.presentation.search.view.SearchViewInterface;
 
 public interface SearchPresenter {
     void getSearchMeals(String selectedCountry, String selectedCategory);
@@ -12,4 +14,6 @@ public interface SearchPresenter {
     void toggleFavourite(Meal meal, int position, Context context);
     void searchBySpecificMeal(String query, String selectedCountry, String selectedCategory);
     void clear();
+
+    void setViews(OnSearchItemClick onSearchItemClick, SearchViewInterface searchView);
 }

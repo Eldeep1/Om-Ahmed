@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
@@ -36,55 +35,11 @@ public class SearchPresenterImp implements SearchPresenter {
     List<Meal> allMeals;
     private final PublishSubject<Object[]> searchSubject = PublishSubject.create();
 
-    public SearchPresenterImp(SearchViewInterface searchView, Context context, OnSearchItemClick onSearchItemClick) {
-        this.searchView = searchView;
+    public SearchPresenterImp( Context context) {
         categoriesRepo = new CategoriesRepo();
         areasRepo = new AreasRepo();
         mealsRepo = new MealsRepo(context);
-        this.onSearchItemClick = onSearchItemClick;
         allMeals = new ArrayList<>();
-
-        disposables.add(searchSubject
-                .debounce(300, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.io())
-                .distinctUntilChanged((oldArr, newArr) ->
-                        oldArr[0].equals(newArr[0]) &&
-                                oldArr[1].equals(newArr[1]) &&
-                                oldArr[2].equals(newArr[2])
-                )
-                .map(arr -> {
-
-                    String query = (String) arr[0];
-                    String country = (String) arr[1];
-                    String category = (String) arr[2];
-
-                    List<Meal> result = new ArrayList<>();
-
-                    for (Meal meal : allMeals) {
-
-                        boolean matchesQuery =
-                                query == null || query.isEmpty()
-                                        || meal.strMeal.toLowerCase()
-                                        .contains(query.toLowerCase());
-
-                        boolean matchesCategory =
-                                category.equals("All Categories")
-                                        || meal.strCategory.equals(category);
-
-                        boolean matchesCountry =
-                                country.equals("All Countries")
-                                        || meal.strArea.equals(country);
-
-                        if (matchesQuery && matchesCategory && matchesCountry) {
-                            result.add(meal);
-                        }
-                    }
-
-                    return result;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(filteredMeals -> {
-                    searchView.setMeals(filteredMeals);
-                }));
 
 
     }
@@ -198,6 +153,53 @@ public class SearchPresenterImp implements SearchPresenter {
         disposables.clear();
         searchView = null;
         onSearchItemClick = null;
+    }
+    @Override
+    public void setViews(OnSearchItemClick onSearchItemClick, SearchViewInterface searchView){
+        this.onSearchItemClick=onSearchItemClick;
+        this.searchView=searchView;
+
+        disposables.add(searchSubject
+                .debounce(300, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.io())
+                .distinctUntilChanged((oldArr, newArr) ->
+                        oldArr[0].equals(newArr[0]) &&
+                                oldArr[1].equals(newArr[1]) &&
+                                oldArr[2].equals(newArr[2])
+                )
+                .map(arr -> {
+
+                    String query = (String) arr[0];
+                    String country = (String) arr[1];
+                    String category = (String) arr[2];
+
+                    List<Meal> result = new ArrayList<>();
+
+                    for (Meal meal : allMeals) {
+
+                        boolean matchesQuery =
+                                query == null || query.isEmpty()
+                                        || meal.strMeal.toLowerCase()
+                                        .contains(query.toLowerCase());
+
+                        boolean matchesCategory =
+                                category.equals("All Categories")
+                                        || meal.strCategory.equals(category);
+
+                        boolean matchesCountry =
+                                country.equals("All Countries")
+                                        || meal.strArea.equals(country);
+
+                        if (matchesQuery && matchesCategory && matchesCountry) {
+                            result.add(meal);
+                        }
+                    }
+
+                    return result;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(filteredMeals -> {
+                    searchView.setMeals(filteredMeals);
+                }));
     }
 
 }

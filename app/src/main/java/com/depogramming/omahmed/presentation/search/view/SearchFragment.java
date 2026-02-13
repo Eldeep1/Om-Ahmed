@@ -44,6 +44,12 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
     private String selectedCountry = "All Countries";
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter = new SearchPresenterImp(requireContext());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -72,37 +78,26 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         super.onViewCreated(view, savedInstanceState);
         customDropdown = new CustomDropdown(this);
 
-        presenter = new SearchPresenterImp(this, requireContext(), this);
-        setupSearchBar();
 
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey("category")) {
             selectedCategory = bundle.getString("category");
             categoriesButton.setText(selectedCategory);
         }
-        presenter.getSearchMeals(selectedCountry, selectedCategory);
-        presenter.getAreas();
-        presenter.getCategories();
 
     }
 
     private void setupSearchBar() {
-        backButton.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigateUp();
-        });
+        backButton.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
 
-        // Search text change listener
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Show/hide clear button with animation
                 if (s.length() > 0) {
-
-                    presenter.searchBySpecificMeal(s.toString(),selectedCountry,selectedCategory);
+                    presenter.searchBySpecificMeal(s.toString(), selectedCountry, selectedCategory);
                 }
             }
 
@@ -111,10 +106,8 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
             }
         });
 
-        // Search action from keyboard
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                performSearch(searchEditText.getText().toString());
                 hideKeyboard();
                 return true;
             }
@@ -139,9 +132,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
     }
 
     public void showCategories(List<Category> dropdownItems) {
-        categoriesButton.setOnClickListener(view -> {
-            customDropdown.showCategories(requireContext(), view, dropdownItems);
-        });
+        categoriesButton.setOnClickListener(view -> customDropdown.showCategories(requireContext(), view, dropdownItems));
     }
 
     public void showCountries(List<CountryModel> countries) {
@@ -158,7 +149,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
     public void onDropDownItemSelected(Category item) {
         selectedCategory = item.getStrCategory();
         categoriesButton.setText(selectedCategory);
-        presenter.searchBySpecificMeal(searchEditText.getText().toString(),selectedCountry,selectedCategory);
+        presenter.searchBySpecificMeal(searchEditText.getText().toString(), selectedCountry, selectedCategory);
     }
 
     @Override
@@ -166,7 +157,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         selectedCountry = item.getCountryName();
         countriesButton.setText(selectedCountry);
 
-        presenter.searchBySpecificMeal(searchEditText.getText().toString(),selectedCountry,selectedCategory);
+        presenter.searchBySpecificMeal(searchEditText.getText().toString(), selectedCountry, selectedCategory);
     }
 
     @Override
@@ -182,7 +173,7 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
 
     @Override
     public void onHeartClicked(Meal meal, int position) {
-        presenter.toggleFavourite(meal, position,getActivity());
+        presenter.toggleFavourite(meal, position, getActivity());
     }
 
     @Override
@@ -194,5 +185,15 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
     public void onStop() {
         super.onStop();
         presenter.clear();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.setViews(this,this);
+        presenter.getSearchMeals(selectedCountry, selectedCategory);
+        presenter.getAreas();
+        presenter.getCategories();
+        setupSearchBar();
     }
 }
