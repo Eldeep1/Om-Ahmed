@@ -44,6 +44,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mealDetailsPresenter = new MealDetailsPresenterImp(getContext().getApplicationContext());
     }
 
     @Override
@@ -65,33 +66,18 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                     .build();
             datePicker.addOnPositiveButtonClickListener(selection -> {
                 Date selectedDate = new Date(selection);
-                mealDetailsPresenter.addToPlanner(selectedDate,getActivity());
+                mealDetailsPresenter.addToPlanner(selectedDate, getActivity());
             });
 
             datePicker.show(getChildFragmentManager(), "DATE_PICKER");
 
         });
 
-        Meal meal = getArguments().getParcelable("meal");
-        mealDetailsPresenter = new MealDetailsPresenterImp(this, meal, getContext().getApplicationContext());
 
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
 
-        viewPager.setAdapter(new MealDetailsAdapter(getActivity(), meal));
 
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            switch (position) {
-                case 0:
-                    tab.setText("Ingredients");
-                    break;
-                case 1:
-                    tab.setText("Instructions");
-                    break;
-            }
-        }).attach();
-
-        mealDetailsPresenter.getMealIngredients();
         selectedMealBacButton.setOnClickListener(view1 -> mealDetailsPresenter.backButton());
 
         return view;
@@ -100,7 +86,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mealDetailsPresenter.getMealIngredients();
     }
 
     @Override
@@ -133,5 +118,24 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     public void onStop() {
         super.onStop();
         mealDetailsPresenter.clear();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Meal meal = getArguments().getParcelable("meal");
+        mealDetailsPresenter.setView(meal,this);
+        mealDetailsPresenter.getMealIngredients();
+        viewPager.setAdapter(new MealDetailsAdapter(getActivity(), meal));
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Ingredients");
+                    break;
+                case 1:
+                    tab.setText("Instructions");
+                    break;
+            }
+        }).attach();
     }
 }

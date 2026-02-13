@@ -5,11 +5,9 @@ import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 import com.depogramming.omahmed.data.mealsplan.repo.MealsPlanRepo;
 import com.depogramming.omahmed.utils.GuestModeDialog;
 import com.depogramming.omahmed.utils.UserData;
-import com.google.android.material.datepicker.MaterialDatePicker;
 
 import android.content.Context;
 
-import com.depogramming.omahmed.data.home.datasource.local.MealsLocalDataSource;
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.mealdetails.view.MealDetailsView;
@@ -18,7 +16,6 @@ import java.util.Date;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealDetailsPresenterImp implements MealDetailsPresenter {
@@ -28,11 +25,10 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
     Meal meal;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    public MealDetailsPresenterImp(MealDetailsView view, Meal meal, Context context) {
-        this.view = view;
-        this.meal = meal;
+    public MealDetailsPresenterImp(Context context) {
         mealsRepo = new MealsRepo(context);
         mealsPlanRepo = new MealsPlanRepo(context);
+        this.meal = meal;
     }
 
 
@@ -80,5 +76,11 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
     public void clear() {
         disposables.clear();
         view = null;
+    }
+
+    @Override
+    public void setView(Meal meal, MealDetailsView view) {
+        this.view = view;
+        this.meal = meal;
     }
 }
