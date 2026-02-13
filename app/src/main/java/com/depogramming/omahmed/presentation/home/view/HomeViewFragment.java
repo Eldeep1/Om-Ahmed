@@ -2,7 +2,6 @@ package com.depogramming.omahmed.presentation.home.view;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -45,7 +44,7 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homePresenter = new HomePresenterImp(this, getActivity().getApplicationContext());
+        homePresenter = new HomePresenterImp( getActivity().getApplicationContext());
     }
 
     @Override
@@ -75,14 +74,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         recommendationsRecyclerView.setLayoutManager(gridLayoutManager);
         return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        homePresenter.getAllCategories();
-        homePresenter.getDailyRecommendations();
-        homePresenter.getDailyMeal();
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -141,16 +132,19 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         mealOfTheDayTitle.setText(meal.strMeal);
         mealOfTheDayFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
         mealOfTheDayFavButton.setOnClickListener(view -> {
-            homePresenter.changeDailyMealFavState(meal,getActivity());});
+            homePresenter.changeDailyMealFavState(meal, getActivity());
+        });
         Glide.with(getActivity()).load(meal.strMealThumb).into(mealOfTheDayImage);
         mealOfTheDayDetailsButton.setOnClickListener(v ->
                 homePresenter.navigateToMealDetails(meal)
         );
     }
+
     @Override
     public void updateDailyMealFavState(boolean isFav) {
         mealOfTheDayFavButton.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
     }
+
     @Override
     public void dailyMealFailed(String errorMessage) {
 
@@ -163,7 +157,7 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
     @Override
     public void onHeartClicked(Meal meal, int position) {
-        homePresenter.changeRecommendationsFavState(meal,position,getActivity());
+        homePresenter.changeRecommendationsFavState(meal, position, getActivity());
     }
 
     @Override
@@ -172,8 +166,8 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     }
 
     @Override
-    public void updateListViewHeart(int position, boolean isFavourite){
-        recommendationsAdapter.notifyItemChanged(position,isFavourite);
+    public void updateListViewHeart(int position, boolean isFavourite) {
+        recommendationsAdapter.notifyItemChanged(position, isFavourite);
     }
 
     @Override
@@ -186,5 +180,14 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     public void onStop() {
         super.onStop();
         homePresenter.clear();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        homePresenter.setView(this);
+        homePresenter.getAllCategories();
+        homePresenter.getDailyRecommendations();
+        homePresenter.getDailyMeal();
     }
 }

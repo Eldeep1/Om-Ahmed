@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.presentation.home.view.HomeView;
 
 public interface HomePresenter {
     void getAllCategories();
@@ -15,4 +16,5 @@ public interface HomePresenter {
     void navigateToMealDetails(Meal meal);
     void clear();
     void navigateToSearch(String category);
+    void setView(HomeView homeView);
 }

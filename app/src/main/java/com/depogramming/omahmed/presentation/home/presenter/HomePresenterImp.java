@@ -19,7 +19,6 @@ import java.util.Random;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomePresenterImp implements HomePresenter {
@@ -29,8 +28,7 @@ public class HomePresenterImp implements HomePresenter {
     MealsRepo mealsRepo;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    public HomePresenterImp(HomeView homeView, Context context) {
-        this.homeView = homeView;
+    public HomePresenterImp(Context context) {
         this.mealsRepo = new MealsRepo(context);
         this.categoriesRepo = new CategoriesRepo();
     }
@@ -38,13 +36,7 @@ public class HomePresenterImp implements HomePresenter {
     @Override
     public void getAllCategories() {
         homeView.categoriesLoading();
-        disposables.add(categoriesRepo.getAllCategories()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        categories -> homeView.categoriesGotSuccessfully(categories.getCategories()),
-                        throwable -> homeView.categoriesFailed(throwable.getMessage())
-                ));
+        disposables.add(categoriesRepo.getAllCategories().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(categories -> homeView.categoriesGotSuccessfully(categories.getCategories()), throwable -> homeView.categoriesFailed(throwable.getMessage())));
     }
 
     @Override
@@ -52,25 +44,14 @@ public class HomePresenterImp implements HomePresenter {
         homeView.recommendationMealsLoading();
         List<Character> randomChars = getDailyChars();
 
-        //TODO: another disposable here...
-        disposables.add(mealsRepo.getDailyRecommendations(randomChars).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        meals -> homeView.recommendationsMealsSuccessful(meals),
-                        throwable -> homeView.recommendationsMealsFailed(throwable.getMessage())
-                ));
+        disposables.add(mealsRepo.getDailyRecommendations(randomChars).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(meals -> homeView.recommendationsMealsSuccessful(meals), throwable -> homeView.recommendationsMealsFailed(throwable.getMessage())));
     }
 
     @Override
     public void getDailyMeal() {
         homeView.dailyMealLoading();
 
-        disposables.add(mealsRepo.getDailyMeal(generateRandomValidChar()).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        meal -> homeView.dailyMealSuccessfully(meal),
-                        throwable -> homeView.dailyMealFailed(throwable.getMessage())
-                ));
+        disposables.add(mealsRepo.getDailyMeal(generateRandomValidChar()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(meal -> homeView.dailyMealSuccessfully(meal), throwable -> homeView.dailyMealFailed(throwable.getMessage())));
     }
 
     @Override
@@ -85,13 +66,10 @@ public class HomePresenterImp implements HomePresenter {
         if (UserData.isGuest) {
             GuestModeDialog.show(context);
         } else {
-            disposables.add( mealsRepo.toggleFavourite(meal)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                        meal.isFav = !meal.isFav;
-                        homeView.updateDailyMealFavState(meal.isFav);
-                    }));
+            disposables.add(mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
+                meal.isFav = !meal.isFav;
+                homeView.updateDailyMealFavState(meal.isFav);
+            }));
         }
     }
 
@@ -100,13 +78,10 @@ public class HomePresenterImp implements HomePresenter {
         if (UserData.isGuest) {
             GuestModeDialog.show(context);
         } else {
-            disposables.add( mealsRepo.toggleFavourite(meal)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                        meal.isFav = !meal.isFav;
-                        homeView.updateListViewHeart(position, meal.isFav);
-                    }, throwable -> System.out.println("lol, we got an error" + throwable)));
+            disposables.add(mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
+                meal.isFav = !meal.isFav;
+                homeView.updateListViewHeart(position, meal.isFav);
+            }, throwable -> System.out.println("lol, we got an error" + throwable)));
         }
 
     }
@@ -123,6 +98,11 @@ public class HomePresenterImp implements HomePresenter {
         Bundle result = new Bundle();
         result.putString("category", category);
         homeView.onCategoryClickAction(result);
+    }
+
+    @Override
+    public void setView(HomeView homeView) {
+        this.homeView = homeView;
     }
 
     private List<Character> getDailyChars() {
@@ -154,6 +134,7 @@ public class HomePresenterImp implements HomePresenter {
         String dateString = sdf.format(new Date());
         return Long.parseLong(dateString) + 3;
     }
+
     @Override
     public void clear() {
         disposables.clear();
