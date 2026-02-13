@@ -10,33 +10,27 @@ import com.depogramming.omahmed.presentation.favourites.view.FavouritesView;
 import com.depogramming.omahmed.presentation.favourites.view.OnCardClicked;
 import com.depogramming.omahmed.presentation.favourites.view.OnHeartClicked;
 
-import java.util.Collections;
-import java.util.List;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FavouritesPresenterImp implements FavouritesPresenter {
 
-    private  FavouritesView favouritesView;
-    private  OnHeartClicked onHeartClicked;
-    private  OnCardClicked onItemClicked;
+    private FavouritesView favouritesView;
+    private OnHeartClicked onHeartClicked;
+    private OnCardClicked onItemClicked;
     MealsRepo mealsRepo;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
 
-    public FavouritesPresenterImp(Context context, FavouritesView favouritesView, OnHeartClicked onHeartClicked, OnCardClicked onCardClicked) {
-        this.favouritesView = favouritesView;
-        this.onHeartClicked = onHeartClicked;
-        mealsRepo=new MealsRepo(context);
-        this.onItemClicked=onCardClicked;
+    public FavouritesPresenterImp(Context context) {
+        mealsRepo = new MealsRepo(context);
     }
+
     @Override
     public void getAllFavourites() {
         favouritesView.favouritesLoading();
-        disposables.add( mealsRepo.getFavouriteMeals().subscribeOn(Schedulers.io())
+        disposables.add(mealsRepo.getFavouriteMeals().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         favouritesView::favouritesGotSuccessfully,
@@ -60,11 +54,19 @@ public class FavouritesPresenterImp implements FavouritesPresenter {
         bundle.putParcelable("meal", MealMapper.toMeal(favouriteMeals));
         onItemClicked.onCardClickedAction(bundle);
     }
+
     @Override
-    public void clear(){
+    public void clear() {
         disposables.clear();
-        favouritesView=null;
-        onHeartClicked=null;
-        onItemClicked=null;
+        favouritesView = null;
+        onHeartClicked = null;
+        onItemClicked = null;
+    }
+
+    @Override
+    public void setView(FavouritesView favouritesView, OnHeartClicked onHeartClicked, OnCardClicked onCardClicked) {
+        this.favouritesView = favouritesView;
+        this.onHeartClicked=onHeartClicked;
+        this.onItemClicked=onCardClicked;
     }
 }
