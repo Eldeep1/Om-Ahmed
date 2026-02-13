@@ -21,6 +21,9 @@ import com.depogramming.omahmed.HomeActivity;
 import com.depogramming.omahmed.utils.UserAlerts;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Objects;
 
 public class RegisterFragment extends Fragment implements RegisterView {
     Button registerButton;
@@ -32,24 +35,32 @@ public class RegisterFragment extends Fragment implements RegisterView {
     LottieAnimationView lottieAnimationView;
     FrameLayout lottieContainer;
     TextView loginTextAction;
+    TextInputLayout registerPassword;
+    TextInputLayout registerEmail;
+    TextInputLayout registerName;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        registerPresenter= new RegisterPresenterImp(this);
+        registerPresenter = new RegisterPresenterImp(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
-        registerButton=view.findViewById(R.id.registerButton);
-        signUpFullNameEditText=view.findViewById(R.id.signUpFullNameEditText);
-        signUpEmailEditText=view.findViewById(R.id.signUpEmailEditText);
-        signUpPasswordEditText=view.findViewById(R.id.signUpPasswordEditText);
-        lottieAnimationView=view.findViewById(R.id.registerLottieAnimation);
-        lottieContainer =view.findViewById(R.id.registerLoadingOverlay);
-        registerGoogleButton=view.findViewById(R.id.registerGoogleButton);
-        loginTextAction=view.findViewById(R.id.loginTextAction);
+        registerButton = view.findViewById(R.id.registerButton);
+        signUpFullNameEditText = view.findViewById(R.id.signUpFullNameEditText);
+        signUpEmailEditText = view.findViewById(R.id.signUpEmailEditText);
+        signUpPasswordEditText = view.findViewById(R.id.signUpPasswordEditText);
+        lottieAnimationView = view.findViewById(R.id.registerLottieAnimation);
+        lottieContainer = view.findViewById(R.id.registerLoadingOverlay);
+        registerGoogleButton = view.findViewById(R.id.registerGoogleButton);
+        loginTextAction = view.findViewById(R.id.loginTextAction);
+        registerPassword = view.findViewById(R.id.registerPassword);
+        registerEmail = view.findViewById(R.id.registerEmail);
+        registerName = view.findViewById(R.id.signUpFullName);
+
         loginTextAction.setOnClickListener(view1 -> Navigation.findNavController(view).popBackStack());
         registerGoogleButton.setOnClickListener(view1 -> googleRegister());
         registerButton.setOnClickListener(view1 -> register());
@@ -61,11 +72,11 @@ public class RegisterFragment extends Fragment implements RegisterView {
     }
 
     private void register() {
-        String name=signUpFullNameEditText.getText().toString();
-        String email=signUpEmailEditText.getText().toString();
-        String password=signUpPasswordEditText.getText().toString();
+        String name = Objects.requireNonNull(signUpFullNameEditText.getText()).toString();
+        String email = Objects.requireNonNull(signUpEmailEditText.getText()).toString();
+        String password = Objects.requireNonNull(signUpPasswordEditText.getText()).toString();
 
-        registerPresenter.register(name,email,password);
+        registerPresenter.register(name, email, password);
     }
 
 
@@ -78,10 +89,35 @@ public class RegisterFragment extends Fragment implements RegisterView {
             getActivity().finish();
         }
     }
+
     @Override
-    public void registerError(String errorMessage) {
-        stopAnimation();
-        UserAlerts.showSnackBar(getView(),errorMessage);
+    public void registerNameError(String errorMessage) {
+        registerName.setError(errorMessage);
+    }
+
+    @Override
+    public void registerEmailError(String errorMessage) {
+        registerEmail.setError(errorMessage);
+    }
+
+    @Override
+    public void registerPasswordError(String errorMessage) {
+        registerPassword.setError(errorMessage);
+    }
+
+    @Override
+    public void registerNameSuccess() {
+        registerName.setError(null);
+    }
+
+    @Override
+    public void registerEmailSuccess() {
+        registerEmail.setError(null);
+    }
+
+    @Override
+    public void registerPasswordSuccess() {
+        registerPassword.setError(null);
     }
 
     @Override
@@ -91,11 +127,13 @@ public class RegisterFragment extends Fragment implements RegisterView {
     }
 
     @Override
-    public void validationFailed(String errorMessage) {
+    public void registerError(String errorMessage) {
         stopAnimation();
-        UserAlerts.showSnackBar(getView(),errorMessage);
+        UserAlerts.showSnackBar(getView(), errorMessage);
     }
-    private void stopAnimation(){
+
+
+    private void stopAnimation() {
         lottieAnimationView.pauseAnimation();
         lottieContainer.setVisibility(View.GONE);
     }

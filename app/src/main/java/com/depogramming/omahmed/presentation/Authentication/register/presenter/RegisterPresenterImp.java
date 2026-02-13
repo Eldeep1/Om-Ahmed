@@ -77,25 +77,32 @@ public class RegisterPresenterImp implements RegisterPresenter {
     }
     private boolean validateUser(@NonNull RegisterUserDTO userDTO) {
         if (userDTO.getName().trim().isEmpty()) {
-            registerView.validationFailed("Please enter your full name.");
+            registerView.registerNameError("Please enter your full name.");
             return false;
         }
+        else{
+            registerView.registerNameSuccess();
+        }
         if (userDTO.getEmail().trim().isEmpty()) {
-            registerView.validationFailed("Email address is required.");
+            registerView.registerEmailError("Email address is required.");
             return false;
         }
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(userDTO.getEmail()).matches()) {
-            registerView.validationFailed("Please enter a valid email address.");
+            registerView.registerEmailError("Please enter a valid email address.");
             return false;
         }
+        else{
+            registerView.registerEmailSuccess();
+        }
         if (userDTO.getPassword().isEmpty()) {
-            registerView.validationFailed("Password cannot be empty.");
+            registerView.registerPasswordError("Password cannot be empty.");
             return false;
         }
         if (userDTO.getPassword().length() < 6) {
-            registerView.validationFailed("Password must be at least 6 characters.");
+            registerView.registerPasswordError("Password must be at least 6 characters.");
             return false;
         }
+        registerView.registerPasswordSuccess();
         return true;
     }
     @Override

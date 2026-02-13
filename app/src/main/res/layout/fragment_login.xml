@@ -72,7 +72,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:passwordToggleEnabled="true"
-        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/loginEmail"
         app:layout_constraintStart_toStartOf="@id/loginEmail"
         app:layout_constraintTop_toBottomOf="@id/loginEmail">
