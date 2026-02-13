@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.Theme.OmAhmed" parent="Theme.Material3.DayNight.NoActionBar">
-
+        <item name="android:windowBackground">@color/background_color</item>
     </style>
 
     <style name="Text_OmAhmed" parent="TextAppearance.Material3.BodyMedium" />
