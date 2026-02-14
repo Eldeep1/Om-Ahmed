@@ -7,7 +7,6 @@ import com.depogramming.omahmed.data.home.models.Category;
 import java.util.List;
 
 public interface CategoriesView {
-    void categoriesLoading();
     void categoriesGotSuccessfully(List<Category> categories);
     void categoriesFailed(String errorMessage);
     void onCategoryClick(String category);

@@ -12,4 +12,7 @@ public interface HomeView extends CategoriesView, RecommendationMeals, DailyMeal
     void updateListViewHeart(int position, boolean isFavourite);
 
     void navigateToMealDetails(Bundle bundle);
+    void allMealsLoading();
+    void allMealsSuccessfully();
+    void allMealsError();
 }

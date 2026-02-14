@@ -24,6 +24,7 @@ import com.depogramming.omahmed.data.home.models.Category;
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.presentation.home.presenter.HomePresenter;
 import com.depogramming.omahmed.presentation.home.presenter.HomePresenterImp;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
@@ -40,6 +41,8 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     TextView mealOfTheDayCountry;
     TextView mealOfTheDayTitle;
     Button mealOfTheDayDetailsButton;
+     ShimmerFrameLayout shimmerLayout;
+     View homeContent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,13 +76,13 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         recommendationsRecyclerView.setLayoutManager(gridLayoutManager);
+
+        shimmerLayout = view.findViewById(R.id.homeShimmerLayout);
+        homeContent = view.findViewById(R.id.homeContent);
         return view;
     }
 
-    @Override
-    public void categoriesLoading() {
 
-    }
 
     @Override
     public void categoriesGotSuccessfully(List<Category> categories) {
@@ -105,10 +108,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         navController.navigate(R.id.searchFragment, result);
     }
 
-    @Override
-    public void recommendationMealsLoading() {
-
-    }
 
     @Override
     public void recommendationsMealsSuccessful(List<Meal> meals) {
@@ -120,10 +119,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
     }
 
-    @Override
-    public void dailyMealLoading() {
-
-    }
 
     @Override
     public void dailyMealSuccessfully(Meal meal) {
@@ -177,6 +172,23 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     }
 
     @Override
+    public void allMealsLoading() {
+        shimmerLayout.setVisibility(View.VISIBLE);
+        homeContent.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void allMealsSuccessfully() {
+        shimmerLayout.setVisibility(View.GONE);
+        homeContent.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void allMealsError() {
+
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         homePresenter.clear();
@@ -186,8 +198,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     public void onStart() {
         super.onStart();
         homePresenter.setView(this);
-        homePresenter.getAllCategories();
-        homePresenter.getDailyRecommendations();
-        homePresenter.getDailyMeal();
+
     }
 }

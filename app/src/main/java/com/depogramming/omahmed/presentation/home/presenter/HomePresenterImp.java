@@ -3,6 +3,7 @@ package com.depogramming.omahmed.presentation.home.presenter;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.depogramming.omahmed.data.home.models.CategoriesResponse;
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
@@ -18,8 +19,13 @@ import java.util.Locale;
 import java.util.Random;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import kotlin.Triple;
 
 public class HomePresenterImp implements HomePresenter {
 
@@ -34,31 +40,8 @@ public class HomePresenterImp implements HomePresenter {
     }
 
     @Override
-    public void getAllCategories() {
-        homeView.categoriesLoading();
-        disposables.add(categoriesRepo.getAllCategories().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(categories -> homeView.categoriesGotSuccessfully(categories.getCategories()), throwable -> homeView.categoriesFailed(throwable.getMessage())));
-    }
-
-    @Override
-    public void getDailyRecommendations() {
-        homeView.recommendationMealsLoading();
-        List<Character> randomChars = getDailyChars();
-
-        disposables.add(mealsRepo.getDailyRecommendations(randomChars).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(meals -> homeView.recommendationsMealsSuccessful(meals), throwable -> homeView.recommendationsMealsFailed(throwable.getMessage())));
-    }
-
-    @Override
-    public void getDailyMeal() {
-        homeView.dailyMealLoading();
-
-        disposables.add(mealsRepo.getDailyMeal(generateRandomValidChar()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(meal -> homeView.dailyMealSuccessfully(meal), throwable -> homeView.dailyMealFailed(throwable.getMessage())));
-    }
-
-    @Override
     public void retryAllButton() {
-        getAllCategories();
-        getDailyRecommendations();
-        getDailyMeal();
+        initData();
     }
 
     @Override
@@ -83,7 +66,6 @@ public class HomePresenterImp implements HomePresenter {
                 homeView.updateListViewHeart(position, meal.isFav);
             }, throwable -> System.out.println("lol, we got an error" + throwable)));
         }
-
     }
 
     @Override
@@ -103,8 +85,55 @@ public class HomePresenterImp implements HomePresenter {
     @Override
     public void setView(HomeView homeView) {
         this.homeView = homeView;
+        initData();
     }
 
+    @Override
+    public void initData() {
+        homeView.allMealsLoading();
+        disposables.add(
+                Single.zip(
+                                categoriesRepo.getAllCategories().firstOrError(),
+                                mealsRepo.getDailyRecommendations(getDailyChars()).firstOrError(),
+                                mealsRepo.getDailyMeal(generateRandomValidChar()).firstOrError(),
+                                (categories, recommendations, dailyMeal) -> {
+                                    Object[] objects = {categories, recommendations, dailyMeal};
+
+                                    return objects;
+                                }
+                        )
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                objects -> {
+
+                                    CategoriesResponse categoriesResponse =
+                                            (CategoriesResponse) objects[0];
+
+                                    List<Meal> recommendations =
+                                            (List<Meal>) objects[1];
+
+                                    Meal dailyMeal =
+                                            (Meal) objects[2];
+
+                                    homeView.categoriesGotSuccessfully(
+                                            categoriesResponse.getCategories()
+                                    );
+
+                                    homeView.recommendationsMealsSuccessful(recommendations);
+                                    homeView.dailyMealSuccessfully(dailyMeal);
+                                    homeView.allMealsSuccessfully();
+                                },
+                                throwable -> {
+                                    System.out.println("the error is " + throwable.getMessage());
+                                    throwable.printStackTrace();
+                                    // homeView.allMealsFailed();
+                                }
+                        )
+        );
+
+
+    }
     private List<Character> getDailyChars() {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
