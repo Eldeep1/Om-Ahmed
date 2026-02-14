@@ -19,13 +19,9 @@ import java.util.Locale;
 import java.util.Random;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import kotlin.Triple;
 
 public class HomePresenterImp implements HomePresenter {
 
@@ -125,9 +121,7 @@ public class HomePresenterImp implements HomePresenter {
                                     homeView.allMealsSuccessfully();
                                 },
                                 throwable -> {
-                                    System.out.println("the error is " + throwable.getMessage());
-                                    throwable.printStackTrace();
-                                    // homeView.allMealsFailed();
+                                     homeView.allMealsError(throwable.getMessage());
                                 }
                         )
         );

@@ -21,6 +21,7 @@ import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.presentation.mealdetails.presentation.MealDetailsPresenter;
 import com.depogramming.omahmed.presentation.mealdetails.presentation.MealDetailsPresenterImp;
+import com.depogramming.omahmed.utils.UserAlerts;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -106,7 +107,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     @Override
     public void addToPlannerSuccess() {
-        Toast.makeText(requireContext(), "Added Successfully!", Toast.LENGTH_SHORT).show();
+        UserAlerts.showSnackBar(getView(), "Added Successfully!");
     }
 
     @Override

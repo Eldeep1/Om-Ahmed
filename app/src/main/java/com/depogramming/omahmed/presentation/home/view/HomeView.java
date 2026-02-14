@@ -2,8 +2,6 @@ package com.depogramming.omahmed.presentation.home.view;
 
 import android.os.Bundle;
 
-import com.depogramming.omahmed.data.home.models.Meal;
-
 public interface HomeView extends CategoriesView, RecommendationMeals, DailyMeal{
     void updateDailyMealFavState(boolean isFav);
 
@@ -14,5 +12,6 @@ public interface HomeView extends CategoriesView, RecommendationMeals, DailyMeal
     void navigateToMealDetails(Bundle bundle);
     void allMealsLoading();
     void allMealsSuccessfully();
-    void allMealsError();
+    void allMealsError(String message);
+
 }

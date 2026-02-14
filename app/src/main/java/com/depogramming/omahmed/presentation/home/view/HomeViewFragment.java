@@ -184,7 +184,7 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     }
 
     @Override
-    public void allMealsError() {
+    public void allMealsError(String message) {
 
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.depogramming.omahmed.data.auth.repository.AuthRepo;
 import com.depogramming.omahmed.data.syncing.repo.SyncingRepo;
 import com.depogramming.omahmed.presentation.profile.view.ProfileView;
+import com.depogramming.omahmed.utils.UserAlerts;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -38,11 +39,7 @@ public class ProfilePresenterImp implements ProfilePresenter {
         disposables.add(syncingRepo.downloadAllUsersData()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        () -> profileView.onDownloadClickAction(),
-                        throwable -> {
-                            System.out.println("wtf");
-                            throwable.printStackTrace();
-                        }
+                        () -> profileView.onDownloadClickAction()
                 ));
     }
 
