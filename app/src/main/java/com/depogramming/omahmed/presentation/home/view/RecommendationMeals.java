@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface RecommendationMeals {
     void recommendationsMealsSuccessful(List<Meal> meals);
-    void recommendationsMealsFailed(String errorMessage);
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface CategoriesView {
     void categoriesGotSuccessfully(List<Category> categories);
-    void categoriesFailed(String errorMessage);
     void onCategoryClick(String category);
     void onCategoryClickAction(Bundle result);
 }

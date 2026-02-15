@@ -155,5 +155,5 @@
     </androidx.core.widget.NestedScrollView>
 
     <include layout="@layout/home_shimmer"/>
-
+    <include layout="@layout/home_error" />
 </FrameLayout>

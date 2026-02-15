@@ -121,7 +121,7 @@ public class HomePresenterImp implements HomePresenter {
                                     homeView.allMealsSuccessfully();
                                 },
                                 throwable -> {
-                                     homeView.allMealsError(throwable.getMessage());
+                                     homeView.allMealsError();
                                 }
                         )
         );

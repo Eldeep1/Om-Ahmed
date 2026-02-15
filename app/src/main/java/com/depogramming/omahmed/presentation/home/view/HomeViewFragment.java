@@ -3,6 +3,7 @@ package com.depogramming.omahmed.presentation.home.view;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -43,11 +44,12 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     Button mealOfTheDayDetailsButton;
      ShimmerFrameLayout shimmerLayout;
      View homeContent;
-
+    ConstraintLayout homeErrorLayout;
+    Button retryButton;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homePresenter = new HomePresenterImp( getActivity().getApplicationContext());
+        homePresenter = new HomePresenterImp( getActivity());
     }
 
     @Override
@@ -79,6 +81,9 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
         shimmerLayout = view.findViewById(R.id.homeShimmerLayout);
         homeContent = view.findViewById(R.id.homeContent);
+        homeErrorLayout=view.findViewById(R.id.homeErrorLayout);
+        retryButton=view.findViewById(R.id.retryButton);
+        retryButton.setOnClickListener(view1 -> homePresenter.retryAllButton());
         return view;
     }
 
@@ -89,10 +94,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         horizontalCategoriesAdapter.setCategories(categories);
     }
 
-    @Override
-    public void categoriesFailed(String errorMessage) {
-
-    }
 
     @Override
     public void onCategoryClick(String category) {
@@ -113,11 +114,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         recommendationsAdapter.setMeals(meals);
     }
 
-    @Override
-    public void recommendationsMealsFailed(String errorMessage) {
-
-    }
-
 
     @Override
     public void dailyMealSuccessfully(Meal meal) {
@@ -125,9 +121,7 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         mealOfTheDayCountry.setText(meal.strArea);
         mealOfTheDayTitle.setText(meal.strMeal);
         mealOfTheDayFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
-        mealOfTheDayFavButton.setOnClickListener(view -> {
-            homePresenter.changeDailyMealFavState(meal, getActivity());
-        });
+        mealOfTheDayFavButton.setOnClickListener(view -> homePresenter.changeDailyMealFavState(meal, getActivity()));
         Glide.with(getActivity()).load(meal.strMealThumb).into(mealOfTheDayImage);
         mealOfTheDayDetailsButton.setOnClickListener(v ->
                 homePresenter.navigateToMealDetails(meal)
@@ -137,16 +131,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     @Override
     public void updateDailyMealFavState(boolean isFav) {
         mealOfTheDayFavButton.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
-    }
-
-    @Override
-    public void dailyMealFailed(String errorMessage) {
-
-    }
-
-    @Override
-    public void networkError() {
-
     }
 
     @Override
@@ -174,17 +158,21 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     public void allMealsLoading() {
         shimmerLayout.setVisibility(View.VISIBLE);
         homeContent.setVisibility(View.GONE);
+        homeErrorLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void allMealsSuccessfully() {
         shimmerLayout.setVisibility(View.GONE);
         homeContent.setVisibility(View.VISIBLE);
+        homeErrorLayout.setVisibility(View.GONE);
     }
 
     @Override
-    public void allMealsError(String message) {
-
+    public void allMealsError() {
+        shimmerLayout.setVisibility(View.GONE);
+        homeContent.setVisibility(View.GONE);
+        homeErrorLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

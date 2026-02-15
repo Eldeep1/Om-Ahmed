@@ -40,4 +40,7 @@
     <string name="you_must_be_logged_in_to_access_this_feature">You must be logged in to access this feature.</string>
     <string name="food_image_of_the_login_page">food image of the login page</string>
     <string name="food_image_of_register">food_image_of_register</string>
+    <string name="retry">Retry</string>
+    <string name="we_couldn_t_load_the_delicious_recipes_for_you_n_please_check_your_connection_and_try_again">We couldn\'t load the delicious recipes for you.\n Please check your connection and try again.</string>
+    <string name="oops_something_went_n_wrong">Oops! Something went \n wrong .</string>
 </resources>
