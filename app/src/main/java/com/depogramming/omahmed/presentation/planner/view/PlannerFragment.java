@@ -75,9 +75,7 @@ public class PlannerFragment extends Fragment implements CalenderView,OnDayClick
 
     @Override
     public void loadDayMeals(List<MealsPlanModel> mealsPlanModels) {
-        System.out.println("we are here and we should actually remove the message");
         if (mealsPlanModels == null || mealsPlanModels.isEmpty()) {
-            System.out.println("interesting");
             mealsRecyclerView.setVisibility(View.GONE);
             emptyMessageTextView.setVisibility(View.VISIBLE);
         } else {

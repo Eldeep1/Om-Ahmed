@@ -26,7 +26,6 @@ public class SplashPresenterImp implements SplashPresenter {
     @Override
     public void decideNextScreen() {
         boolean finished = userPreferencesRepository.getOnBoardingFlag();
-        System.out.println("hello from splash...");
         if (finished) {
             //TODO: CompositeDisposable again...
             Disposable subscribe = authRepo.getRegisteredUser()

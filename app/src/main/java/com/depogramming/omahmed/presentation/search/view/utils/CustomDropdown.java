@@ -56,7 +56,6 @@ public class CustomDropdown implements OnDropDownItemClickListener {
 
     public void showCountries(Context context, View anchorView, List<CountryModel> countries){
 
-        System.out.println("hello from the custom drop down "+countries.size());
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View dropdownView = inflater.inflate(R.layout.dropdown_menu_layout, null);

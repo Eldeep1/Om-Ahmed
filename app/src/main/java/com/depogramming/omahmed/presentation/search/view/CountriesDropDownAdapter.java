@@ -42,7 +42,6 @@ public class CountriesDropDownAdapter extends RecyclerView.Adapter<CountriesDrop
     }
     public void setCountries(List<CountryModel> categories){
         this.countryModels=categories;
-        System.out.println("interesting actually");
         notifyDataSetChanged();
     }
 

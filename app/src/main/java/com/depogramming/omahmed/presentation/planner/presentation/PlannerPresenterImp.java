@@ -93,9 +93,6 @@ public class PlannerPresenterImp implements PlannerPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         mealsPlanModels -> {
-                            for (MealsPlanModel meal : mealsPlanModels) {
-                                System.out.println(meal.isFav);
-                            }
                             calenderView.loadDayMeals(mealsPlanModels);
                         },
                         throwable -> System.out.println("interesting" + throwable)

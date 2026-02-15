@@ -66,7 +66,6 @@ public class SearchFragment extends Fragment implements OnDropDownItemSelected, 
         getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, bundle) -> {
             if (bundle.getString("category") != null) {
                 selectedCategory = bundle.getString("category");
-                System.out.println("yaaaaay");
                 categoriesButton.setText(selectedCategory);
             }
         });

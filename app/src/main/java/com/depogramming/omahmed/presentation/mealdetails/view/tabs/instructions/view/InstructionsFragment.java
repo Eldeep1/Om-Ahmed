@@ -104,7 +104,6 @@ public class InstructionsFragment extends Fragment implements InstructionsView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("the view destoreeeeed");
         presenter.clear();
         youtubePlayerView.release();
     }

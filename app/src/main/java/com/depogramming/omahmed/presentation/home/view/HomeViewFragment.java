@@ -96,7 +96,6 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
     @Override
     public void onCategoryClick(String category) {
-        System.out.println("we have clicked on category");
         homePresenter.navigateToSearch(category);
     }
 
