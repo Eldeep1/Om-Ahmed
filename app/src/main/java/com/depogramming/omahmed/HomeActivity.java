@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         );
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
 
-            // List of destination IDs that require a non-guest user
+
             List<Integer> restrictedDestinations = Arrays.asList(
                     R.id.favouritesFragment,
                     R.id.plannerFragment,
@@ -78,19 +78,20 @@ public class HomeActivity extends AppCompatActivity {
             );
 
             if (UserData.isGuest && restrictedDestinations.contains(destination.getId())) {
-                // Show guest dialog
+
                 GuestModeDialog.show(this);
 
                 controller.popBackStack();
                 return; // exit early
             }
 
-            // Adjust visibility for toolbar/bottom nav
+
             if (destination.getId() == R.id.mealDetailsFragment) {
                 appbarTitle.setVisibility(View.GONE);
                 bottomNavigationView.setVisibility(View.GONE);
             } else if (destination.getId() == R.id.searchFragment) {
                 appbarTitle.setVisibility(View.GONE);
+                bottomNavigationView.setVisibility(View.VISIBLE);
             } else {
                 appbarTitle.setVisibility(View.VISIBLE);
                 bottomNavigationView.setVisibility(View.VISIBLE);

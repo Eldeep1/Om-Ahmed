@@ -2,10 +2,11 @@ package com.depogramming.omahmed.presentation.home.view;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,10 +22,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Category;
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.categories.Category;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 import com.depogramming.omahmed.presentation.home.presenter.HomePresenter;
 import com.depogramming.omahmed.presentation.home.presenter.HomePresenterImp;
+import com.depogramming.omahmed.utils.UserAlerts;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
@@ -41,11 +44,14 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     TextView mealOfTheDayCountry;
     TextView mealOfTheDayTitle;
     Button mealOfTheDayDetailsButton;
-
+     ShimmerFrameLayout shimmerLayout;
+     View homeContent;
+    ConstraintLayout homeErrorLayout;
+    Button retryButton;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homePresenter = new HomePresenterImp(this, getActivity().getApplicationContext());
+        homePresenter = new HomePresenterImp( getActivity());
     }
 
     @Override
@@ -74,65 +80,48 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         recommendationsRecyclerView.setLayoutManager(gridLayoutManager);
+
+        shimmerLayout = view.findViewById(R.id.homeShimmerLayout);
+        homeContent = view.findViewById(R.id.homeContent);
+        homeErrorLayout=view.findViewById(R.id.homeErrorLayout);
+        retryButton=view.findViewById(R.id.retryButton);
+        retryButton.setOnClickListener(view1 -> homePresenter.retryAllButton());
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        homePresenter.getAllCategories();
-        homePresenter.getDailyRecommendations();
-        homePresenter.getDailyMeal();
-        super.onViewCreated(view, savedInstanceState);
-    }
 
-    @Override
-    public void categoriesLoading() {
-
-    }
 
     @Override
     public void categoriesGotSuccessfully(List<Category> categories) {
         horizontalCategoriesAdapter.setCategories(categories);
     }
 
-    @Override
-    public void categoriesFailed(String errorMessage) {
-
-    }
 
     @Override
     public void onCategoryClick(String category) {
-        System.out.println("we have clicked on category");
         homePresenter.navigateToSearch(category);
     }
 
     @Override
     public void onCategoryClickAction(Bundle result) {
-        getParentFragmentManager().setFragmentResult("category", result);
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.bottomNavigationFragments);
+        NavController navController = Navigation.findNavController(
+                requireActivity(), R.id.bottomNavigationFragments
+        );
 
-        navController.navigate(R.id.searchFragment, result);
+        NavOptions navOptions = new NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setPopUpTo(R.id.homeFragment, true)
+                .build();
+
+        navController.navigate(R.id.searchFragment, result, navOptions);
     }
 
-    @Override
-    public void recommendationMealsLoading() {
-
-    }
 
     @Override
     public void recommendationsMealsSuccessful(List<Meal> meals) {
         recommendationsAdapter.setMeals(meals);
     }
 
-    @Override
-    public void recommendationsMealsFailed(String errorMessage) {
-
-    }
-
-    @Override
-    public void dailyMealLoading() {
-
-    }
 
     @Override
     public void dailyMealSuccessfully(Meal meal) {
@@ -140,30 +129,22 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         mealOfTheDayCountry.setText(meal.strArea);
         mealOfTheDayTitle.setText(meal.strMeal);
         mealOfTheDayFavButton.setImageResource(meal.isFav ? R.drawable.alreadyfav : R.drawable.addfav);
-        mealOfTheDayFavButton.setOnClickListener(view -> {
-            homePresenter.changeDailyMealFavState(meal,getActivity());});
+        mealOfTheDayFavButton.setOnClickListener(view -> homePresenter.changeDailyMealFavState(meal, getActivity()));
         Glide.with(getActivity()).load(meal.strMealThumb).into(mealOfTheDayImage);
         mealOfTheDayDetailsButton.setOnClickListener(v ->
                 homePresenter.navigateToMealDetails(meal)
         );
     }
+
     @Override
-    public void updateDailyMealFavState(boolean isFav) {
+    public void updateDailyMealFavState(boolean isFav, String message) {
         mealOfTheDayFavButton.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
-    }
-    @Override
-    public void dailyMealFailed(String errorMessage) {
-
-    }
-
-    @Override
-    public void networkError() {
-
+        UserAlerts.showSnackBar(getView(),message);
     }
 
     @Override
     public void onHeartClicked(Meal meal, int position) {
-        homePresenter.changeRecommendationsFavState(meal,position,getActivity());
+        homePresenter.changeRecommendationsFavState(meal, position, getActivity());
     }
 
     @Override
@@ -172,8 +153,9 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     }
 
     @Override
-    public void updateListViewHeart(int position, boolean isFavourite){
-        recommendationsAdapter.notifyItemChanged(position,isFavourite);
+    public void updateListViewHeart(int position, boolean isFavourite, String message) {
+        recommendationsAdapter.notifyItemChanged(position, isFavourite);
+        UserAlerts.showSnackBar(getView(), message);
     }
 
     @Override
@@ -182,5 +164,37 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
                 .navigate(R.id.action_homeFragment_to_mealDetailsFragment, bundle);
     }
 
+    @Override
+    public void allMealsLoading() {
+        shimmerLayout.setVisibility(View.VISIBLE);
+        homeContent.setVisibility(View.GONE);
+        homeErrorLayout.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void allMealsSuccessfully() {
+        shimmerLayout.setVisibility(View.GONE);
+        homeContent.setVisibility(View.VISIBLE);
+        homeErrorLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void allMealsError() {
+        shimmerLayout.setVisibility(View.GONE);
+        homeContent.setVisibility(View.GONE);
+        homeErrorLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        homePresenter.clear();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        homePresenter.setView(this);
+
+    }
 }

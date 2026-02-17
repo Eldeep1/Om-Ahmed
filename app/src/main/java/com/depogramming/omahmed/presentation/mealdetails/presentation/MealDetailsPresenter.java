@@ -2,7 +2,8 @@ package com.depogramming.omahmed.presentation.mealdetails.presentation;
 
 import android.content.Context;
 
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
+import com.depogramming.omahmed.presentation.mealdetails.view.MealDetailsView;
 
 import java.util.Date;
 
@@ -12,4 +13,6 @@ public interface MealDetailsPresenter {
 
     void addToPlanner(Date date, Context context);
     void backButton();
+    void clear();
+    void setView(Meal meal, MealDetailsView view);
 }

@@ -1,12 +1,14 @@
 package com.depogramming.omahmed.presentation.Authentication.register.view;
 
-import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
-
 public interface RegisterView {
     void registerSuccess();
 
-    void registerError(String errorMessage);
-
+    void registerNameError(String errorMessage);
+    void registerEmailError(String errorMessage);
+    void registerPasswordError(String errorMessage);
+    void registerNameSuccess();
+    void registerEmailSuccess();
+    void registerPasswordSuccess();
     void registerLoading();
-    void validationFailed(String errorMessage);
+    void registerError(String errorMessage);
 }

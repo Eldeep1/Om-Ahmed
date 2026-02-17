@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="24dp"
+    app:cardBackgroundColor="@color/crater_brown_darker"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/actionDialogueImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/broken_heart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/really_red" />
+
+        <TextView
+            android:id="@+id/actionDialogueTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/actionDialogueImage"
+            app:layout_constraintStart_toStartOf="@id/actionDialogueImage"
+            app:layout_constraintTop_toBottomOf="@id/actionDialogueImage" />
+
+        <TextView
+            android:id="@+id/actionDialogueDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Are you sure you want to remove this
+delicious recipe from your favorites?"
+            android:textColor="@color/oriental_pink"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/actionDialogueImage"
+            app:layout_constraintStart_toStartOf="@id/actionDialogueImage"
+            app:layout_constraintTop_toBottomOf="@id/actionDialogueTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/actionDialogueRemoveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="25dp"
+            android:backgroundTint="@color/crater_brown"
+            android:text="REMOVE"
+            android:textColor="@color/really_red"
+            app:cornerRadius="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/actionDialogueDescription" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/actionDialogueKeepButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/button_color"
+            android:text="KEEP IT"
+            android:textColor="@color/white"
+            app:cornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="@+id/actionDialogueRemoveButton"
+            app:layout_constraintStart_toStartOf="@+id/actionDialogueRemoveButton"
+            app:layout_constraintTop_toBottomOf="@+id/actionDialogueRemoveButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Instructions;
+import com.depogramming.omahmed.data.meals.model.meal.Instructions;
 
 import java.util.ArrayList;
 import java.util.List;

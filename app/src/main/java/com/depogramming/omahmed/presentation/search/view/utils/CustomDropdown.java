@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Category;
-import com.depogramming.omahmed.data.home.models.CountryModel;
+import com.depogramming.omahmed.data.meals.model.categories.Category;
+import com.depogramming.omahmed.data.meals.model.countries.CountryModel;
 import com.depogramming.omahmed.presentation.search.view.CategoriesDropDownAdapter;
 import com.depogramming.omahmed.presentation.search.view.CountriesDropDownAdapter;
 import com.depogramming.omahmed.presentation.search.view.OnDropDownItemClickListener;
@@ -56,7 +56,6 @@ public class CustomDropdown implements OnDropDownItemClickListener {
 
     public void showCountries(Context context, View anchorView, List<CountryModel> countries){
 
-        System.out.println("hello from the custom drop down "+countries.size());
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View dropdownView = inflater.inflate(R.layout.dropdown_menu_layout, null);

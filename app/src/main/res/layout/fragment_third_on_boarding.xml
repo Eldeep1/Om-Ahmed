@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/aimessanger" />
+        app:lottie_rawRes="@raw/offline" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

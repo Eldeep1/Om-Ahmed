@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Ingredients;
-import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.home.models.MealMapper;
+import com.depogramming.omahmed.data.meals.model.meal.Ingredients;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
+import com.depogramming.omahmed.data.meals.model.utils.MealMapper;
 
 import java.util.List;
 

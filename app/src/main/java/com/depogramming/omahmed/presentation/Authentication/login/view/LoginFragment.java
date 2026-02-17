@@ -3,6 +3,7 @@ package com.depogramming.omahmed.presentation.Authentication.login.view;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -21,6 +22,9 @@ import com.depogramming.omahmed.HomeActivity;
 import com.depogramming.omahmed.utils.UserAlerts;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Objects;
 
 public class LoginFragment extends Fragment implements LoginView {
 
@@ -33,10 +37,17 @@ public class LoginFragment extends Fragment implements LoginView {
     LottieAnimationView lottieAnimationView;
     FrameLayout lottieContainer;
     LoginPresenter loginPresenter;
+    TextInputLayout passwordLayout;
+    TextInputLayout emailLayout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loginPresenter = new LoginPresenterImp();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         singUpButton = view.findViewById(R.id.signUpTextAction);
@@ -47,12 +58,11 @@ public class LoginFragment extends Fragment implements LoginView {
         loginGoogleButton = view.findViewById(R.id.loginGoogleButton);
         lottieAnimationView = view.findViewById(R.id.loginLottieAnimation);
         lottieContainer = view.findViewById(R.id.loginLoadingOverlay);
+        passwordLayout = view.findViewById(R.id.loginPassword);
+        emailLayout = view.findViewById(R.id.loginEmail);
 
-        loginPresenter=new LoginPresenterImp(this);
         singUpButton.setOnClickListener(view1 -> Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment));
-        loginGoogleButton.setOnClickListener(
-                view1 -> googleLogin()
-        );
+        loginGoogleButton.setOnClickListener(view1 -> googleLogin());
         loginButton.setOnClickListener(view1 -> login());
         loginGuestButton.setOnClickListener(view1 -> loginPresenter.guestLogin());
 
@@ -64,11 +74,12 @@ public class LoginFragment extends Fragment implements LoginView {
     }
 
     private void login() {
-        String email=loginEmailEditText.getText().toString();
-        String password=loginPasswordEditText.getText().toString();
+        String email = Objects.requireNonNull(loginEmailEditText.getText()).toString();
+        String password = Objects.requireNonNull(loginPasswordEditText.getText()).toString();
 
-        loginPresenter.login(email,password);
+        loginPresenter.login(email, password);
     }
+
     @Override
     public void loginSuccess() {
         Intent intent = new Intent(getActivity(), HomeActivity.class);
@@ -90,21 +101,50 @@ public class LoginFragment extends Fragment implements LoginView {
         lottieAnimationView.playAnimation();
         lottieContainer.setVisibility(View.VISIBLE);
     }
+
+
     @Override
-    public void guestLogin(){
+    public void guestLogin() {
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void validationFailed(String errorMessage) {
-        stopAnimation();
-        UserAlerts.showSnackBar(getView(), errorMessage);
+    public void failedPasswordValidation(String errorMessage) {
+        passwordLayout.setError(errorMessage);
     }
+
+    @Override
+    public void failedEmailValidation(String errorMessage) {
+        emailLayout.setError(errorMessage);
+    }
+
+    @Override
+    public void successPasswordValidation() {
+        passwordLayout.setError(null);
+    }
+
+    @Override
+    public void successEmailValidation() {
+        emailLayout.setError(null);
+    }
+
 
     private void stopAnimation() {
         lottieAnimationView.pauseAnimation();
         lottieContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loginPresenter.setView(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        loginPresenter.clear();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.depogramming.omahmed.presentation.mealdetails.view.tabs.instructions.view;
 
-import com.depogramming.omahmed.data.home.models.Instructions;
+import com.depogramming.omahmed.data.meals.model.meal.Instructions;
 
 import java.util.List;
 

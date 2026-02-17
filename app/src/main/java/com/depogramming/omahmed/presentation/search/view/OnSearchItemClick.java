@@ -2,7 +2,7 @@ package com.depogramming.omahmed.presentation.search.view;
 
 import android.os.Bundle;
 
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 
 public interface OnSearchItemClick {
     void onCardClicked(Meal meal);

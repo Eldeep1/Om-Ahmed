@@ -2,7 +2,6 @@ package com.depogramming.omahmed.presentation.splash.presenter;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import com.depogramming.omahmed.data.auth.repository.AuthRepo;
 import com.depogramming.omahmed.data.onboarding.repository.UserPreferencesRepository;
@@ -26,30 +25,14 @@ public class SplashPresenterImp implements SplashPresenter {
     @Override
     public void decideNextScreen() {
         boolean finished = userPreferencesRepository.getOnBoardingFlag();
-        System.out.println("hello from splash...");
         if (finished) {
-            //TODO: CompositeDisposable again...
             Disposable subscribe = authRepo.getRegisteredUser()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe(d -> Log.d("RxDebug", "Started checking user..."))
-                    .doOnTerminate(() -> Log.d("RxDebug", "Chain terminated"))
                     .subscribe(
-                            firebaseUser -> {
-                                Log.d("RxDebug", "User found: " + firebaseUser.getUid());
-                                Log.d("RxDebug", "User found: " + firebaseUser.getEmail());
-                                Log.d("RxDebug", "User found: " + firebaseUser.getDisplayName());
-                                splashView.navigateToHome();
-                            },
-                            throwable -> {
-                                Log.e("RxDebug", "Error occurred", throwable);
-                                splashView.navigateToLogin();
-                            },
-                            () -> {
-                                // This runs if the Observable completes WITHOUT emitting a user
-                                Log.d("RxDebug", "Completed with NO user (Empty)");
-                                splashView.navigateToLogin();
-                            }
+                            firebaseUser -> splashView.navigateToHome(),
+                            throwable -> splashView.navigateToLogin(),
+                            () -> splashView.navigateToLogin()
                     );
         } else {
             splashView.navigateToOnBoarding();

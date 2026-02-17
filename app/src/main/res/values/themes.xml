@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.Theme.OmAhmed" parent="Theme.Material3.DayNight.NoActionBar">
-
+        <item name="android:windowBackground">@color/background_color</item>
     </style>
 
     <style name="Text_OmAhmed" parent="TextAppearance.Material3.BodyMedium" />
@@ -93,7 +93,11 @@
         <item name="android:background">@drawable/guest_login_button</item>
         <item name="backgroundTint">@null</item>
     </style>
-    <style name="Theme.OmAhmed" parent="Base.Theme.OmAhmed" />
+    <style name="Theme.OmAhmed" parent="Base.Theme.OmAhmed">
+        <item name="android:statusBarColor">@color/crater_brown</item>
+        <item name="android:navigationBarColor">@color/background_color</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 
 
     <style name="Widget.OmAhmed.InputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">

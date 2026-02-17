@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 import com.depogramming.omahmed.presentation.mealdetails.presentation.MealDetailsPresenter;
 import com.depogramming.omahmed.presentation.mealdetails.presentation.MealDetailsPresenterImp;
+import com.depogramming.omahmed.utils.UserAlerts;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -44,6 +44,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mealDetailsPresenter = new MealDetailsPresenterImp(getContext().getApplicationContext());
     }
 
     @Override
@@ -65,33 +66,18 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                     .build();
             datePicker.addOnPositiveButtonClickListener(selection -> {
                 Date selectedDate = new Date(selection);
-                mealDetailsPresenter.addToPlanner(selectedDate,getActivity());
+                mealDetailsPresenter.addToPlanner(selectedDate, getActivity());
             });
 
             datePicker.show(getChildFragmentManager(), "DATE_PICKER");
 
         });
 
-        Meal meal = getArguments().getParcelable("meal");
-        mealDetailsPresenter = new MealDetailsPresenterImp(this, meal, getContext().getApplicationContext());
 
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
 
-        viewPager.setAdapter(new MealDetailsAdapter(getActivity(), meal));
 
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            switch (position) {
-                case 0:
-                    tab.setText("Ingredients");
-                    break;
-                case 1:
-                    tab.setText("Instructions");
-                    break;
-            }
-        }).attach();
-
-        mealDetailsPresenter.getMealIngredients();
         selectedMealBacButton.setOnClickListener(view1 -> mealDetailsPresenter.backButton());
 
         return view;
@@ -100,7 +86,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mealDetailsPresenter.getMealIngredients();
     }
 
     @Override
@@ -115,13 +100,14 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     }
 
     @Override
-    public void toggleFavouriteButton(boolean isFav) {
+    public void toggleFavouriteButton(boolean isFav, String message) {
         selectedMealFavButton.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
+        UserAlerts.showSnackBar(getView(),message);
     }
 
     @Override
     public void addToPlannerSuccess() {
-        Toast.makeText(requireContext(), "Added Successfully!", Toast.LENGTH_SHORT).show();
+        UserAlerts.showSnackBar(getView(), "Added Successfully!");
     }
 
     @Override
@@ -129,5 +115,28 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         Navigation.findNavController(getView()).popBackStack();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        mealDetailsPresenter.clear();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Meal meal = getArguments().getParcelable("meal");
+        mealDetailsPresenter.setView(meal,this);
+        mealDetailsPresenter.getMealIngredients();
+        viewPager.setAdapter(new MealDetailsAdapter(getActivity(), meal));
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Ingredients");
+                    break;
+                case 1:
+                    tab.setText("Instructions");
+                    break;
+            }
+        }).attach();
+    }
 }

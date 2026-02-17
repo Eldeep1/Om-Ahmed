@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.CountryModel;
+import com.depogramming.omahmed.data.meals.model.countries.CountryModel;
 
 import java.util.List;
 
@@ -42,7 +42,6 @@ public class CountriesDropDownAdapter extends RecyclerView.Adapter<CountriesDrop
     }
     public void setCountries(List<CountryModel> categories){
         this.countryModels=categories;
-        System.out.println("interesting actually");
         notifyDataSetChanged();
     }
 

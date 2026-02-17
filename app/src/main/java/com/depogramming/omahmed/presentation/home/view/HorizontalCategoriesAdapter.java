@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Category;
+import com.depogramming.omahmed.data.meals.model.categories.Category;
 
 import java.util.List;
 

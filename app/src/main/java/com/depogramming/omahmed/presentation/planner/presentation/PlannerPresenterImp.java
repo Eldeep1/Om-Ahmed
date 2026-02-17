@@ -3,12 +3,14 @@ package com.depogramming.omahmed.presentation.planner.presentation;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.depogramming.omahmed.data.home.models.MealMapper;
-import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
-import com.depogramming.omahmed.data.mealsplan.repo.MealsPlanRepo;
+import com.depogramming.omahmed.R;
+import com.depogramming.omahmed.data.meals.model.utils.MealMapper;
+import com.depogramming.omahmed.data.meals.repository.MealsRepo;
+import com.depogramming.omahmed.data.meals.model.utils.CalendarDay;
+import com.depogramming.omahmed.data.meals.model.meal.MealsPlanModel;
 import com.depogramming.omahmed.presentation.planner.view.CalenderView;
 import com.depogramming.omahmed.presentation.planner.view.OnPlannedMealClick;
+import com.depogramming.omahmed.utils.ActionCheckingDialogue;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,22 +19,20 @@ import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PlannerPresenterImp implements PlannerPresenter {
     private final Calendar currentCalendar;
-    MealsPlanRepo mealsPlanRepo;
+    MealsRepo mealsRepo;
     CalenderView calenderView;
     OnPlannedMealClick onPlannedMealClick;
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
-    public PlannerPresenterImp(CalenderView calenderView, OnPlannedMealClick onPlannedMealClick, Context context) {
-        this.calenderView = calenderView;
+
+    public PlannerPresenterImp(Context context) {
         currentCalendar = Calendar.getInstance();
-        mealsPlanRepo = new MealsPlanRepo(context);
-        this.onPlannedMealClick=onPlannedMealClick;
-        loadMealsForToday();
-        updateCalendar();
+        mealsRepo = new MealsRepo(context);
     }
 
     private List<CalendarDay> generateCalendarDays(Calendar calendar) {
@@ -64,6 +64,7 @@ public class PlannerPresenterImp implements PlannerPresenter {
         calenderView.updateCalendar(generateCalendarDays(currentCalendar));
         updateMonthYear();
     }
+
     private void updateCalendarMonth() {
         calenderView.updateCalenderMonth(generateCalendarDays(currentCalendar));
         updateMonthYear();
@@ -89,34 +90,34 @@ public class PlannerPresenterImp implements PlannerPresenter {
 
     @Override
     public void loadMealsForDay(CalendarDay day, int position) {
-        Disposable subscribe = mealsPlanRepo.getAllPlannedMeals(day.calendar.getTime())
+        disposables.add(mealsRepo.getAllPlannedMeals(day.calendar.getTime())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        mealsPlanModels -> {
-                            for (MealsPlanModel meal:mealsPlanModels) {
-                                System.out.println(meal.isFav);
-                            }
-                            calenderView.loadDayMeals(mealsPlanModels);
-                        },
+                        mealsPlanModels -> calenderView.loadDayMeals(mealsPlanModels),
                         throwable -> System.out.println("interesting" + throwable)
-                );
-
-        //1. get the meals from the database
-        //2. sent the planned meals list to the view
-//        calenderView.loadDayMeals();
+                ));
     }
 
     @Override
-    public void removeFromPlanned(MealsPlanModel plannedMeal, int position) {
-        Disposable subscribe = mealsPlanRepo.deletePlannedMeal(plannedMeal).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                        () -> {
-                            plannedMeal.isFav=!plannedMeal.isFav;
-                            onPlannedMealClick.onRemoveButtonAction(plannedMeal, position);
-                        }, throwable -> System.out.println("ما علينا من النقطه دي")
-                );
-
+    public void removeFromPlanned(Context context,MealsPlanModel plannedMeal, int position) {
+        ActionCheckingDialogue.show(
+                context,
+                "Remove From Planned",
+                "Are you sure you want to remove this meal from your plans",
+                R.drawable.remove_planner,
+                result -> {
+                    if (result) {
+                        disposables.add(mealsRepo.deletePlannedMeal(plannedMeal).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                                        () -> {
+                                            plannedMeal.isFav = !plannedMeal.isFav;
+                                            onPlannedMealClick.onRemoveButtonAction(plannedMeal, position,"Removed Successfully");
+                                        }, throwable -> System.out.println("ربنا ميجيب ايرورز")
+                                ));
+                    }
+                }
+        );
     }
 
     @Override
@@ -135,5 +136,20 @@ public class PlannerPresenterImp implements PlannerPresenter {
                 true
         );
         loadMealsForDay(todayCalendarDay, -1);
+    }
+
+    @Override
+    public void clear() {
+        disposables.clear();
+        calenderView = null;
+        onPlannedMealClick = null;
+    }
+
+    @Override
+    public void init(CalenderView calenderView, OnPlannedMealClick onPlannedMealClick) {
+        this.calenderView = calenderView;
+        this.onPlannedMealClick = onPlannedMealClick;
+        loadMealsForToday();
+        updateCalendar();
     }
 }
