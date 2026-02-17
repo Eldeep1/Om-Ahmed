@@ -2,46 +2,46 @@
 
 A modern Android application for discovering, saving, and planning your favorite meals. Browse recipes from around the world, save your favorites, and plan your weekly meals with ease.
 
-## Features 
+## Features ✨
 
-###  Home
+### 🏠 Home
 - Daily meal recommendations
 - Browse meals by category
 - View popular recipes
 - Quick access to favorites
 
-###  Search
+### 🔍 Search
 - Search recipes by name
 - Filter by category (Breakfast, Lunch, Dinner, Dessert, etc.)
 - Filter by country/cuisine (American, Italian, Chinese, Egyptian, etc.)
 - Real-time search with debouncing
 - Grid view of search results
 
-### Favorites
+### ❤️ Favorites
 - Save your favorite recipes
 - Quick access to saved meals
 - Toggle favorites on/off
 - Persistent storage
 
-###  Meal Planner
+### 📅  Meal Planner
 - Plan meals for specific dates
 - Calendar view to select dates
 - View planned meals for each day
 - Organize your weekly meal schedule
 
-###  Recipe Details
+### 📖 Recipe Details
 - High-quality recipe images
 - Complete ingredient lists with measurements
 - Step-by-step cooking instructions
 - Video tutorials (YouTube integration)
 
 
-## Technology Stack 
+## Technology Stack 🛠️
 
-- **Language**: Java
+- **Language**: Java For Android
 - **Architecture**: MVP (Model-View-Presenter)
-- **Networking**: Retrofit, RxJava3
-- **Authintication**: Firebase Authentication
+- **Networking**: Retrofit
+- **Authentication**: Firebase Authentication
 - **Local Database**: Room
 - **Remote Database**: Firestore
 - **Image Loading**: Glide
@@ -50,7 +50,7 @@ A modern Android application for discovering, saving, and planning your favorite
 - **Async Operations**: RxJava
 - **UI Components**: Material Design 3
 
-## API 
+## API 🌐
 
 This app uses [TheMealDB API](https://www.themealdb.com/api.php) to fetch recipe data.
 
@@ -65,14 +65,14 @@ Some features work offline:
 -  Accessing meal plans
 -  Viewing previously loaded recipes
 
-## Requirements 
+## Requirements 📋
 
 - Android Studio Arctic Fox or later
 - Android SDK 24+ (Android 7.0+)
 - Target SDK 34 (Android 14)
 - Java 8+
 
-## Installation 
+## Installation 🚀
 
 1. **Clone the repository**
    ```bash
@@ -91,7 +91,7 @@ Some features work offline:
    - Click "Run" or press `Shift + F10`
    - Make sure your device has internet connectivity
 
-## Key Features Implementation 
+## Key Features Implementation 🔑
 
 ### MVP Architecture
 Each screen follows the MVP pattern:
@@ -114,7 +114,7 @@ Each screen follows the MVP pattern:
 - Custom themes and colors
 - Smooth animations and transitions
 
-## Configuration 
+## Configuration ⚙️
 
 ### API Configuration
 The app uses TheMealDB API. No API key is required for the free tier.
@@ -122,7 +122,7 @@ The app uses TheMealDB API. No API key is required for the free tier.
 ### Database Configuration
 Room database is automatically created on first app launch.
 
-## Usage Tips 
+## Usage Tips 💡
 
 1. **First Launch**: Make sure you have an active internet connection to load initial data
 2. **Offline Mode**: Previously loaded recipes and favorites are available offline
