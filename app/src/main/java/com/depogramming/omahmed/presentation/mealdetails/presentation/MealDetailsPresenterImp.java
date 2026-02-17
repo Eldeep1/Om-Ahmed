@@ -1,10 +1,7 @@
 package com.depogramming.omahmed.presentation.mealdetails.presentation;
 
-import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.MealMapper;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
-import com.depogramming.omahmed.data.mealsplan.repo.MealsPlanRepo;
-import com.depogramming.omahmed.utils.ActionCheckingDialogue;
 import com.depogramming.omahmed.utils.FavouriteToggleHelper;
 import com.depogramming.omahmed.utils.GuestModeDialog;
 import com.depogramming.omahmed.utils.UserData;
@@ -23,14 +20,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealDetailsPresenterImp implements MealDetailsPresenter {
     private MealDetailsView view;
-    private final MealsPlanRepo mealsPlanRepo;
     private final MealsRepo mealsRepo;
     Meal meal;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     public MealDetailsPresenterImp(Context context) {
         mealsRepo = new MealsRepo(context);
-        mealsPlanRepo = new MealsPlanRepo(context);
     }
 
 
@@ -53,7 +48,7 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
             GuestModeDialog.show(context);
         } else {
             MealsPlanModel mealPlan = MealMapper.toMealPlanner(meal, date);
-            disposables.add(mealsPlanRepo.insertPlanned(mealPlan)
+            disposables.add(mealsRepo.insertPlanned(mealPlan)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(view::addToPlannerSuccess));

@@ -12,8 +12,12 @@ import com.depogramming.omahmed.data.home.models.FavouriteMeals;
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.models.MealMapper;
 import com.depogramming.omahmed.data.home.models.MealsResponse;
+import com.depogramming.omahmed.data.mealsplan.datasource.local.MealsPlanLocalDataSource;
+import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.utils.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -24,11 +28,14 @@ public class MealsRepo {
     MealsLocalDataSource mealsLocalDataSource;
     CategoriesRemoteDataSource categoriesRemoteDataSource;
     AreasRemoteDataSource areasRemoteDataSource;
+    MealsPlanLocalDataSource mealsPlanLocalDataSource;
 
     public MealsRepo(Context context){
         mealsRemoteDataSource=new MealsRemoteDataSource();
         mealsLocalDataSource=new MealsLocalDataSource(context);
         categoriesRemoteDataSource = new CategoriesRemoteDataSource();
+        areasRemoteDataSource= new AreasRemoteDataSource();
+        mealsPlanLocalDataSource=new MealsPlanLocalDataSource(context);
     }
     public Observable<List<Meal>> getAllMeals() {
 
@@ -131,5 +138,17 @@ public class MealsRepo {
     }
     public Observable<List<Areas>> getAreas(){
         return areasRemoteDataSource.getAreas().map(areasResponse -> areasResponse.areas);
+    }
+
+    public Observable<List<MealsPlanModel>> getAllPlannedMeals(Date day){
+        Date startOfDay = DateUtils.getStartOfDay(day);
+        Date endOfDay = DateUtils.getEndOfDay(day);
+        return mealsPlanLocalDataSource.getDayPlans(startOfDay,endOfDay);
+    }
+    public Completable insertPlanned(MealsPlanModel meal){
+        return mealsPlanLocalDataSource.insertPlanned(meal);
+    }
+    public Completable deletePlannedMeal(MealsPlanModel meal){
+        return mealsPlanLocalDataSource.deletePlannedMeal(meal);
     }
 }

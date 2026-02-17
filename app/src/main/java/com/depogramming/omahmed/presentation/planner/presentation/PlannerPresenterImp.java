@@ -5,9 +5,9 @@ import android.os.Bundle;
 
 import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.MealMapper;
+import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
-import com.depogramming.omahmed.data.mealsplan.repo.MealsPlanRepo;
 import com.depogramming.omahmed.presentation.planner.view.CalenderView;
 import com.depogramming.omahmed.presentation.planner.view.OnPlannedMealClick;
 import com.depogramming.omahmed.utils.ActionCheckingDialogue;
@@ -24,7 +24,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class PlannerPresenterImp implements PlannerPresenter {
     private final Calendar currentCalendar;
-    MealsPlanRepo mealsPlanRepo;
+    MealsRepo mealsRepo;
     CalenderView calenderView;
     OnPlannedMealClick onPlannedMealClick;
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -32,7 +32,7 @@ public class PlannerPresenterImp implements PlannerPresenter {
 
     public PlannerPresenterImp(Context context) {
         currentCalendar = Calendar.getInstance();
-        mealsPlanRepo = new MealsPlanRepo(context);
+        mealsRepo = new MealsRepo(context);
     }
 
     private List<CalendarDay> generateCalendarDays(Calendar calendar) {
@@ -90,7 +90,7 @@ public class PlannerPresenterImp implements PlannerPresenter {
 
     @Override
     public void loadMealsForDay(CalendarDay day, int position) {
-        disposables.add(mealsPlanRepo.getAllPlannedMeals(day.calendar.getTime())
+        disposables.add(mealsRepo.getAllPlannedMeals(day.calendar.getTime())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -108,7 +108,7 @@ public class PlannerPresenterImp implements PlannerPresenter {
                 R.drawable.remove_planner,
                 result -> {
                     if (result) {
-                        disposables.add(mealsPlanRepo.deletePlannedMeal(plannedMeal).subscribeOn(Schedulers.io())
+                        disposables.add(mealsRepo.deletePlannedMeal(plannedMeal).subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread()).subscribe(
                                         () -> {
                                             plannedMeal.isFav = !plannedMeal.isFav;
