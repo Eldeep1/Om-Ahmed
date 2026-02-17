@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.depogramming.omahmed.data.home.models.CategoriesResponse;
 import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.home.view.HomeView;
 import com.depogramming.omahmed.utils.FavouriteToggleHelper;
@@ -25,13 +24,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class HomePresenterImp implements HomePresenter {
 
     HomeView homeView;
-    CategoriesRepo categoriesRepo;
     MealsRepo mealsRepo;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     public HomePresenterImp(Context context) {
         this.mealsRepo = new MealsRepo(context);
-        this.categoriesRepo = new CategoriesRepo();
     }
 
     @Override
@@ -75,7 +72,7 @@ public class HomePresenterImp implements HomePresenter {
         homeView.allMealsLoading();
         disposables.add(
                 Single.zip(
-                                categoriesRepo.getAllCategories().firstOrError(),
+                                mealsRepo.getAllCategories().firstOrError(),
                                 mealsRepo.getDailyRecommendations(getDailyChars()).firstOrError(),
                                 mealsRepo.getDailyMeal(generateRandomValidChar()).firstOrError(),
                                 (categories, recommendations, dailyMeal) -> {

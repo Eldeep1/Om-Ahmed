@@ -7,8 +7,6 @@ import com.depogramming.omahmed.data.home.models.Category;
 import com.depogramming.omahmed.data.home.models.CountryModel;
 import com.depogramming.omahmed.data.home.models.CountryUtils;
 import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.home.repository.AreasRepo;
-import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.search.view.OnSearchItemClick;
 import com.depogramming.omahmed.presentation.search.view.SearchViewInterface;
@@ -26,18 +24,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class SearchPresenterImp implements SearchPresenter {
-    CategoriesRepo categoriesRepo;
     SearchViewInterface searchView;
     OnSearchItemClick onSearchItemClick;
-    AreasRepo areasRepo;
     MealsRepo mealsRepo;
     private final CompositeDisposable disposables = new CompositeDisposable();
     List<Meal> allMeals;
     private final PublishSubject<Object[]> searchSubject = PublishSubject.create();
 
     public SearchPresenterImp( Context context) {
-        categoriesRepo = new CategoriesRepo();
-        areasRepo = new AreasRepo();
         mealsRepo = new MealsRepo(context);
         allMeals = new ArrayList<>();
 
@@ -75,7 +69,7 @@ public class SearchPresenterImp implements SearchPresenter {
 
     @Override
     public void getAreas() {
-        disposables.add(areasRepo.getAreas()
+        disposables.add(mealsRepo.getAreas()
                         .subscribeOn(Schedulers.io())
                         .map(areas ->
                                 areas.stream()
@@ -103,7 +97,7 @@ public class SearchPresenterImp implements SearchPresenter {
 
     @Override
     public void getCategories() {
-        disposables.add(categoriesRepo.getAllCategories().subscribeOn(Schedulers.io())
+        disposables.add(mealsRepo.getAllCategories().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).map(
                         categoriesResponse -> {
                             List<Category> result = new ArrayList<>(categoriesResponse.getCategories().size() + 1);
@@ -114,9 +108,7 @@ public class SearchPresenterImp implements SearchPresenter {
                             return result;
                         }
                 )
-                .subscribe(categoriesResponse -> {
-                    searchView.showCategories(categoriesResponse);
-                }, throwable -> {
+                .subscribe(categoriesResponse -> searchView.showCategories(categoriesResponse), throwable -> {
                 }));
     }
 
@@ -197,9 +189,7 @@ public class SearchPresenterImp implements SearchPresenter {
                     return result;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(filteredMeals -> {
-                    searchView.setMeals(filteredMeals);
-                }));
+                .subscribe(searchView::setMeals));
     }
 
 }

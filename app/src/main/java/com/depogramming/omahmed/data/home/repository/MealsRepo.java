@@ -3,7 +3,11 @@ package com.depogramming.omahmed.data.home.repository;
 import android.content.Context;
 
 import com.depogramming.omahmed.data.home.datasource.local.MealsLocalDataSource;
+import com.depogramming.omahmed.data.home.datasource.remote.AreasRemoteDataSource;
+import com.depogramming.omahmed.data.home.datasource.remote.CategoriesRemoteDataSource;
 import com.depogramming.omahmed.data.home.datasource.remote.MealsRemoteDataSource;
+import com.depogramming.omahmed.data.home.models.Areas;
+import com.depogramming.omahmed.data.home.models.CategoriesResponse;
 import com.depogramming.omahmed.data.home.models.FavouriteMeals;
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.models.MealMapper;
@@ -11,7 +15,6 @@ import com.depogramming.omahmed.data.home.models.MealsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
@@ -19,16 +22,19 @@ import io.reactivex.rxjava3.core.Observable;
 public class MealsRepo {
     MealsRemoteDataSource mealsRemoteDataSource;
     MealsLocalDataSource mealsLocalDataSource;
+    CategoriesRemoteDataSource categoriesRemoteDataSource;
+    AreasRemoteDataSource areasRemoteDataSource;
+
     public MealsRepo(Context context){
         mealsRemoteDataSource=new MealsRemoteDataSource();
         mealsLocalDataSource=new MealsLocalDataSource(context);
+        categoriesRemoteDataSource = new CategoriesRemoteDataSource();
     }
     public Observable<List<Meal>> getAllMeals() {
 
         return Observable.range('a', 26)
                 .map(i -> (char) i.intValue())
-                .flatMap(c ->
-                        searchForMealsByFirstChar(c))
+                .flatMap(this::searchForMealsByFirstChar)
                 .map(response ->
                         response != null
                                 ? response
@@ -118,5 +124,12 @@ public class MealsRepo {
     }
     public Completable removeFavourite(FavouriteMeals favouriteMeals){
         return mealsLocalDataSource.deleteMeal(favouriteMeals);
+    }
+
+    public Observable<CategoriesResponse> getAllCategories(){
+        return categoriesRemoteDataSource.getAllCategories();
+    }
+    public Observable<List<Areas>> getAreas(){
+        return areasRemoteDataSource.getAreas().map(areasResponse -> areasResponse.areas);
     }
 }
