@@ -101,8 +101,9 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     }
 
     @Override
-    public void toggleFavouriteButton(boolean isFav) {
+    public void toggleFavouriteButton(boolean isFav, String message) {
         selectedMealFavButton.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
+        UserAlerts.showSnackBar(getView(),message);
     }
 
     @Override

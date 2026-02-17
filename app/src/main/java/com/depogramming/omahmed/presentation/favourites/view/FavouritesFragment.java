@@ -16,6 +16,7 @@ import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.FavouriteMeals;
 import com.depogramming.omahmed.presentation.favourites.presentation.FavouritesPresenter;
 import com.depogramming.omahmed.presentation.favourites.presentation.FavouritesPresenterImp;
+import com.depogramming.omahmed.utils.UserAlerts;
 
 import java.util.List;
 
@@ -68,12 +69,13 @@ public class FavouritesFragment extends Fragment implements FavouritesView, OnHe
 
     @Override
     public void removeFavouriteLogic(FavouriteMeals favouriteMeals, int position) {
-        favouritesPresenter.changeFavouritesFavState(favouriteMeals, position);
+        favouritesPresenter.changeFavouritesFavState(getContext(),favouriteMeals, position);
     }
 
     @Override
-    public void removeFavouriteUI(int position) {
+    public void removeFavouriteUI(int position,String message) {
         favouritesAdapter.notifyItemChanged(position);
+        UserAlerts.showSnackBar(getView(),message);
     }
 
     @Override

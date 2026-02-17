@@ -1,8 +1,11 @@
 package com.depogramming.omahmed.presentation.mealdetails.presentation;
 
+import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.MealMapper;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 import com.depogramming.omahmed.data.mealsplan.repo.MealsPlanRepo;
+import com.depogramming.omahmed.utils.ActionCheckingDialogue;
+import com.depogramming.omahmed.utils.FavouriteToggleHelper;
 import com.depogramming.omahmed.utils.GuestModeDialog;
 import com.depogramming.omahmed.utils.UserData;
 
@@ -28,7 +31,6 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
     public MealDetailsPresenterImp(Context context) {
         mealsRepo = new MealsRepo(context);
         mealsPlanRepo = new MealsPlanRepo(context);
-        this.meal = meal;
     }
 
 
@@ -40,17 +42,9 @@ public class MealDetailsPresenterImp implements MealDetailsPresenter {
 
     @Override
     public void toggleFavourite(Context context) {
-        if (UserData.isGuest) {
-            GuestModeDialog.show(context);
-        } else {
-            disposables.add(mealsRepo.toggleFavourite(meal)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                        meal.isFav = !meal.isFav;
-                        view.toggleFavouriteButton(meal.isFav);
-                    }));
-        }
+        FavouriteToggleHelper.toggle(
+                context,meal,mealsRepo,disposables,(isFav, message) -> view.toggleFavouriteButton(isFav, message)
+        );
     }
 
     @Override

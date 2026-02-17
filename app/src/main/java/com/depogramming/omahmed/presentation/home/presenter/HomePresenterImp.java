@@ -8,8 +8,7 @@ import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.data.home.repository.CategoriesRepo;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.home.view.HomeView;
-import com.depogramming.omahmed.utils.GuestModeDialog;
-import com.depogramming.omahmed.utils.UserData;
+import com.depogramming.omahmed.utils.FavouriteToggleHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -42,27 +41,14 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void changeDailyMealFavState(Meal meal, Context context) {
-        if (UserData.isGuest) {
-            GuestModeDialog.show(context);
-        } else {
-            disposables.add(mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
-                meal.isFav = !meal.isFav;
-                homeView.updateDailyMealFavState(meal.isFav);
-            }));
-        }
+        FavouriteToggleHelper.toggle(context, meal, mealsRepo, disposables, (isFav, message) -> homeView.updateDailyMealFavState(isFav,message));
     }
 
     @Override
     public void changeRecommendationsFavState(Meal meal, int position, Context context) {
-        if (UserData.isGuest) {
-            GuestModeDialog.show(context);
-        } else {
-            disposables.add(mealsRepo.toggleFavourite(meal).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
-                meal.isFav = !meal.isFav;
-                homeView.updateListViewHeart(position, meal.isFav);
-            }, throwable -> System.out.println("lol, we got an error" + throwable)));
-        }
+        FavouriteToggleHelper.toggle(context, meal, mealsRepo, disposables, (isFav, message) -> homeView.updateListViewHeart(position, isFav,message));
     }
+
 
     @Override
     public void navigateToMealDetails(Meal meal) {
@@ -121,13 +107,14 @@ public class HomePresenterImp implements HomePresenter {
                                     homeView.allMealsSuccessfully();
                                 },
                                 throwable -> {
-                                     homeView.allMealsError();
+                                    homeView.allMealsError();
                                 }
                         )
         );
 
 
     }
+
     private List<Character> getDailyChars() {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
 

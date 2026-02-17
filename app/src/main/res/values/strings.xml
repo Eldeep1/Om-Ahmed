@@ -43,4 +43,6 @@
     <string name="retry">Retry</string>
     <string name="we_couldn_t_load_the_delicious_recipes_for_you_n_please_check_your_connection_and_try_again">We couldn\'t load the delicious recipes for you.\n Please check your connection and try again.</string>
     <string name="oops_something_went_n_wrong">Oops! Something went \n wrong .</string>
+    <string name="remove_from_favorites">Remove from Favorites?</string>
+    <string name="are_you_sure_you_want_to_remove_this_delicious_recipe_from_your_favorites">Are you sure you want to remove this delicious recipe from your favorites?</string>
 </resources>

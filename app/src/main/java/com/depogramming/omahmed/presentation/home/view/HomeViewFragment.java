@@ -25,6 +25,7 @@ import com.depogramming.omahmed.data.home.models.Category;
 import com.depogramming.omahmed.data.home.models.Meal;
 import com.depogramming.omahmed.presentation.home.presenter.HomePresenter;
 import com.depogramming.omahmed.presentation.home.presenter.HomePresenterImp;
+import com.depogramming.omahmed.utils.UserAlerts;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
@@ -129,8 +130,9 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     }
 
     @Override
-    public void updateDailyMealFavState(boolean isFav) {
+    public void updateDailyMealFavState(boolean isFav, String message) {
         mealOfTheDayFavButton.setImageResource(isFav ? R.drawable.alreadyfav : R.drawable.addfav);
+        UserAlerts.showSnackBar(getView(),message);
     }
 
     @Override
@@ -144,8 +146,9 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
     }
 
     @Override
-    public void updateListViewHeart(int position, boolean isFavourite) {
+    public void updateListViewHeart(int position, boolean isFavourite, String message) {
         recommendationsAdapter.notifyItemChanged(position, isFavourite);
+        UserAlerts.showSnackBar(getView(), message);
     }
 
     @Override

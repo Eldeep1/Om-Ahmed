@@ -3,12 +3,14 @@ package com.depogramming.omahmed.presentation.favourites.presentation;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.FavouriteMeals;
 import com.depogramming.omahmed.data.home.models.MealMapper;
 import com.depogramming.omahmed.data.home.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.favourites.view.FavouritesView;
 import com.depogramming.omahmed.presentation.favourites.view.OnCardClicked;
 import com.depogramming.omahmed.presentation.favourites.view.OnHeartClicked;
+import com.depogramming.omahmed.utils.ActionCheckingDialogue;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -39,13 +41,24 @@ public class FavouritesPresenterImp implements FavouritesPresenter {
     }
 
     @Override
-    public void changeFavouritesFavState(FavouriteMeals favouriteMeals, int position) {
-        disposables.add(mealsRepo.removeFavourite(favouriteMeals).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        () -> onHeartClicked.removeFavouriteUI(position),
-                        throwable -> favouritesView.favouritesFailed(throwable.getMessage())
-                ));
+    public void changeFavouritesFavState(Context context,FavouriteMeals favouriteMeals, int position) {
+        ActionCheckingDialogue.show(
+                context,
+                "Remove from favourites",
+                "Are you sure you want to remove this delicious recipe from your favourites",
+                R.drawable.broken_heart,
+                result -> {
+                    if (result) {
+                        disposables.add(mealsRepo.removeFavourite(favouriteMeals).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                        () -> onHeartClicked.removeFavouriteUI(position, "Removed Successfully"),
+                                        throwable -> favouritesView.favouritesFailed(throwable.getMessage())
+                                ));
+                    }
+                }
+                );
+
     }
 
     @Override
