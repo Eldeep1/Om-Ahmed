@@ -93,7 +93,11 @@
         <item name="android:background">@drawable/guest_login_button</item>
         <item name="backgroundTint">@null</item>
     </style>
-    <style name="Theme.OmAhmed" parent="Base.Theme.OmAhmed" />
+    <style name="Theme.OmAhmed" parent="Base.Theme.OmAhmed">
+        <item name="android:statusBarColor">@color/crater_brown</item>
+        <item name="android:navigationBarColor">@color/background_color</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 
 
     <style name="Widget.OmAhmed.InputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
