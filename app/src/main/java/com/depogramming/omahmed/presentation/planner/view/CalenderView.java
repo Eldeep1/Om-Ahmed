@@ -1,7 +1,7 @@
 package com.depogramming.omahmed.presentation.planner.view;
 
-import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.meals.model.utils.CalendarDay;
+import com.depogramming.omahmed.data.meals.model.meal.MealsPlanModel;
 
 import java.util.List;
 

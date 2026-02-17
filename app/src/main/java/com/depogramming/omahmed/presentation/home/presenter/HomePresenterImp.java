@@ -3,9 +3,9 @@ package com.depogramming.omahmed.presentation.home.presenter;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.depogramming.omahmed.data.home.models.CategoriesResponse;
-import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.home.repository.MealsRepo;
+import com.depogramming.omahmed.data.meals.model.categories.CategoriesResponse;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
+import com.depogramming.omahmed.data.meals.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.home.view.HomeView;
 import com.depogramming.omahmed.utils.FavouriteToggleHelper;
 

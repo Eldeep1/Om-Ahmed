@@ -2,8 +2,8 @@ package com.depogramming.omahmed.data.syncing.datasource;
 
 import android.util.Pair;
 
-import com.depogramming.omahmed.data.home.models.FavouriteMeals;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.meals.model.meal.FavouriteMeals;
+import com.depogramming.omahmed.data.meals.model.meal.MealsPlanModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;

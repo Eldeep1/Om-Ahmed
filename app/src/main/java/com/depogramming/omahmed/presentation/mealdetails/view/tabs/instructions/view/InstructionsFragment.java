@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Instructions;
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.meal.Instructions;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 import com.depogramming.omahmed.presentation.mealdetails.view.tabs.instructions.presenter.InstructionsPresenter;
 import com.depogramming.omahmed.presentation.mealdetails.view.tabs.instructions.presenter.InstructionsPresenterImp;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;

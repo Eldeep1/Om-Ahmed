@@ -2,7 +2,7 @@ package com.depogramming.omahmed.presentation.Authentication.login.presenter;
 
 import android.app.Activity;
 
-import com.depogramming.omahmed.data.auth.login.model.LoginUserDTO;
+import com.depogramming.omahmed.data.auth.model.LoginUserDTO;
 import com.depogramming.omahmed.data.auth.repository.AuthRepo;
 import com.depogramming.omahmed.presentation.Authentication.login.view.LoginView;
 import com.depogramming.omahmed.utils.UserData;

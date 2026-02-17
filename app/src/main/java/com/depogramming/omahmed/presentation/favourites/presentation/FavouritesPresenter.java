@@ -2,12 +2,10 @@ package com.depogramming.omahmed.presentation.favourites.presentation;
 
 import android.content.Context;
 
-import com.depogramming.omahmed.data.home.models.FavouriteMeals;
+import com.depogramming.omahmed.data.meals.model.meal.FavouriteMeals;
 import com.depogramming.omahmed.presentation.favourites.view.FavouritesView;
 import com.depogramming.omahmed.presentation.favourites.view.OnCardClicked;
 import com.depogramming.omahmed.presentation.favourites.view.OnHeartClicked;
-
-import java.util.List;
 
 public interface FavouritesPresenter {
     void getAllFavourites();

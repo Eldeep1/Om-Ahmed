@@ -2,8 +2,7 @@ package com.depogramming.omahmed.presentation.planner.view;
 
 import android.os.Bundle;
 
-import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.meals.model.meal.MealsPlanModel;
 
 public interface OnPlannedMealClick {
     void onRemoveButtonClicked(MealsPlanModel meal, int position);

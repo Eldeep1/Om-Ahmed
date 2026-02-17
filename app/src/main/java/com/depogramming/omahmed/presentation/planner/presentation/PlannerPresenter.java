@@ -2,8 +2,8 @@ package com.depogramming.omahmed.presentation.planner.presentation;
 
 import android.content.Context;
 
-import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.meals.model.utils.CalendarDay;
+import com.depogramming.omahmed.data.meals.model.meal.MealsPlanModel;
 import com.depogramming.omahmed.presentation.planner.view.CalenderView;
 import com.depogramming.omahmed.presentation.planner.view.OnPlannedMealClick;
 

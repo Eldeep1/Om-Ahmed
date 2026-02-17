@@ -4,8 +4,8 @@ package com.depogramming.omahmed.utils;
 import android.content.Context;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.home.repository.MealsRepo;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
+import com.depogramming.omahmed.data.meals.repository.MealsRepo;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;

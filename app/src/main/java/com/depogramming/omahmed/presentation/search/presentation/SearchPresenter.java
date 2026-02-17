@@ -2,7 +2,7 @@ package com.depogramming.omahmed.presentation.search.presentation;
 
 import android.content.Context;
 
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 import com.depogramming.omahmed.presentation.search.view.OnSearchItemClick;
 import com.depogramming.omahmed.presentation.search.view.SearchViewInterface;
 

@@ -53,6 +53,6 @@
         tools:layout="@layout/fragment_meal_details" >
         <argument
             android:name="selectedMeal"
-            app:argType="com.depogramming.omahmed.data.home.models.Meal" />
+            app:argType="com.depogramming.omahmed.data.meals.model.meal.Meal" />
     </fragment>
 </navigation>

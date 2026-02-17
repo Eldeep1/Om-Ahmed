@@ -3,9 +3,9 @@ package com.depogramming.omahmed.data.auth.repository;
 import android.app.Activity;
 import android.content.Context;
 
-import com.depogramming.omahmed.data.auth.login.model.LoginUserDTO;
+import com.depogramming.omahmed.data.auth.model.LoginUserDTO;
 import com.depogramming.omahmed.data.auth.datasource.FirebaseDataSource;
-import com.depogramming.omahmed.data.auth.register.model.RegisterUserDTO;
+import com.depogramming.omahmed.data.auth.model.RegisterUserDTO;
 import com.depogramming.omahmed.data.db.AppDataBase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;

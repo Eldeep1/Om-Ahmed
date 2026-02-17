@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 import com.depogramming.omahmed.presentation.mealdetails.view.tabs.ingredients.IngredientsFragment;
 import com.depogramming.omahmed.presentation.mealdetails.view.tabs.instructions.view.InstructionsFragment;
 

@@ -2,7 +2,7 @@ package com.depogramming.omahmed.presentation.home.view;
 
 import android.os.Bundle;
 
-import com.depogramming.omahmed.data.home.models.Category;
+import com.depogramming.omahmed.data.meals.model.categories.Category;
 
 import java.util.List;
 

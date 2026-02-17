@@ -3,11 +3,11 @@ package com.depogramming.omahmed.presentation.search.presentation;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.depogramming.omahmed.data.home.models.Category;
-import com.depogramming.omahmed.data.home.models.CountryModel;
-import com.depogramming.omahmed.data.home.models.CountryUtils;
-import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.home.repository.MealsRepo;
+import com.depogramming.omahmed.data.meals.model.categories.Category;
+import com.depogramming.omahmed.data.meals.model.countries.CountryModel;
+import com.depogramming.omahmed.data.meals.model.countries.CountryUtils;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
+import com.depogramming.omahmed.data.meals.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.search.view.OnSearchItemClick;
 import com.depogramming.omahmed.presentation.search.view.SearchViewInterface;
 import com.depogramming.omahmed.utils.GuestModeDialog;

@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.FavouriteMeals;
-import com.depogramming.omahmed.data.home.models.MealMapper;
-import com.depogramming.omahmed.data.home.repository.MealsRepo;
+import com.depogramming.omahmed.data.meals.model.meal.FavouriteMeals;
+import com.depogramming.omahmed.data.meals.model.utils.MealMapper;
+import com.depogramming.omahmed.data.meals.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.favourites.view.FavouritesView;
 import com.depogramming.omahmed.presentation.favourites.view.OnCardClicked;
 import com.depogramming.omahmed.presentation.favourites.view.OnHeartClicked;

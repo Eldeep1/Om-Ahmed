@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.meals.model.utils.CalendarDay;
+import com.depogramming.omahmed.data.meals.model.meal.MealsPlanModel;
 import com.depogramming.omahmed.presentation.planner.presentation.PlannerPresenter;
 import com.depogramming.omahmed.presentation.planner.presentation.PlannerPresenterImp;
 import com.depogramming.omahmed.utils.UserAlerts;

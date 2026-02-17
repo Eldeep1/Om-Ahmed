@@ -2,14 +2,10 @@ package com.depogramming.omahmed.data.syncing.repo;
 
 import android.content.Context;
 import android.util.Pair;
-import com.depogramming.omahmed.data.home.datasource.local.MealsLocalDataSource;
-import com.depogramming.omahmed.data.home.models.FavouriteMeals;
-import com.depogramming.omahmed.data.mealsplan.datasource.local.MealsPlanLocalDataSource;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.meals.datasource.local.favourites.FavouriteMealsLocalDataSource;
+import com.depogramming.omahmed.data.meals.datasource.local.planned.MealsPlanLocalDataSource;
 import com.depogramming.omahmed.data.syncing.datasource.FireStoreDataSource;
 
-
-import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
@@ -17,17 +13,17 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SyncingRepo {
     FireStoreDataSource fireStoreDataSource;
-    MealsLocalDataSource mealsLocalDataSource;
+    FavouriteMealsLocalDataSource favouriteMealsLocalDataSource;
     MealsPlanLocalDataSource mealsPlanLocalDataSource;
     public SyncingRepo(Context context) {
         fireStoreDataSource= new FireStoreDataSource();
-        mealsLocalDataSource= new MealsLocalDataSource(context);
+        favouriteMealsLocalDataSource = new FavouriteMealsLocalDataSource(context);
         mealsPlanLocalDataSource= new MealsPlanLocalDataSource(context);
     }
 
     public Completable uploadAllUsersData() {
         return Single.zip(
-                        mealsLocalDataSource.getAllMeals().firstOrError(),
+                        favouriteMealsLocalDataSource.getAllMeals().firstOrError(),
                         mealsPlanLocalDataSource.getAllPlannedMeals().firstOrError(),
                         Pair::new
                 )
@@ -43,7 +39,7 @@ public class SyncingRepo {
         return fireStoreDataSource.downloadAllUsersData()
                 .flatMapCompletable(pair ->
                         Completable.mergeArray(
-                                mealsLocalDataSource.insertAll(pair.second)
+                                favouriteMealsLocalDataSource.insertAll(pair.second)
                                         .subscribeOn(Schedulers.io()),
                                 mealsPlanLocalDataSource.insertAll(pair.first)
                                         .subscribeOn(Schedulers.io())

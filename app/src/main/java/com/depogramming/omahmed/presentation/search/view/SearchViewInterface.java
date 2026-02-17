@@ -1,8 +1,8 @@
 package com.depogramming.omahmed.presentation.search.view;
 
-import com.depogramming.omahmed.data.home.models.Category;
-import com.depogramming.omahmed.data.home.models.CountryModel;
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.categories.Category;
+import com.depogramming.omahmed.data.meals.model.countries.CountryModel;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 
 import java.util.List;
 

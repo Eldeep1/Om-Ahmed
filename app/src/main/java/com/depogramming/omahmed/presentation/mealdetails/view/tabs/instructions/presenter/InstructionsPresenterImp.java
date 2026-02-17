@@ -1,8 +1,8 @@
 package com.depogramming.omahmed.presentation.mealdetails.view.tabs.instructions.presenter;
 
-import com.depogramming.omahmed.data.home.models.Instructions;
-import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.home.models.MealMapper;
+import com.depogramming.omahmed.data.meals.model.meal.Instructions;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
+import com.depogramming.omahmed.data.meals.model.utils.MealMapper;
 import com.depogramming.omahmed.presentation.mealdetails.view.tabs.instructions.view.InstructionsView;
 
 import java.util.List;

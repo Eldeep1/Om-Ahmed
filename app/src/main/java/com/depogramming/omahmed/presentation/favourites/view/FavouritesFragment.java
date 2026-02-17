@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.FavouriteMeals;
+import com.depogramming.omahmed.data.meals.model.meal.FavouriteMeals;
 import com.depogramming.omahmed.presentation.favourites.presentation.FavouritesPresenter;
 import com.depogramming.omahmed.presentation.favourites.presentation.FavouritesPresenterImp;
 import com.depogramming.omahmed.utils.UserAlerts;

@@ -1,15 +1,15 @@
 package com.depogramming.omahmed.presentation.mealdetails.presentation;
 
-import com.depogramming.omahmed.data.home.models.MealMapper;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.meals.model.utils.MealMapper;
+import com.depogramming.omahmed.data.meals.model.meal.MealsPlanModel;
 import com.depogramming.omahmed.utils.FavouriteToggleHelper;
 import com.depogramming.omahmed.utils.GuestModeDialog;
 import com.depogramming.omahmed.utils.UserData;
 
 import android.content.Context;
 
-import com.depogramming.omahmed.data.home.models.Meal;
-import com.depogramming.omahmed.data.home.repository.MealsRepo;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
+import com.depogramming.omahmed.data.meals.repository.MealsRepo;
 import com.depogramming.omahmed.presentation.mealdetails.view.MealDetailsView;
 
 import java.util.Date;

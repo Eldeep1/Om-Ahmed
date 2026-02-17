@@ -6,15 +6,15 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.depogramming.omahmed.data.home.datasource.local.MealsDao;
-import com.depogramming.omahmed.data.home.models.FavouriteMeals;
-import com.depogramming.omahmed.data.mealsplan.datasource.local.MealsPlanDao;
-import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
+import com.depogramming.omahmed.data.meals.datasource.local.favourites.FavouritesMealsDao;
+import com.depogramming.omahmed.data.meals.model.meal.FavouriteMeals;
+import com.depogramming.omahmed.data.meals.datasource.local.planned.MealsPlanDao;
+import com.depogramming.omahmed.data.meals.model.meal.MealsPlanModel;
 
 
 @Database(entities = {FavouriteMeals.class, MealsPlanModel.class},version = 1,exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
-    public abstract MealsDao mealsDao();
+    public abstract FavouritesMealsDao mealsDao();
     public abstract MealsPlanDao mealsPlanDao();
     private static AppDataBase Instance;
     public static AppDataBase getInstance(Context context){

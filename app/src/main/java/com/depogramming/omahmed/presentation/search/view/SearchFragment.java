@@ -21,9 +21,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Category;
-import com.depogramming.omahmed.data.home.models.CountryModel;
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.categories.Category;
+import com.depogramming.omahmed.data.meals.model.countries.CountryModel;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 import com.depogramming.omahmed.presentation.search.presentation.SearchPresenter;
 import com.depogramming.omahmed.presentation.search.presentation.SearchPresenterImp;
 import com.depogramming.omahmed.presentation.search.view.utils.CustomDropdown;

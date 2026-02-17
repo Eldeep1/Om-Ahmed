@@ -14,11 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.depogramming.omahmed.R;
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 import com.depogramming.omahmed.presentation.mealdetails.presentation.MealDetailsPresenter;
 import com.depogramming.omahmed.presentation.mealdetails.presentation.MealDetailsPresenterImp;
 import com.depogramming.omahmed.utils.UserAlerts;

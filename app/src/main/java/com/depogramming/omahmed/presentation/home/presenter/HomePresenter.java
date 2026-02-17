@@ -1,9 +1,8 @@
 package com.depogramming.omahmed.presentation.home.presenter;
 
 import android.content.Context;
-import android.view.View;
 
-import com.depogramming.omahmed.data.home.models.Meal;
+import com.depogramming.omahmed.data.meals.model.meal.Meal;
 import com.depogramming.omahmed.presentation.home.view.HomeView;
 
 public interface HomePresenter {
