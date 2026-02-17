@@ -104,11 +104,13 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
 
     @Override
     public void onCategoryClickAction(Bundle result) {
-        getParentFragmentManager().setFragmentResult("category", result);
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.bottomNavigationFragments);
+        NavController navController = Navigation.findNavController(
+                requireActivity(), R.id.bottomNavigationFragments
+        );
 
         NavOptions navOptions = new NavOptions.Builder()
                 .setLaunchSingleTop(true)
+                .setPopUpTo(R.id.homeFragment, true)
                 .build();
 
         navController.navigate(R.id.searchFragment, result, navOptions);
