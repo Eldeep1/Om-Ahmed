@@ -19,6 +19,7 @@ import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 import com.depogramming.omahmed.presentation.planner.presentation.PlannerPresenter;
 import com.depogramming.omahmed.presentation.planner.presentation.PlannerPresenterImp;
+import com.depogramming.omahmed.utils.UserAlerts;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class PlannerFragment extends Fragment implements CalenderView,OnDayClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        plannerPresenter = new PlannerPresenterImp(getContext().getApplicationContext());
+        plannerPresenter = new PlannerPresenterImp(getContext());
 
     }
 
@@ -47,16 +48,16 @@ public class PlannerFragment extends Fragment implements CalenderView,OnDayClick
         mealsRecyclerView = view.findViewById(R.id.mealsRecyclerView);
         monthYearTextView = view.findViewById(R.id.monthYearTextView);
         view.findViewById(R.id.previousMonthButton).setOnClickListener(v -> plannerPresenter.nextMonth());
-        view.findViewById(R.id.nextMonthButton).setOnClickListener(v -> plannerPresenter.previousMonth());;
+        view.findViewById(R.id.nextMonthButton).setOnClickListener(v -> plannerPresenter.previousMonth());
         emptyMessageTextView=view.findViewById(R.id.emptyMessageTextView);
         calendarAdapter = new CalendarAdapter(this);
-        calendarRecyclerView.setLayoutManager(new GridLayoutManager(getContext().getApplicationContext(), 7));
+        calendarRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
         calendarRecyclerView.setAdapter(calendarAdapter);
 
         plannedMealsAdapter = new PlannedMealsAdapter(this);
         mealsRecyclerView = view.findViewById(R.id.mealsRecyclerView);
         mealsRecyclerView.setLayoutManager(
-                new LinearLayoutManager(getContext().getApplicationContext(), LinearLayoutManager.VERTICAL, false)
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false)
         );
         mealsRecyclerView.setAdapter(plannedMealsAdapter);
         return view;
@@ -97,7 +98,7 @@ public class PlannerFragment extends Fragment implements CalenderView,OnDayClick
 
     @Override
     public void onRemoveButtonClicked(MealsPlanModel meal, int position) {
-        plannerPresenter.removeFromPlanned(meal,position);
+        plannerPresenter.removeFromPlanned(getContext(),meal,position);
     }
 
     @Override
@@ -106,9 +107,9 @@ public class PlannerFragment extends Fragment implements CalenderView,OnDayClick
     }
 
     @Override
-    public void onRemoveButtonAction(MealsPlanModel meal, int position) {
+    public void onRemoveButtonAction(MealsPlanModel meal, int position, String message) {
         plannedMealsAdapter.notifyItemChanged(position,meal);
-        plannedMealsAdapter.notifyItemRemoved(position);
+        UserAlerts.showSnackBar(getView(),message);
     }
 
     @Override

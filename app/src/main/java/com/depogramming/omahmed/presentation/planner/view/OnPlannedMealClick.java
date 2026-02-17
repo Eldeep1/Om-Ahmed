@@ -8,6 +8,6 @@ import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
 public interface OnPlannedMealClick {
     void onRemoveButtonClicked(MealsPlanModel meal, int position);
     void onCardClicked(MealsPlanModel meal);
-    void onRemoveButtonAction(MealsPlanModel meal, int positon);
+    void onRemoveButtonAction(MealsPlanModel meal, int positon,String message);
     void onCardClickedAction(Bundle bundle);
 }

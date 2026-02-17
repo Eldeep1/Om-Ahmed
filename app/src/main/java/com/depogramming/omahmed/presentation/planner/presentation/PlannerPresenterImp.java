@@ -3,6 +3,7 @@ package com.depogramming.omahmed.presentation.planner.presentation;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.depogramming.omahmed.R;
 import com.depogramming.omahmed.data.home.models.MealMapper;
 import com.depogramming.omahmed.data.mealsplan.models.CalendarDay;
 import com.depogramming.omahmed.data.mealsplan.models.MealsPlanModel;
@@ -29,7 +30,7 @@ public class PlannerPresenterImp implements PlannerPresenter {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
 
-    public PlannerPresenterImp( Context context) {
+    public PlannerPresenterImp(Context context) {
         currentCalendar = Calendar.getInstance();
         mealsPlanRepo = new MealsPlanRepo(context);
     }
@@ -93,23 +94,30 @@ public class PlannerPresenterImp implements PlannerPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        mealsPlanModels -> {
-                            calenderView.loadDayMeals(mealsPlanModels);
-                        },
+                        mealsPlanModels -> calenderView.loadDayMeals(mealsPlanModels),
                         throwable -> System.out.println("interesting" + throwable)
                 ));
     }
 
     @Override
-    public void removeFromPlanned(MealsPlanModel plannedMeal, int position) {
-        disposables.add(mealsPlanRepo.deletePlannedMeal(plannedMeal).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(
-                        () -> {
-                            plannedMeal.isFav = !plannedMeal.isFav;
-                            onPlannedMealClick.onRemoveButtonAction(plannedMeal, position);
-                        }, throwable -> System.out.println("ما علينا من النقطه دي")
-                ));
-
+    public void removeFromPlanned(Context context,MealsPlanModel plannedMeal, int position) {
+        ActionCheckingDialogue.show(
+                context,
+                "Remove From Planned",
+                "Are you sure you want to remove this meal from your plans",
+                R.drawable.remove_planner,
+                result -> {
+                    if (result) {
+                        disposables.add(mealsPlanRepo.deletePlannedMeal(plannedMeal).subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread()).subscribe(
+                                        () -> {
+                                            plannedMeal.isFav = !plannedMeal.isFav;
+                                            onPlannedMealClick.onRemoveButtonAction(plannedMeal, position,"Removed Successfully");
+                                        }, throwable -> System.out.println("ربنا ميجيب ايرورز")
+                                ));
+                    }
+                }
+        );
     }
 
     @Override
@@ -136,10 +144,11 @@ public class PlannerPresenterImp implements PlannerPresenter {
         calenderView = null;
         onPlannedMealClick = null;
     }
+
     @Override
-    public void init(CalenderView calenderView, OnPlannedMealClick onPlannedMealClick){
-        this.calenderView=calenderView;
-        this.onPlannedMealClick=onPlannedMealClick;
+    public void init(CalenderView calenderView, OnPlannedMealClick onPlannedMealClick) {
+        this.calenderView = calenderView;
+        this.onPlannedMealClick = onPlannedMealClick;
         loadMealsForToday();
         updateCalendar();
     }
