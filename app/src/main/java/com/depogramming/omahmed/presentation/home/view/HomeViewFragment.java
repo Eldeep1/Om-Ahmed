@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -106,7 +107,11 @@ public class HomeViewFragment extends Fragment implements HomeView, OnItemClick 
         getParentFragmentManager().setFragmentResult("category", result);
         NavController navController = Navigation.findNavController(requireActivity(), R.id.bottomNavigationFragments);
 
-        navController.navigate(R.id.searchFragment, result);
+        NavOptions navOptions = new NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .build();
+
+        navController.navigate(R.id.searchFragment, result, navOptions);
     }
 
 
